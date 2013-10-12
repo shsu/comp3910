@@ -1,7 +1,9 @@
 package com.corejsf;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -239,7 +241,13 @@ public class TimeTable implements Serializable {
      * @return the string
      */
     public String calculateWeekEnding(final int year, final int week) {
-        return null;
+        SimpleDateFormat f = new SimpleDateFormat("MM/dd/yyyy");
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.WEEK_OF_YEAR, week);
+        c.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
+
+        return f.format(c.getTime());
     }
 
     /**
