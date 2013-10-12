@@ -1,5 +1,7 @@
 package com.corejsf;
 
+import java.io.Serializable;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -12,7 +14,7 @@ import javax.inject.Named;
  */
 @ApplicationScoped
 @Named("TimeSheet")
-public class TimeSheetBean {
+public class TimeSheetBean implements Serializable {
 
     /** The project. */
     private int project;

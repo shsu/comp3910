@@ -8,7 +8,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-// TODO: Auto-generated Javadoc
 /**
  * TimeTable CDI Bean.
  *
