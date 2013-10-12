@@ -1,12 +1,14 @@
 package com.corejsf;
 
+import java.io.Serializable;
+
 /**
  * The Class Hours.
  *
  * @author jhou
  * @version 0.1
  */
-public class Hours {
+public class Hours implements Serializable {
 
     /** The sat. */
     private double sat;
@@ -28,37 +30,6 @@ public class Hours {
 
     /** The fri. */
     private double fri;
-
-    /**
-     * Instantiates a new hours.
-     *
-     * @param sat
-     *            the sat
-     * @param sun
-     *            the sun
-     * @param mon
-     *            the mon
-     * @param tue
-     *            the tue
-     * @param wed
-     *            the wed
-     * @param thu
-     *            the thu
-     * @param fri
-     *            the fri
-     */
-    public Hours(final double sat, final double sun, final double mon,
-            final double tue, final double wed, final double thu,
-            final double fri) {
-        super();
-        this.sat = sat;
-        this.sun = sun;
-        this.mon = mon;
-        this.tue = tue;
-        this.wed = wed;
-        this.thu = thu;
-        this.fri = fri;
-    }
 
     /**
      * Gets the sat.
