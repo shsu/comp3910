@@ -98,7 +98,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Gets the sat total.
-     * 
+     *
      * @return the sat total
      */
     public double getSatTotal() {
@@ -107,7 +107,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Sets the sat total.
-     * 
+     *
      * @param satTotal
      *            the new sat total
      */
@@ -117,7 +117,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Gets the sun total.
-     * 
+     *
      * @return the sun total
      */
     public double getSunTotal() {
@@ -126,7 +126,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Sets the sun total.
-     * 
+     *
      * @param sunTotal
      *            the new sun total
      */
@@ -136,7 +136,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Gets the mon total.
-     * 
+     *
      * @return the mon total
      */
     public double getMonTotal() {
@@ -145,7 +145,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Sets the mon total.
-     * 
+     *
      * @param monTotal
      *            the new mon total
      */
@@ -155,7 +155,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Gets the tue total.
-     * 
+     *
      * @return the tue total
      */
     public double getTueTotal() {
@@ -164,7 +164,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Sets the tue total.
-     * 
+     *
      * @param tueTotal
      *            the new tue total
      */
@@ -174,7 +174,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Gets the wed total.
-     * 
+     *
      * @return the wed total
      */
     public double getWedTotal() {
@@ -183,7 +183,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Sets the wed total.
-     * 
+     *
      * @param wedTotal
      *            the new wed total
      */
@@ -193,7 +193,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Gets the thu total.
-     * 
+     *
      * @return the thu total
      */
     public double getThuTotal() {
@@ -202,7 +202,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Sets the thu total.
-     * 
+     *
      * @param thuTotal
      *            the new thu total
      */
@@ -212,7 +212,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Gets the fri total.
-     * 
+     *
      * @return the fri total
      */
     public double getFriTotal() {
@@ -221,7 +221,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Sets the fri total.
-     * 
+     *
      * @param friTotal
      *            the new fri total
      */
