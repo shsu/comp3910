@@ -1,6 +1,10 @@
 package com.corejsf;
 
+import java.io.Serializable;
+import java.util.List;
+
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -11,7 +15,7 @@ import javax.inject.Named;
  */
 @ApplicationScoped
 @Named("User")
-public class UserBean {
+public class UserBean implements Serializable {
 
     /** The username. */
     private String username;
@@ -21,6 +25,13 @@ public class UserBean {
 
     /** The super user. */
     private boolean superUser;
+
+    /** The employee id. */
+    private int employeeID;
+
+    /** The user time sheets. */
+    @Inject
+    private List<TimeSheetBean> userTimeSheets;
 
     /**
      * Gets the username.
@@ -77,6 +88,44 @@ public class UserBean {
      */
     public void setSuperUser(final boolean superUser) {
         this.superUser = superUser;
+    }
+
+    /**
+     * Gets the employee id.
+     *
+     * @return the employee id
+     */
+    public int getEmployeeID() {
+        return employeeID;
+    }
+
+    /**
+     * Sets the employee id.
+     *
+     * @param employeeID
+     *            the new employee id
+     */
+    public void setEmployeeID(final int employeeID) {
+        this.employeeID = employeeID;
+    }
+
+    /**
+     * Gets the user time sheets.
+     *
+     * @return the user time sheets
+     */
+    public List<TimeSheetBean> getUserTimeSheets() {
+        return userTimeSheets;
+    }
+
+    /**
+     * Sets the user time sheets.
+     *
+     * @param userTimeSheets
+     *            the new user time sheets
+     */
+    public void setUserTimeSheets(final List<TimeSheetBean> userTimeSheets) {
+        this.userTimeSheets = userTimeSheets;
     }
 
 }
