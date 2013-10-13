@@ -1,10 +1,8 @@
 package com.corejsf;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -17,6 +15,9 @@ import javax.inject.Named;
 @Named("User")
 public class UserBean implements Serializable {
 
+    /** The employee id. */
+    private int employeeID;
+
     /** The username. */
     private String username;
 
@@ -26,12 +27,36 @@ public class UserBean implements Serializable {
     /** The super user. */
     private boolean superUser;
 
-    /** The employee id. */
-    private int employeeID;
+    /**
+     * Instantiates a new user bean.
+     * 
+     * @param employeeID
+     *            the employee id
+     * @param username
+     *            the username
+     * @param password
+     *            the password
+     * @param superUser
+     *            the super user
+     */
+    public UserBean(final int employeeID, final String username,
+            final String password, final boolean superUser) {
+        super();
+        this.employeeID = employeeID;
+        this.username = username;
+        this.password = password;
+        this.superUser = superUser;
+    }
 
-    /** The user time sheets. */
-    @Inject
-    private List<TimeSheetBean> userTimeSheets;
+    /**
+     * Sets the employee id.
+     *
+     * @param employeeID
+     *            the new employee id
+     */
+    public void setEmployeeID(final int employeeID) {
+        this.employeeID = employeeID;
+    }
 
     /**
      * Gets the username.
@@ -98,34 +123,4 @@ public class UserBean implements Serializable {
     public int getEmployeeID() {
         return employeeID;
     }
-
-    /**
-     * Sets the employee id.
-     *
-     * @param employeeID
-     *            the new employee id
-     */
-    public void setEmployeeID(final int employeeID) {
-        this.employeeID = employeeID;
-    }
-
-    /**
-     * Gets the user time sheets.
-     *
-     * @return the user time sheets
-     */
-    public List<TimeSheetBean> getUserTimeSheets() {
-        return userTimeSheets;
-    }
-
-    /**
-     * Sets the user time sheets.
-     *
-     * @param userTimeSheets
-     *            the new user time sheets
-     */
-    public void setUserTimeSheets(final List<TimeSheetBean> userTimeSheets) {
-        this.userTimeSheets = userTimeSheets;
-    }
-
 }

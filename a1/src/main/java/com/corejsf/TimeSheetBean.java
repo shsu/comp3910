@@ -16,6 +16,9 @@ import javax.inject.Named;
 @Named("TimeSheet")
 public class TimeSheetBean implements Serializable {
 
+    /** The employee id. */
+    private int employeeID;
+
     /** The project. */
     private int project;
 
@@ -34,6 +37,25 @@ public class TimeSheetBean implements Serializable {
 
     /** The year. */
     private int year;
+
+    /**
+     * Gets the employee id.
+     *
+     * @return the employee id
+     */
+    public int getEmployeeID() {
+        return employeeID;
+    }
+
+    /**
+     * Sets the employee id.
+     *
+     * @param employeeID
+     *            the new employee id
+     */
+    public void setEmployeeID(final int employeeID) {
+        this.employeeID = employeeID;
+    }
 
     /**
      * Gets the project.
