@@ -39,6 +39,17 @@ public class TimeSheetBean implements Serializable {
     private int year;
 
     /**
+     * Instantiates a new time sheet bean.
+     * 
+     * @param employeeID
+     *            the employee id
+     */
+    public TimeSheetBean(final int employeeID) {
+        super();
+        this.employeeID = employeeID;
+    }
+
+    /**
      * Gets the employee id.
      *
      * @return the employee id
