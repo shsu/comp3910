@@ -1,4 +1,4 @@
-package com.corejsf;
+package ca.bcit.infosys.a1;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -11,8 +11,8 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.corejsf.access.TimeSheetManager;
-import com.corejsf.model.TimeSheet;
+import ca.bcit.infosys.a1.access.TimeSheetManager;
+import ca.bcit.infosys.a1.model.TimeSheet;
 
 /**
  * TimeTable CDI Bean.

@@ -1,4 +1,4 @@
-package com.corejsf.model;
+package ca.bcit.infosys.a1.model;
 
 /**
  * User Model.

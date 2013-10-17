@@ -1,4 +1,4 @@
-package com.corejsf.access;
+package ca.bcit.infosys.a1.access;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,32 +9,33 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.corejsf.model.User;
+import ca.bcit.infosys.a1.model.TimeSheet;
 
 /**
- * Handles CRUD actions for User class. In this assignment, we are not writing
- * to the database, hence passing on the responsibility to UserSession class.
+ * Handles CRUD actions for TimeSheet class. In this assignment, we are not
+ * writing to the database, hence passing on the responsibility to TimeTable
+ * class.
  *
  * @author shsu
  * @version 0.1
  */
 @ConversationScoped
-@Named("UserManager")
-public class UserManager implements Serializable {
+@Named("TimeSheetManager")
+public class TimeSheetManager implements Serializable {
 
     /** The conversation. */
     @Inject
     private Conversation conversation;
 
     /** The data source. */
-    private List<User> dataSource = new ArrayList<User>();
+    private List<TimeSheet> dataSource = new ArrayList<TimeSheet>();
 
     /**
      * Gets the data source.
      *
      * @return the data source
      */
-    public List<User> getDataSource() {
+    public List<TimeSheet> getDataSource() {
         return dataSource;
     }
 
@@ -44,7 +45,7 @@ public class UserManager implements Serializable {
      * @param dataSource
      *            the new data source
      */
-    public void setDataSource(final List<User> dataSource) {
+    public void setDataSource(final List<TimeSheet> dataSource) {
         this.dataSource = dataSource;
     }
 }

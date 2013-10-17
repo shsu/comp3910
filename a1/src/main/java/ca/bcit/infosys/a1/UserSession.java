@@ -1,4 +1,4 @@
-package com.corejsf;
+package ca.bcit.infosys.a1;
 
 import java.io.Serializable;
 import java.util.List;
@@ -8,8 +8,8 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.corejsf.access.UserManager;
-import com.corejsf.model.User;
+import ca.bcit.infosys.a1.access.UserManager;
+import ca.bcit.infosys.a1.model.User;
 
 /**
  * UserSession CDI Bean.

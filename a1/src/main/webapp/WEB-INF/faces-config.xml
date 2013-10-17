@@ -6,7 +6,7 @@
 	version="2.1">
 	<application>
 		<resource-bundle>
-			<base-name>com.corejsf.messages</base-name>
+			<base-name>ca.bcit.infosys.a1.messages</base-name>
 			<var>msgs</var>
 		</resource-bundle>
 		<locale-config>
