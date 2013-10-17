@@ -13,14 +13,14 @@
 		<ui:define name="content">
 			<div class="jumbotron">
 				<div class="container">
-					<h:panelGroup layout="block" rendered="#{UserSession.isLoggedIn}">
-						<h1>Hello, welcome!</h1>
+					<h:panelGroup layout="block" rendered="#{UserSession.loggedIn}">
+						<h3>Welcome, #{UserSession.username}!</h3>
 						<p>
 							<a class="btn btn-primary btn-lg">Learn more</a>
 						</p>
 					</h:panelGroup>
-					<h:panelGroup layout="block" rendered="#{!UserSession.isLoggedIn}">
-						<h1>Hello, please type your username and password:</h1>
+					<h:panelGroup layout="block" rendered="#{!UserSession.loggedIn}">
+						<h3>Welcome, please login with your username and password:</h3>
 						<ui:include src="/sections/login.xhtml" />
 					</h:panelGroup>
 				</div>
