@@ -1,19 +1,12 @@
-package com.corejsf;
-
-import java.io.Serializable;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Named;
+package com.corejsf.model;
 
 /**
- * User CDI Bean.
+ * User Model.
  *
  * @author shsu
  * @version 0.1
  */
-@ApplicationScoped
-@Named("User")
-public class UserBean implements Serializable {
+public class User {
 
     /** The employee id. */
     private int employeeID;
@@ -44,7 +37,7 @@ public class UserBean implements Serializable {
      * @param edit
      *            the edit
      */
-    public UserBean(final int employeeID, final String username,
+    public User(final int employeeID, final String username,
             final String password, final boolean superUser, final boolean edit) {
         super();
         this.employeeID = employeeID;

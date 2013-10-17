@@ -1,14 +1,12 @@
-package com.corejsf;
-
-import java.io.Serializable;
+package com.corejsf.model;
 
 /**
- * The Class Hours.
+ * The utility class Hours.
  *
  * @author jhou
  * @version 0.1
  */
-public class Hours implements Serializable {
+public class Hours {
 
     /** The sat. */
     private double sat;

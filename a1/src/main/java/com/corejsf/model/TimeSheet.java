@@ -1,20 +1,14 @@
-package com.corejsf;
+package com.corejsf.model;
 
-import java.io.Serializable;
-
-import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
- * TimeSheet CDI Bean.
+ * TimeSheet Model.
  *
  * @author shsu
  * @version 0.1
  */
-@ApplicationScoped
-@Named("TimeSheet")
-public class TimeSheetBean implements Serializable {
+public class TimeSheet {
 
     /** The employee id. */
     private int employeeID;
@@ -40,11 +34,11 @@ public class TimeSheetBean implements Serializable {
 
     /**
      * Instantiates a new time sheet bean.
-     * 
+     *
      * @param employeeID
      *            the employee id
      */
-    public TimeSheetBean(final int employeeID) {
+    public TimeSheet(final int employeeID) {
         super();
         this.employeeID = employeeID;
     }
