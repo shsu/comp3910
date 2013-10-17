@@ -6,9 +6,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import com.corejsf.access.TimeSheetManager;
+import com.corejsf.model.TimeSheet;
 
 /**
  * TimeTable CDI Bean.
@@ -16,19 +20,17 @@ import javax.inject.Named;
  * @author shsu
  * @version 0.1
  */
-@ApplicationScoped
+@ConversationScoped
 @Named("TimeTable")
 public class TimeTable implements Serializable {
 
-    /** The display. */
-    private final List<TimeSheetBean> timeTable = new ArrayList<TimeSheetBean>();
-
-    /** The new time sheets to be inserted. */
-    private List<TimeSheetBean> newTimeSheets = new ArrayList<TimeSheetBean>();
-
-    /** The users. */
+    /** The conversation. */
     @Inject
-    private UserBean users;
+    private Conversation conversation;
+
+    /** The time sheet manager. */
+    @Inject
+    private TimeSheetManager timeSheetManager;
 
     /** The sat total. */
     private double satTotal;
@@ -52,183 +54,77 @@ public class TimeTable implements Serializable {
     private double friTotal;
 
     /**
-     * Gets the time table.
-     *
-     * @return the time table
+     * Instantiates a new time table.
      */
-    public List<TimeSheetBean> getTimeTable() {
-        return timeTable;
+    public TimeTable() {
+        timeSheetManager.setDataSource(new ArrayList<TimeSheet>());
     }
 
     /**
-     * Gets the new time sheets.
+     * Gets the time sheets.
      *
-     * @return the new time sheets
+     * @return the time sheets
      */
-    public List<TimeSheetBean> getNewTimeSheets() {
-        return newTimeSheets;
+    public List<TimeSheet> getTimeSheets() {
+        return timeSheetManager.getDataSource();
     }
 
     /**
-     * Sets the new time sheets.
+     * Sets the time sheets.
      *
-     * @param newTimeSheets
-     *            the new new time sheets
+     * @param timeSheets
+     *            the new time sheets
      */
-    public void setNewTimeSheets(final List<TimeSheetBean> newTimeSheets) {
-        this.newTimeSheets = newTimeSheets;
+    public void setTimeSheets(final List<TimeSheet> timeSheets) {
+        timeSheetManager.setDataSource(timeSheets);
     }
 
     /**
-     * Gets the users.
+     * Show timesheet or not.
      *
-     * @return the users
+     * @param employeeID
+     *            the employee id
+     * @param year
+     *            the year
+     * @param week
+     *            the week
+     * @return true, if successful
      */
-    public UserBean getUsers() {
-        return users;
+    public boolean show(final int employeeID, final int year, final int week) {
+        return true;
     }
 
     /**
-     * Sets the users.
+     * Adds the time table row.
      *
-     * @param users
-     *            the new users
+     * @param employeeID
+     *            the employee id
+     * @return the string
      */
-    public void setUsers(final UserBean users) {
-        this.users = users;
+    public String addTimeTableRow(final int employeeID) {
+        getTimeSheets().add(new TimeSheet(employeeID));
+
+        return null;
     }
 
     /**
-     * Gets the sat total.
+     * Delete time table row.
      *
-     * @return the sat total
+     * @param toDelete
+     *            the to delete
+     * @return the string
      */
-    public double getSatTotal() {
-        return satTotal;
+    public String deleteTimeTableRow(final TimeSheet toDelete) {
+        getTimeSheets().remove(toDelete);
+
+        return null;
     }
 
     /**
-     * Sets the sat total.
-     *
-     * @param satTotal
-     *            the new sat total
+     * Refresh total hours.
      */
-    public void setSatTotal(final double satTotal) {
-        this.satTotal = satTotal;
-    }
+    public void refreshTotalHours() {
 
-    /**
-     * Gets the sun total.
-     *
-     * @return the sun total
-     */
-    public double getSunTotal() {
-        return sunTotal;
-    }
-
-    /**
-     * Sets the sun total.
-     *
-     * @param sunTotal
-     *            the new sun total
-     */
-    public void setSunTotal(final double sunTotal) {
-        this.sunTotal = sunTotal;
-    }
-
-    /**
-     * Gets the mon total.
-     *
-     * @return the mon total
-     */
-    public double getMonTotal() {
-        return monTotal;
-    }
-
-    /**
-     * Sets the mon total.
-     *
-     * @param monTotal
-     *            the new mon total
-     */
-    public void setMonTotal(final double monTotal) {
-        this.monTotal = monTotal;
-    }
-
-    /**
-     * Gets the tue total.
-     *
-     * @return the tue total
-     */
-    public double getTueTotal() {
-        return tueTotal;
-    }
-
-    /**
-     * Sets the tue total.
-     *
-     * @param tueTotal
-     *            the new tue total
-     */
-    public void setTueTotal(final double tueTotal) {
-        this.tueTotal = tueTotal;
-    }
-
-    /**
-     * Gets the wed total.
-     *
-     * @return the wed total
-     */
-    public double getWedTotal() {
-        return wedTotal;
-    }
-
-    /**
-     * Sets the wed total.
-     *
-     * @param wedTotal
-     *            the new wed total
-     */
-    public void setWedTotal(final double wedTotal) {
-        this.wedTotal = wedTotal;
-    }
-
-    /**
-     * Gets the thu total.
-     *
-     * @return the thu total
-     */
-    public double getThuTotal() {
-        return thuTotal;
-    }
-
-    /**
-     * Sets the thu total.
-     *
-     * @param thuTotal
-     *            the new thu total
-     */
-    public void setThuTotal(final double thuTotal) {
-        this.thuTotal = thuTotal;
-    }
-
-    /**
-     * Gets the fri total.
-     *
-     * @return the fri total
-     */
-    public double getFriTotal() {
-        return friTotal;
-    }
-
-    /**
-     * Sets the fri total.
-     *
-     * @param friTotal
-     *            the new fri total
-     */
-    public void setFriTotal(final double friTotal) {
-        this.friTotal = friTotal;
     }
 
     /**
@@ -251,52 +147,66 @@ public class TimeTable implements Serializable {
     }
 
     /**
-     * Populate time table with filtered data.
+     * Gets the sat total.
      *
-     * @param year
-     *            the year
-     * @param week
-     *            the week
+     * @return the sat total
      */
-    public void populateTimeTableWithFilteredData(final int year, final int week) {
-        timeTable.clear();
-        newTimeSheets.clear();
-
-        // by picking rows out of the main database, we may run into a problem
-        // when saving it back in. UNLESS WE REMOVE IT THEN STUFF IT BACK IN
-        // DURING SAVE.
-        for (TimeSheetBean userTimeSheet : users.getUserTimeSheets()) {
-            if ((userTimeSheet.getWeek() == week)
-                    && (userTimeSheet.getYear()) == year) {
-                satTotal += userTimeSheet.getHours().getSat();
-                sunTotal += userTimeSheet.getHours().getSat();
-                monTotal += userTimeSheet.getHours().getSat();
-                tueTotal += userTimeSheet.getHours().getSat();
-                wedTotal += userTimeSheet.getHours().getSat();
-                thuTotal += userTimeSheet.getHours().getSat();
-                friTotal += userTimeSheet.getHours().getSat();
-                timeTable.add(userTimeSheet);
-            }
-        }
-
+    public double getSatTotal() {
+        return satTotal;
     }
 
     /**
-     * Adds a new time table row.
+     * Gets the sun total.
+     *
+     * @return the sun total
      */
-    public void addTimeTableRow() {
-        newTimeSheets.add(new TimeSheetBean());
+    public double getSunTotal() {
+        return sunTotal;
     }
 
     /**
-     * Save time table. Currently only allows saving of new time sheets.
+     * Gets the mon total.
+     *
+     * @return the mon total
      */
-    public void saveTimeTable() {
-        // add logic to save existing ones in addition to new ones.
+    public double getMonTotal() {
+        return monTotal;
+    }
 
-        for (TimeSheetBean newTimeSheet : newTimeSheets) {
-            users.getUserTimeSheets().add(newTimeSheet);
-        }
+    /**
+     * Gets the tue total.
+     *
+     * @return the tue total
+     */
+    public double getTueTotal() {
+        return tueTotal;
+    }
+
+    /**
+     * Gets the wed total.
+     *
+     * @return the wed total
+     */
+    public double getWedTotal() {
+        return wedTotal;
+    }
+
+    /**
+     * Gets the thu total.
+     *
+     * @return the thu total
+     */
+    public double getThuTotal() {
+        return thuTotal;
+    }
+
+    /**
+     * Gets the fri total.
+     *
+     * @return the fri total
+     */
+    public double getFriTotal() {
+        return friTotal;
     }
 
 }
