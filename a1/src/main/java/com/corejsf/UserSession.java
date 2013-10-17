@@ -1,10 +1,15 @@
 package com.corejsf;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import com.corejsf.access.UserManager;
+import com.corejsf.model.User;
 
 /**
  * UserSession CDI Bean.
@@ -12,13 +17,17 @@ import javax.inject.Named;
  * @author shsu
  * @version 0.1
  */
-@SessionScoped
+@ConversationScoped
 @Named("UserSession")
 public class UserSession implements Serializable {
 
-    /** The all users. */
+    /** The conversation. */
     @Inject
-    private UserListBean allUsers;
+    private Conversation conversation;
+
+    /** The user manager. */
+    @Inject
+    private UserManager userManager;
 
     /** The username. */
     private String username;
@@ -33,8 +42,91 @@ public class UserSession implements Serializable {
      * Instantiates a new user session with 1 admin, 1 user.
      */
     public UserSession() {
-        allUsers.getUsers().add(new UserBean(1, "shsu", "1234", true));
-        allUsers.getUsers().add(new UserBean(1, "jhou", "1234", false));
+        conversation.begin();
+        createUser(1, "shsu", "1234", true);
+        createUser(1, "jhou", "1234", false);
+    }
+
+    /**
+     * Gets the users.
+     *
+     * @return the users
+     */
+    public List<User> getUsers() {
+        return userManager.getDataSource();
+    }
+
+    /**
+     * Sets the users.
+     *
+     * @param users
+     *            the new users
+     */
+    public void setUsers(final List<User> users) {
+        userManager.setDataSource(users);
+    }
+
+    /**
+     * Creates the user.
+     *
+     * @param employeeID
+     *            the employee id
+     * @param newUsername
+     *            the username
+     * @param newPassword
+     *            the password
+     * @param superUser
+     *            the super user
+     * @return the string
+     */
+    public String createUser(final int employeeID, final String newUsername,
+            final String newPassword, final boolean superUser) {
+        getUsers()
+                .add(new User(employeeID, newUsername, newPassword, superUser,
+                        true));
+        return null;
+    }
+
+    /**
+     * Delete user.
+     *
+     * @param userToDelete
+     *            the user to delete
+     * @return the string
+     */
+    public String deleteUser(final User userToDelete) {
+        if (loggedIn) {
+            getUsers().remove(userToDelete);
+        }
+        return null;
+    }
+
+    /**
+     * Save all users by setting edit to false, then refresh.
+     *
+     * @return the string
+     */
+    public String saveUsers() {
+        for (User user : getUsers()) {
+            user.setEdit(false);
+        }
+        return null;
+    }
+
+    /**
+     * Verify username and password.
+     *
+     * @return the string
+     */
+    public String verify() {
+        for (User user : getUsers()) {
+            if (user.getUsername().equals(username)
+                    && user.getPassword().equals(password)) {
+                loggedIn = true;
+                break;
+            }
+        }
+        return "index";
     }
 
     /**
@@ -92,30 +184,5 @@ public class UserSession implements Serializable {
      */
     public void setLoggedIn(final boolean loggedIn) {
         this.loggedIn = loggedIn;
-    }
-
-    /**
-     * Gets the all users.
-     *
-     * @return the all users
-     */
-    public UserListBean getAllUsers() {
-        return allUsers;
-    }
-
-    /**
-     * Verify username and password.
-     *
-     * @return the string
-     */
-    public String verify() {
-        for (UserBean user : allUsers.getUsers()) {
-            if (user.getUsername().equals(username)
-                    && user.getPassword().equals(password)) {
-                loggedIn = true;
-                return "index";
-            }
-        }
-        return null;
     }
 }
