@@ -27,9 +27,12 @@ public class UserBean implements Serializable {
     /** The super user. */
     private boolean superUser;
 
+    /** The edit. */
+    private boolean edit;
+
     /**
      * Instantiates a new user bean.
-     * 
+     *
      * @param employeeID
      *            the employee id
      * @param username
@@ -38,14 +41,17 @@ public class UserBean implements Serializable {
      *            the password
      * @param superUser
      *            the super user
+     * @param edit
+     *            the edit
      */
     public UserBean(final int employeeID, final String username,
-            final String password, final boolean superUser) {
+            final String password, final boolean superUser, final boolean edit) {
         super();
         this.employeeID = employeeID;
         this.username = username;
         this.password = password;
         this.superUser = superUser;
+        this.edit = edit;
     }
 
     /**
@@ -123,4 +129,24 @@ public class UserBean implements Serializable {
     public int getEmployeeID() {
         return employeeID;
     }
+
+    /**
+     * Checks if is edits the.
+     *
+     * @return true, if is edits the
+     */
+    public boolean isEdit() {
+        return edit;
+    }
+
+    /**
+     * Sets the edits the.
+     *
+     * @param edit
+     *            the new edits the
+     */
+    public void setEdit(final boolean edit) {
+        this.edit = edit;
+    }
+
 }
