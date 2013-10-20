@@ -22,7 +22,7 @@
 			enable third-party plugin if using Maven < 2.1) -->
 		<maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
 		<!-- Specify the JBoss AS directory to be the JBOSS_HOME environment variable -->
-		<jboss.home>${env.JBOSS_HOME}</jboss.home>
+		<jboss-as.home>${env.JBOSS_HOME}</jboss-as.home>
 	</properties>
 
 	<repositories>
@@ -126,7 +126,15 @@
 					<plugin>
 						<groupId>org.jboss.as.plugins</groupId>
 						<artifactId>jboss-as-maven-plugin</artifactId>
-						<version>7.1.1.Final</version>
+						<version>7.4.Final</version>
+						<executions>
+							<execution>
+								<phase>install</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
