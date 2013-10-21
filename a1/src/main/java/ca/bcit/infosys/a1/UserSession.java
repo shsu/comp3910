@@ -3,8 +3,8 @@ package ca.bcit.infosys.a1;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -17,13 +17,9 @@ import ca.bcit.infosys.a1.model.User;
  * @author shsu
  * @version 0.1
  */
-@ConversationScoped
+@SessionScoped
 @Named("UserSession")
 public class UserSession implements Serializable {
-
-    /** The conversation. */
-    @Inject
-    private Conversation conversation;
 
     /** The user manager. */
     @Inject
@@ -38,32 +34,16 @@ public class UserSession implements Serializable {
     /** The is logged in. */
     private boolean loggedIn;
 
+    /** The super user. */
+    private boolean superUser;
+
     /**
-     * Instantiates a new user session with 1 admin, 1 user.
+     * Populate sample data.
      */
-    public UserSession() {
-        conversation.begin();
+    @PostConstruct
+    public void populateSampleData() {
         createUser(1, "shsu", "1234", true);
         createUser(1, "jhou", "1234", false);
-    }
-
-    /**
-     * Gets the users.
-     *
-     * @return the users
-     */
-    public List<User> getUsers() {
-        return userManager.getDataSource();
-    }
-
-    /**
-     * Sets the users.
-     *
-     * @param users
-     *            the new users
-     */
-    public void setUsers(final List<User> users) {
-        userManager.setDataSource(users);
     }
 
     /**
@@ -95,7 +75,7 @@ public class UserSession implements Serializable {
      * @return the string
      */
     public String deleteUser(final User userToDelete) {
-        if (loggedIn) {
+        if (loggedIn && superUser) {
             getUsers().remove(userToDelete);
         }
         return null;
@@ -114,19 +94,52 @@ public class UserSession implements Serializable {
     }
 
     /**
-     * Verify username and password.
-     *
+     * Log in.
+     * 
      * @return the string
      */
-    public String verify() {
+    public String logIn() {
         for (User user : getUsers()) {
             if (user.getUsername().equals(username)
                     && user.getPassword().equals(password)) {
                 loggedIn = true;
-                break;
+                return "index";
             }
         }
+        System.err.print("Auth Failure");
+        return null;
+    }
+
+    /**
+     * Log out.
+     *
+     * @return the string
+     */
+    public String logOut() {
+        username = "";
+        password = "";
+        superUser = false;
+        loggedIn = false;
         return "index";
+    }
+
+    /**
+     * Gets the users.
+     *
+     * @return the users
+     */
+    public List<User> getUsers() {
+        return userManager.getDataSource();
+    }
+
+    /**
+     * Sets the users.
+     *
+     * @param users
+     *            the new users
+     */
+    public void setUsers(final List<User> users) {
+        userManager.setDataSource(users);
     }
 
     /**
@@ -184,5 +197,24 @@ public class UserSession implements Serializable {
      */
     public void setLoggedIn(final boolean loggedIn) {
         this.loggedIn = loggedIn;
+    }
+
+    /**
+     * Checks if is super user.
+     *
+     * @return true, if is super user
+     */
+    public boolean isSuperUser() {
+        return superUser;
+    }
+
+    /**
+     * Sets the super user.
+     *
+     * @param superUser
+     *            the new super user
+     */
+    public void setSuperUser(final boolean superUser) {
+        this.superUser = superUser;
     }
 }

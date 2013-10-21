@@ -2,12 +2,11 @@ package ca.bcit.infosys.a1;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -20,13 +19,9 @@ import ca.bcit.infosys.a1.model.TimeSheet;
  * @author shsu
  * @version 0.1
  */
-@ConversationScoped
+@SessionScoped
 @Named("TimeTable")
 public class TimeTable implements Serializable {
-
-    /** The conversation. */
-    @Inject
-    private Conversation conversation;
 
     /** The time sheet manager. */
     @Inject
@@ -53,11 +48,9 @@ public class TimeTable implements Serializable {
     /** The fri total. */
     private double friTotal;
 
-    /**
-     * Instantiates a new time table.
-     */
-    public TimeTable() {
-        timeSheetManager.setDataSource(new ArrayList<TimeSheet>());
+    @PostConstruct
+    public void populateSampleData() {
+
     }
 
     /**

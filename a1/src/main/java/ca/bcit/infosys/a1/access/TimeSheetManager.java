@@ -4,9 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
-import javax.inject.Inject;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 
 import ca.bcit.infosys.a1.model.TimeSheet;
@@ -19,16 +17,16 @@ import ca.bcit.infosys.a1.model.TimeSheet;
  * @author shsu
  * @version 0.1
  */
-@ConversationScoped
+@ApplicationScoped
 @Named("TimeSheetManager")
 public class TimeSheetManager implements Serializable {
 
-    /** The conversation. */
-    @Inject
-    private Conversation conversation;
-
     /** The data source. */
-    private List<TimeSheet> dataSource = new ArrayList<TimeSheet>();
+    private List<TimeSheet> dataSource;
+
+    public TimeSheetManager() {
+        dataSource = new ArrayList<TimeSheet>();
+    }
 
     /**
      * Gets the data source.
