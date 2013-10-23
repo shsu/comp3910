@@ -1,7 +1,5 @@
 package ca.bcit.infosys.a1.model;
 
-import javax.inject.Inject;
-
 /**
  * TimeSheet Model.
  *
@@ -13,15 +11,32 @@ public class TimeSheet {
     /** The employee id. */
     private int employeeID;
 
-    /** The project. */
-    private int project;
+    /** The project number. */
+    private int projectNumber;
 
     /** The work package. */
     private String workPackage;
 
-    /** The hours. */
-    @Inject
-    private Hours hours;
+    /** The sat. */
+    private double sat;
+
+    /** The sun. */
+    private double sun;
+
+    /** The mon. */
+    private double mon;
+
+    /** The tue. */
+    private double tue;
+
+    /** The wed. */
+    private double wed;
+
+    /** The thu. */
+    private double thu;
+
+    /** The fri. */
+    private double fri;
 
     /** The notes. */
     private String notes;
@@ -44,6 +59,39 @@ public class TimeSheet {
     }
 
     /**
+     * Instantiates a new time sheet.
+     *
+     * @param employeeID
+     *            the employee id
+     * @param projectNumber
+     *            the project number
+     * @param workPackage
+     *            the work package
+     * @param week
+     *            the week
+     * @param year
+     *            the year
+     */
+    public TimeSheet(final int employeeID, final int projectNumber,
+            final String workPackage, final int week, final int year) {
+        super();
+        this.employeeID = employeeID;
+        this.projectNumber = projectNumber;
+        this.workPackage = workPackage;
+        this.week = week;
+        this.year = year;
+    }
+
+    /**
+     * Gets the total.
+     *
+     * @return the total
+     */
+    public double getTotal() {
+        return sat + sun + mon + tue + wed + thu + fri;
+    }
+
+    /**
      * Gets the employee id.
      *
      * @return the employee id
@@ -63,22 +111,22 @@ public class TimeSheet {
     }
 
     /**
-     * Gets the project.
+     * Gets the project number.
      *
-     * @return the project
+     * @return the project number
      */
-    public int getProject() {
-        return project;
+    public int getProjectNumber() {
+        return projectNumber;
     }
 
     /**
-     * Sets the project.
+     * Sets the project number.
      *
-     * @param project
-     *            the new project
+     * @param projectNumber
+     *            the new project number
      */
-    public void setProject(final int project) {
-        this.project = project;
+    public void setProjectNumber(final int projectNumber) {
+        this.projectNumber = projectNumber;
     }
 
     /**
@@ -101,22 +149,136 @@ public class TimeSheet {
     }
 
     /**
-     * Gets the hours.
+     * Gets the sat.
      *
-     * @return the hours
+     * @return the sat
      */
-    public Hours getHours() {
-        return hours;
+    public double getSat() {
+        return sat;
     }
 
     /**
-     * Sets the hours.
+     * Sets the sat.
      *
-     * @param hours
-     *            the new hours
+     * @param sat
+     *            the new sat
      */
-    public void setHours(final Hours hours) {
-        this.hours = hours;
+    public void setSat(final double sat) {
+        this.sat = sat;
+    }
+
+    /**
+     * Gets the sun.
+     *
+     * @return the sun
+     */
+    public double getSun() {
+        return sun;
+    }
+
+    /**
+     * Sets the sun.
+     *
+     * @param sun
+     *            the new sun
+     */
+    public void setSun(final double sun) {
+        this.sun = sun;
+    }
+
+    /**
+     * Gets the mon.
+     *
+     * @return the mon
+     */
+    public double getMon() {
+        return mon;
+    }
+
+    /**
+     * Sets the mon.
+     *
+     * @param mon
+     *            the new mon
+     */
+    public void setMon(final double mon) {
+        this.mon = mon;
+    }
+
+    /**
+     * Gets the tue.
+     *
+     * @return the tue
+     */
+    public double getTue() {
+        return tue;
+    }
+
+    /**
+     * Sets the tue.
+     *
+     * @param tue
+     *            the new tue
+     */
+    public void setTue(final double tue) {
+        this.tue = tue;
+    }
+
+    /**
+     * Gets the wed.
+     *
+     * @return the wed
+     */
+    public double getWed() {
+        return wed;
+    }
+
+    /**
+     * Sets the wed.
+     *
+     * @param wed
+     *            the new wed
+     */
+    public void setWed(final double wed) {
+        this.wed = wed;
+    }
+
+    /**
+     * Gets the thu.
+     *
+     * @return the thu
+     */
+    public double getThu() {
+        return thu;
+    }
+
+    /**
+     * Sets the thu.
+     *
+     * @param thu
+     *            the new thu
+     */
+    public void setThu(final double thu) {
+        this.thu = thu;
+    }
+
+    /**
+     * Gets the fri.
+     *
+     * @return the fri
+     */
+    public double getFri() {
+        return fri;
+    }
+
+    /**
+     * Sets the fri.
+     *
+     * @param fri
+     *            the new fri
+     */
+    public void setFri(final double fri) {
+        this.fri = fri;
     }
 
     /**
