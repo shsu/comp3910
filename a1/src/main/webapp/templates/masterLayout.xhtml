@@ -22,7 +22,15 @@ body {
 		</ui:insert>
 	</div>
 	<div id="content" class="container">
-		<ui:insert name="content" />
+		<h:panelGroup layout="block" rendered="#{!UserSession.loggedIn}">
+			<ui:insert name="content" />
+		</h:panelGroup>
+		<h:panelGroup layout="block" rendered="#{UserSession.loggedIn}">
+			<h1>
+				<ui:insert name="pageHeader" />
+			</h1>
+			<ui:insert name="content-private" />
+		</h:panelGroup>
 	</div>
 	<ui:debug />
 </h:body>

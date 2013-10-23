@@ -8,23 +8,19 @@
 <body>
 	<ui:composition template="/templates/masterLayout.xhtml">
 		<ui:define name="windowTitle">
-            #{msgs.pageTitle} - Welcome
+            #{msgs.pageTitle}
          </ui:define>
 		<ui:define name="content">
 			<div class="jumbotron">
-				<div class="container">
-					<h:panelGroup layout="block" rendered="#{UserSession.loggedIn}">
-						<h3>Welcome, #{UserSession.username}!</h3>
-						<p>
-							<a class="btn btn-primary btn-lg">Learn more</a>
-						</p>
-					</h:panelGroup>
-					<h:panelGroup layout="block" rendered="#{!UserSession.loggedIn}">
-						<h3>Welcome, please login with your username and password:</h3>
-						<ui:include src="/sections/login.xhtml" />
-					</h:panelGroup>
-				</div>
+				<h2>#{msgs.loginPrompt}</h2>
+				<ui:include src="/sections/login.xhtml" />
 			</div>
+		</ui:define>
+		<ui:define name="pageHeader">
+			#{msgs.welcome}, #{UserSession.username}! Super User: #{UserSession.superUser}
+		</ui:define>
+		<ui:define name="content-private">
+            <ui:include src="/sections/timetable.xhtml" />
 		</ui:define>
 	</ui:composition>
 </body>
