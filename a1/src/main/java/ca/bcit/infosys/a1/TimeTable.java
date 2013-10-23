@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -27,6 +28,16 @@ public class TimeTable implements Serializable {
     @Inject
     private TimeSheetManager timeSheetManager;
 
+    /** The user session. */
+    @Inject
+    private UserSession userSession;
+
+    /** The current week. */
+    private int currentWeek;
+
+    /** The current year. */
+    private int currentYear;
+
     /** The sat total. */
     private double satTotal;
 
@@ -48,9 +59,22 @@ public class TimeTable implements Serializable {
     /** The fri total. */
     private double friTotal;
 
+    /**
+     * Populate sample data.
+     */
     @PostConstruct
     public void populateSampleData() {
-
+        Random random = new Random();
+        for (int i = 30; i <= 50; i++) {
+            for (int j = 1; j <= 5; j++) {
+                getTimeSheets().add(
+                        new TimeSheet(1, random.nextInt(10), "A"
+                                + random.nextInt(9999), i, 2013));
+                getTimeSheets().add(
+                        new TimeSheet(2, random.nextInt(10), "A"
+                                + random.nextInt(9999), i, 2013));
+            }
+        }
     }
 
     /**
@@ -70,21 +94,6 @@ public class TimeTable implements Serializable {
      */
     public void setTimeSheets(final List<TimeSheet> timeSheets) {
         timeSheetManager.setDataSource(timeSheets);
-    }
-
-    /**
-     * Show timesheet or not.
-     *
-     * @param employeeID
-     *            the employee id
-     * @param year
-     *            the year
-     * @param week
-     *            the week
-     * @return true, if successful
-     */
-    public boolean show(final int employeeID, final int year, final int week) {
-        return true;
     }
 
     /**
@@ -109,15 +118,49 @@ public class TimeTable implements Serializable {
      */
     public String deleteTimeTableRow(final TimeSheet toDelete) {
         getTimeSheets().remove(toDelete);
-
+        resetTotalHours();
         return null;
     }
 
     /**
-     * Refresh total hours.
+     * Decide if we should show the timeSheet.
+     *
+     * @param toShow
+     *            the to show
+     * @return true, if successful
      */
-    public void refreshTotalHours() {
+    public boolean show(final TimeSheet toShow) {
+        if (toShow.getEmployeeID() == userSession.getEmployeeID()
+        // && toShow.getWeek() == currentWeek
+        // && toShow.getYear() == currentYear
+        ) {
+            // addTotalHours(toShow);
+            return true;
+        }
+        return false;
+    }
 
+    /**
+     * Adds the total hours.
+     *
+     * @param toAdd
+     *            the to add
+     */
+    public void addTotalHours(final TimeSheet toAdd) {
+        satTotal += toAdd.getSat();
+        sunTotal += toAdd.getSun();
+        monTotal += toAdd.getMon();
+        tueTotal += toAdd.getTue();
+        wedTotal += toAdd.getWed();
+        thuTotal += toAdd.getThu();
+        friTotal += toAdd.getFri();
+    }
+
+    /**
+     * Reset total hours.
+     */
+    public void resetTotalHours() {
+        satTotal = sunTotal = monTotal = tueTotal = wedTotal = thuTotal = friTotal = 0;
     }
 
     /**
@@ -137,6 +180,44 @@ public class TimeTable implements Serializable {
         c.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
 
         return f.format(c.getTime());
+    }
+
+    /**
+     * Gets the current week.
+     *
+     * @return the current week
+     */
+    public int getCurrentWeek() {
+        return currentWeek;
+    }
+
+    /**
+     * Sets the current week.
+     *
+     * @param currentWeek
+     *            the new current week
+     */
+    public void setCurrentWeek(final int currentWeek) {
+        this.currentWeek = currentWeek;
+    }
+
+    /**
+     * Gets the current year.
+     *
+     * @return the current year
+     */
+    public int getCurrentYear() {
+        return currentYear;
+    }
+
+    /**
+     * Sets the current year.
+     *
+     * @param currentYear
+     *            the new current year
+     */
+    public void setCurrentYear(final int currentYear) {
+        this.currentYear = currentYear;
     }
 
     /**
