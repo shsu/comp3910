@@ -110,6 +110,7 @@ public class UserSession implements Serializable {
                     && user.getPassword().equals(password)) {
                 loggedIn = true;
                 employeeID = user.getEmployeeID();
+                superUser = user.isSuperUser();
                 return "index";
             }
         }
