@@ -60,6 +60,8 @@ public class UserSession implements Serializable {
      *            the password
      * @param superUser
      *            the super user
+     * @param edit
+     *            the edit
      * @return the string
      */
     public String createUser(final int employeeID, final String newUsername,

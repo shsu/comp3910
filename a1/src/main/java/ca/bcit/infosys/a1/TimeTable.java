@@ -90,7 +90,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Refresh time table.
-     * 
+     *
      * @return the string
      */
     public String refreshTimeTable() {
