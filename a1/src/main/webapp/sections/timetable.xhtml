@@ -31,11 +31,13 @@
 				<h:column headerClass="columnHeader">
 					<f:facet name="header">#{msgs.projectNumber}</f:facet>
 					<h:inputText value="#{timesheet.projectNumber}" size="5" />
+					<f:facet name="footer">#{msgs.total}: </f:facet>
 				</h:column>
 
 				<h:column headerClass="columnHeader">
 					<f:facet name="header">#{msgs.workPackage}</f:facet>
 					<h:inputText value="#{timesheet.workPackage}" size="5" />
+					<f:facet name="footer">#{TimeTable.weekdayTotal}</f:facet>
 				</h:column>
 
 				<h:column headerClass="columnHeader">
