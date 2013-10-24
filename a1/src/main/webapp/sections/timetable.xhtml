@@ -1,84 +1,96 @@
 <h:panelGroup xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
+	<div class="alert alert-danger alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert"
+			aria-hidden="true">X</button>
+		If anything bad happenes, we will report it.
+	</div>
+	<br />
 
-<br />Current Week: #{TimeTable.currentWeek} 
-<br />Current Year: #{TimeTable.currentYear}
-<br />Week Ending: #{TimeTable.weekEnding}
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<div class="col-md-4 text-center">
+			Current Week of the Year:
+				#{TimeTable.currentWeek}</div>
+			<div class="col-md-4 text-center">Current Year: #{TimeTable.currentYear}</div>
+			<div class="col-md-4 text-center">Week Ending On #{TimeTable.weekEnding}</div>
+			<br />
+		</div>
+		<h:form>
+			<h:dataTable value="#{TimeTable.timeTable}" var="timesheet"
+				styleClass="table table-hover">
 
-	<h:form>
-		<h:dataTable value="#{TimeTable.timeTable}" var="timesheet"
-			styleClass="table table-hover">
-
-			<h:column headerClass="columnHeader">
-				<f:facet name="header">#{msgs.employeeID}</f:facet>
+				<h:column headerClass="columnHeader">
+					<f:facet name="header">#{msgs.employeeID}</f:facet>
 			#{timesheet.employeeID}
-        </h:column>
+            </h:column>
 
-			<h:column headerClass="columnHeader">
-				<f:facet name="header">#{msgs.projectNumber}</f:facet>
-				<h:inputText value="#{timesheet.projectNumber}" size="5" />
-			</h:column>
+				<h:column headerClass="columnHeader">
+					<f:facet name="header">#{msgs.projectNumber}</f:facet>
+					<h:inputText value="#{timesheet.projectNumber}" size="5" />
+				</h:column>
 
-			<h:column headerClass="columnHeader">
-				<f:facet name="header">#{msgs.workPackage}</f:facet>
-				<h:inputText value="#{timesheet.workPackage}" size="5" />
-			</h:column>
+				<h:column headerClass="columnHeader">
+					<f:facet name="header">#{msgs.workPackage}</f:facet>
+					<h:inputText value="#{timesheet.workPackage}" size="5" />
+				</h:column>
 
-			<h:column headerClass="columnHeader">
-				<f:facet name="header">#{msgs.sat}</f:facet>
-				<h:inputText value="#{timesheet.sat}" size="2" maxlength="2" />
-				<f:facet name="footer">#{TimeTable.satTotal}</f:facet>
-			</h:column>
+				<h:column headerClass="columnHeader">
+					<f:facet name="header">#{msgs.sat}</f:facet>
+					<h:inputText value="#{timesheet.sat}" size="2" maxlength="2" />
+					<f:facet name="footer">#{TimeTable.satTotal}</f:facet>
+				</h:column>
 
-			<h:column headerClass="columnHeader">
-				<f:facet name="header">#{msgs.sun}</f:facet>
-				<h:inputText value="#{timesheet.sun}" size="2" maxlength="2" />
-				<f:facet name="footer">#{TimeTable.sunTotal}</f:facet>
-			</h:column>
+				<h:column headerClass="columnHeader">
+					<f:facet name="header">#{msgs.sun}</f:facet>
+					<h:inputText value="#{timesheet.sun}" size="2" maxlength="2" />
+					<f:facet name="footer">#{TimeTable.sunTotal}</f:facet>
+				</h:column>
 
-			<h:column headerClass="columnHeader">
-				<f:facet name="header">#{msgs.mon}</f:facet>
-				<h:inputText value="#{timesheet.mon}" size="2" maxlength="2" />
-				<f:facet name="footer">#{TimeTable.monTotal}</f:facet>
-			</h:column>
+				<h:column headerClass="columnHeader">
+					<f:facet name="header">#{msgs.mon}</f:facet>
+					<h:inputText value="#{timesheet.mon}" size="2" maxlength="2" />
+					<f:facet name="footer">#{TimeTable.monTotal}</f:facet>
+				</h:column>
 
-			<h:column headerClass="columnHeader">
-				<f:facet name="header">#{msgs.tue}</f:facet>
-				<h:inputText value="#{timesheet.tue}" size="2" maxlength="2" />
-				<f:facet name="footer">#{TimeTable.tueTotal}</f:facet>
-			</h:column>
+				<h:column headerClass="columnHeader">
+					<f:facet name="header">#{msgs.tue}</f:facet>
+					<h:inputText value="#{timesheet.tue}" size="2" maxlength="2" />
+					<f:facet name="footer">#{TimeTable.tueTotal}</f:facet>
+				</h:column>
 
-			<h:column headerClass="columnHeader">
-				<f:facet name="header">#{msgs.wed}</f:facet>
-				<h:inputText value="#{timesheet.wed}" size="2" maxlength="2" />
-				<f:facet name="footer">#{TimeTable.wedTotal}</f:facet>
-			</h:column>
-			<h:column headerClass="columnHeader">
-				<f:facet name="header">#{msgs.thu}</f:facet>
-				<h:inputText value="#{timesheet.thu}" size="2" maxlength="2" />
-				<f:facet name="footer">#{TimeTable.thuTotal}</f:facet>
-			</h:column>
-			<h:column headerClass="columnHeader">
-				<f:facet name="header">#{msgs.fri}</f:facet>
-				<h:inputText value="#{timesheet.fri}" size="2" maxlength="2" />
-				<f:facet name="footer">#{TimeTable.friTotal}</f:facet>
-			</h:column>
+				<h:column headerClass="columnHeader">
+					<f:facet name="header">#{msgs.wed}</f:facet>
+					<h:inputText value="#{timesheet.wed}" size="2" maxlength="2" />
+					<f:facet name="footer">#{TimeTable.wedTotal}</f:facet>
+				</h:column>
+				<h:column headerClass="columnHeader">
+					<f:facet name="header">#{msgs.thu}</f:facet>
+					<h:inputText value="#{timesheet.thu}" size="2" maxlength="2" />
+					<f:facet name="footer">#{TimeTable.thuTotal}</f:facet>
+				</h:column>
+				<h:column headerClass="columnHeader">
+					<f:facet name="header">#{msgs.fri}</f:facet>
+					<h:inputText value="#{timesheet.fri}" size="2" maxlength="2" />
+					<f:facet name="footer">#{TimeTable.friTotal}</f:facet>
+				</h:column>
 
-			<h:column headerClass="columnHeader">
-				<f:facet name="header">#{msgs.notes}</f:facet>
-				<h:inputText value="#{timesheet.notes}" size="20" />
-			</h:column>
+				<h:column headerClass="columnHeader">
+					<f:facet name="header">#{msgs.notes}</f:facet>
+					<h:inputText value="#{timesheet.notes}" size="20" />
+				</h:column>
 
-			<h:column headerClass="columnHeader">
-				<f:facet name="header">#{msgs.delete}</f:facet>
-				<h:commandLink action="#{TimeTable.deleteTimeTableRow(timesheet)}"
-					value="#{msgs.delete}" />
-			</h:column>
+				<h:column headerClass="columnHeader">
+					<f:facet name="header">#{msgs.delete}</f:facet>
+					<h:commandLink action="#{TimeTable.deleteTimeTableRow(timesheet)}"
+						value="#{msgs.delete}" />
+				</h:column>
+			</h:dataTable>
 
-		</h:dataTable>
-		<h:commandButton action="#{TimeTable.addTimeTableRow()}"
-			value="Add new row" />
-		<h:commandButton action="#{TimeTable.persistTimeTable()}"
-			value="Save All" />
-	</h:form>
+			<h:commandButton value="Add New Row"
+				action="#{TimeTable.addTimeTableRow()}" />
+			<h:commandButton value="Save All"
+				action="#{TimeTable.persistTimeTable()}" />
+		</h:form>
+	</div>
 </h:panelGroup>
