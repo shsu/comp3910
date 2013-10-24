@@ -2,6 +2,7 @@ package ca.bcit.infosys.a1;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
@@ -32,6 +33,9 @@ public class TimeTable implements Serializable {
     @Inject
     private UserSession userSession;
 
+    /** The time table. */
+    private List<TimeSheet> timeTable;
+
     /** The current week. */
     private int currentWeek;
 
@@ -60,17 +64,24 @@ public class TimeTable implements Serializable {
     private double friTotal;
 
     /**
+     * Instantiates a new time table.
+     */
+    public TimeTable() {
+        timeTable = new ArrayList<TimeSheet>(50);
+    }
+
+    /**
      * Populate sample data.
      */
     @PostConstruct
     public void populateSampleData() {
         Random random = new Random();
-        for (int i = 30; i <= 50; i++) {
-            for (int j = 1; j <= 5; j++) {
-                getTimeSheets().add(
+        for (int i = 43; i < 50; i++) {
+            for (int j = 1; j <= 3; j++) {
+                timeSheetManager.getDataSource().add(
                         new TimeSheet(1, random.nextInt(10), "A"
                                 + random.nextInt(9999), i, 2013));
-                getTimeSheets().add(
+                timeSheetManager.getDataSource().add(
                         new TimeSheet(2, random.nextInt(10), "A"
                                 + random.nextInt(9999), i, 2013));
             }
@@ -78,66 +89,31 @@ public class TimeTable implements Serializable {
     }
 
     /**
-     * Gets the time sheets.
-     *
-     * @return the time sheets
+     * Refresh time table.
      */
-    public List<TimeSheet> getTimeSheets() {
-        return timeSheetManager.getDataSource();
-    }
-
-    /**
-     * Sets the time sheets.
-     *
-     * @param timeSheets
-     *            the new time sheets
-     */
-    public void setTimeSheets(final List<TimeSheet> timeSheets) {
-        timeSheetManager.setDataSource(timeSheets);
-    }
-
-    /**
-     * Adds the time table row.
-     *
-     * @param employeeID
-     *            the employee id
-     * @return the string
-     */
-    public String addTimeTableRow(final int employeeID) {
-        getTimeSheets().add(new TimeSheet(employeeID));
-
-        return null;
-    }
-
-    /**
-     * Delete time table row.
-     *
-     * @param toDelete
-     *            the to delete
-     * @return the string
-     */
-    public String deleteTimeTableRow(final TimeSheet toDelete) {
-        getTimeSheets().remove(toDelete);
+    public String refreshTimeTable() {
+        timeTable.clear();
         resetTotalHours();
+
+        if (currentWeek == 0 || currentYear == 0) {
+            setDateAsToday();
+        }
+
+        for (TimeSheet timeSheet : timeSheetManager.getDataSource()) {
+            if (timeSheet.getEmployeeID() == userSession.getEmployeeID()
+                    && timeSheet.getWeek() == currentWeek) {
+                timeTable.add(timeSheet);
+                addTotalHours(timeSheet);
+            }
+        }
         return null;
     }
 
     /**
-     * Decide if we should show the timeSheet.
-     *
-     * @param toShow
-     *            the to show
-     * @return true, if successful
+     * Reset total hours.
      */
-    public boolean show(final TimeSheet toShow) {
-        if (toShow.getEmployeeID() == userSession.getEmployeeID()
-        // && toShow.getWeek() == currentWeek
-        // && toShow.getYear() == currentYear
-        ) {
-            // addTotalHours(toShow);
-            return true;
-        }
-        return false;
+    public void resetTotalHours() {
+        satTotal = sunTotal = monTotal = tueTotal = wedTotal = thuTotal = friTotal = 0;
     }
 
     /**
@@ -157,29 +133,81 @@ public class TimeTable implements Serializable {
     }
 
     /**
-     * Reset total hours.
+     * Persist time table.
      */
-    public void resetTotalHours() {
-        satTotal = sunTotal = monTotal = tueTotal = wedTotal = thuTotal = friTotal = 0;
+    public void persistTimeTable() {
+        timeSheetManager.getDataSource().removeAll(timeTable);
+        timeSheetManager.getDataSource().addAll(timeTable);
     }
 
     /**
-     * Calculate week ending based on year and week.
+     * Adds the time table row.
      *
-     * @param year
-     *            the year
-     * @param week
-     *            the week
+     * @param employeeID
+     *            the employee id
      * @return the string
      */
-    public String calculateWeekEnding(final int year, final int week) {
+    public String addTimeTableRow() {
+        timeTable.add(new TimeSheet(userSession.getEmployeeID(), currentWeek,
+                currentYear));
+        return null;
+    }
+
+    /**
+     * Delete time table row.
+     *
+     * @param toDelete
+     *            the to delete
+     * @return the string
+     */
+    public String deleteTimeTableRow(final TimeSheet toDelete) {
+        timeTable.remove(toDelete);
+        timeSheetManager.getDataSource().remove(toDelete);
+        return null;
+    }
+
+    /**
+     * Sets the date as today.
+     */
+    void setDateAsToday() {
+        currentWeek = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
+        currentYear = Calendar.getInstance().get(Calendar.YEAR);
+    }
+
+    /**
+     * Gets the week ending.
+     *
+     * @return the week ending
+     */
+    public String getWeekEnding() {
         SimpleDateFormat f = new SimpleDateFormat("MM/dd/yyyy");
         Calendar c = Calendar.getInstance();
-        c.set(Calendar.YEAR, year);
-        c.set(Calendar.WEEK_OF_YEAR, week);
+        c.set(Calendar.YEAR, currentYear);
+        c.set(Calendar.WEEK_OF_YEAR, currentWeek);
         c.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
 
         return f.format(c.getTime());
+    }
+
+    /**
+     * Gets the time table.
+     *
+     * @return the time table
+     */
+    public List<TimeSheet> getTimeTable() {
+        refreshTimeTable();
+        return timeTable;
+    }
+
+    /**
+     * Sets the time table.
+     *
+     * @param timeTable
+     *            the new time table
+     */
+    public void setTimeTable(final List<TimeSheet> timeTable) {
+        this.timeTable = timeTable;
+        persistTimeTable();
     }
 
     /**

@@ -25,6 +25,9 @@ public class UserSession implements Serializable {
     @Inject
     private UserManager userManager;
 
+    /** The employee id. */
+    private int employeeID;
+
     /** The username. */
     private String username;
 
@@ -42,8 +45,8 @@ public class UserSession implements Serializable {
      */
     @PostConstruct
     public void populateSampleData() {
-        createUser(1, "shsu", "1234", true);
-        createUser(1, "jhou", "1234", false);
+        getUsers().add(new User(1, "shsu", "1234", true, false));
+        getUsers().add(new User(2, "jhou", "1234", false, false));
     }
 
     /**
@@ -60,10 +63,13 @@ public class UserSession implements Serializable {
      * @return the string
      */
     public String createUser(final int employeeID, final String newUsername,
-            final String newPassword, final boolean superUser) {
-        getUsers()
-                .add(new User(employeeID, newUsername, newPassword, superUser,
-                        true));
+            final String newPassword, final boolean superUser,
+            final boolean edit) {
+        if (loggedIn && this.superUser) {
+            getUsers().add(
+                    new User(employeeID, newUsername, newPassword, superUser,
+                            edit));
+        }
         return null;
     }
 
@@ -95,7 +101,7 @@ public class UserSession implements Serializable {
 
     /**
      * Log in.
-     * 
+     *
      * @return the string
      */
     public String logIn() {
@@ -103,6 +109,7 @@ public class UserSession implements Serializable {
             if (user.getUsername().equals(username)
                     && user.getPassword().equals(password)) {
                 loggedIn = true;
+                employeeID = user.getEmployeeID();
                 return "index";
             }
         }
@@ -140,6 +147,25 @@ public class UserSession implements Serializable {
      */
     public void setUsers(final List<User> users) {
         userManager.setDataSource(users);
+    }
+
+    /**
+     * Gets the employee id.
+     *
+     * @return the employee id
+     */
+    public int getEmployeeID() {
+        return employeeID;
+    }
+
+    /**
+     * Sets the employee id.
+     *
+     * @param employeeID
+     *            the new employee id
+     */
+    public void setEmployeeID(final int employeeID) {
+        this.employeeID = employeeID;
     }
 
     /**

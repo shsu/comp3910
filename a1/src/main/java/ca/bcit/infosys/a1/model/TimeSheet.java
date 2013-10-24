@@ -48,14 +48,20 @@ public class TimeSheet {
     private int year;
 
     /**
-     * Instantiates a new time sheet bean.
+     * Instantiates a new time sheet.
      *
      * @param employeeID
      *            the employee id
+     * @param week
+     *            the week
+     * @param year
+     *            the year
      */
-    public TimeSheet(final int employeeID) {
+    public TimeSheet(final int employeeID, final int week, final int year) {
         super();
         this.employeeID = employeeID;
+        this.week = week;
+        this.year = year;
     }
 
     /**
