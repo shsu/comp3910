@@ -90,6 +90,8 @@ public class TimeTable implements Serializable {
 
     /**
      * Refresh time table.
+     * 
+     * @return the string
      */
     public String refreshTimeTable() {
         persistTimeTable();
@@ -144,8 +146,6 @@ public class TimeTable implements Serializable {
     /**
      * Adds the time table row.
      *
-     * @param employeeID
-     *            the employee id
      * @return the string
      */
     public String addTimeTableRow() {

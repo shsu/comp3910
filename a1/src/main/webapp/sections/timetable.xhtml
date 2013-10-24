@@ -7,17 +7,17 @@
 	</div>
 	<br />
 
-	<div class="panel panel-info">
+	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<h3 class="panel-title">
-				<div class="col-md-4 text-center">Current Week of the Year:
+				<div class="col-md-4 text-center">#{msgs.currentWeek}
 					#{TimeTable.currentWeek}</div>
-				<div class="col-md-4 text-center">Current Year:
+				<div class="col-md-4 text-center">#{msgs.currentYear}
 					#{TimeTable.currentYear}</div>
-				<div class="col-md-4 text-center">Week Ending On
+				<div class="col-md-4 text-center">#{msgs.weekEnding}
 					#{TimeTable.weekEnding}</div>
 			</h3>
-			<br /><br />
+			<br /> <br />
 		</div>
 		<h:form>
 			<h:dataTable value="#{TimeTable.timeTable}" var="timesheet"
@@ -89,11 +89,25 @@
 						value="#{msgs.delete}" />
 				</h:column>
 			</h:dataTable>
-
-			<h:commandButton value="Add New Row"
-				action="#{TimeTable.addTimeTableRow()}" />
-			<h:commandButton value="Save All"
-				action="#{TimeTable.persistTimeTable()}" />
+			<div class="panel-footer">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						<div class="col-md-4 text-center">
+							<h:commandButton value="{#{msgs.saveAll}"
+								action="#{TimeTable.persistTimeTable()}" />
+						</div>
+						<div class="col-md-4 text-center">
+							<h:commandButton value="#{msgs.addRow}"
+								action="#{TimeTable.addTimeTableRow()}" />
+						</div>
+						<div class="col-md-4 text-center">
+							<h:commandButton value="{#{msgs.saveAll}"
+								action="#{TimeTable.persistTimeTable()}" />
+						</div>
+						<br />
+					</h3>
+				</div>
+			</div>
 		</h:form>
 	</div>
 </h:panelGroup>
