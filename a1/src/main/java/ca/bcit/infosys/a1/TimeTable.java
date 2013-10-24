@@ -63,9 +63,6 @@ public class TimeTable implements Serializable {
     /** The fri total. */
     private double friTotal;
 
-    /** The weekday total. */
-    private double weekdayTotal;
-
     /**
      * Instantiates a new time table.
      */
@@ -136,7 +133,6 @@ public class TimeTable implements Serializable {
         wedTotal += toAdd.getWed();
         thuTotal += toAdd.getThu();
         friTotal += toAdd.getFri();
-        weekdayTotal = monTotal + tueTotal + wedTotal + thuTotal + friTotal;
     }
 
     /**
@@ -322,17 +318,7 @@ public class TimeTable implements Serializable {
      * @return the weekday total
      */
     public double getWeekdayTotal() {
-        return weekdayTotal;
-    }
-
-    /**
-     * Sets the weekday total.
-     *
-     * @param weekdayTotal
-     *            the new weekday total
-     */
-    public void setWeekdayTotal(final double weekdayTotal) {
-        this.weekdayTotal = weekdayTotal;
+        return monTotal + tueTotal + wedTotal + thuTotal + friTotal;
     }
 
 }
