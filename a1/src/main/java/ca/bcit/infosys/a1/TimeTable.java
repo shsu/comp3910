@@ -92,6 +92,7 @@ public class TimeTable implements Serializable {
      * Refresh time table.
      */
     public String refreshTimeTable() {
+        persistTimeTable();
         timeTable.clear();
         resetTotalHours();
 
