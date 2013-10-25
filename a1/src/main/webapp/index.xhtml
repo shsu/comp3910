@@ -12,14 +12,13 @@
          </ui:define>
 		<ui:define name="content">
 			<div class="jumbotron">
-				<h2>#{msgs.loginPrompt}:</h2>
 				<ui:include src="/sections/login.xhtml" />
 			</div>
 		</ui:define>
 		<ui:define name="pageHeader">
 			#{msgs.timeTable}: #{UserSession.username}
 		</ui:define>
-		<ui:define name="content-private">
+		<ui:define name="content-loggedIn">
             <ui:include src="/sections/timetable.xhtml" />
 		</ui:define>
 	</ui:composition>

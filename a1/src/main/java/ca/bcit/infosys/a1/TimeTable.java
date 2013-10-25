@@ -36,6 +36,9 @@ public class TimeTable implements Serializable {
     /** The time table. */
     private List<TimeSheet> timeTable;
 
+    /** The recycle bin. */
+    private final List<TimeSheet> recycleBin;
+
     /** The current week. */
     private int currentWeek;
 
@@ -63,53 +66,173 @@ public class TimeTable implements Serializable {
     /** The fri total. */
     private double friTotal;
 
+    /** The empty time table alert. */
+    private boolean emptyTimeTableAlert;
+
     /**
      * Instantiates a new time table.
      */
     public TimeTable() {
         timeTable = new ArrayList<TimeSheet>(50);
+        recycleBin = new ArrayList<TimeSheet>(50);
+
+    }
+
+    /**
+     * Populate time table.
+     */
+    @PostConstruct
+    public void initialSetUp() {
+        populateSampleData();
+        thisWeek();
     }
 
     /**
      * Populate sample data.
      */
-    @PostConstruct
     public void populateSampleData() {
         Random random = new Random();
-        for (int i = 43; i < 50; i++) {
+        for (int i = 2; i < 10; i++) {
             for (int j = 1; j <= 3; j++) {
                 timeSheetManager.getDataSource().add(
                         new TimeSheet(1, random.nextInt(10), "A"
-                                + random.nextInt(9999), i, 2013));
+                                + random.nextInt(9999), getWeekOfYear() - i,
+                                2013, random.nextInt(9), random.nextInt(9),
+                                random.nextInt(9), random.nextInt(9), random
+                                        .nextInt(9)));
                 timeSheetManager.getDataSource().add(
                         new TimeSheet(2, random.nextInt(10), "A"
-                                + random.nextInt(9999), i, 2013));
+                                + random.nextInt(9999), getWeekOfYear() - i,
+                                2013, random.nextInt(9), random.nextInt(9),
+                                random.nextInt(9), random.nextInt(9), random
+                                        .nextInt(9)));
             }
         }
     }
 
     /**
-     * Refresh time table.
+     * Navigate to previous week.
+     *
+     * @return the string
+     */
+    public String previousWeek() {
+        if (currentWeek > 1) {
+            currentWeek--;
+        }
+
+        refreshTimeTable();
+
+        return null;
+    }
+
+    /**
+     * Navigate to this week.
+     *
+     * @return the string
+     */
+    public String thisWeek() {
+        currentWeek = getWeekOfYear();
+        currentYear = getYear();
+        refreshTimeTable();
+
+        return null;
+    }
+
+    /**
+     * Navigate to next week.
+     *
+     * @return the string
+     */
+    public String nextWeek() {
+        if (currentWeek < 52 && currentWeek < getWeekOfYear()) {
+            currentWeek++;
+        }
+        refreshTimeTable();
+
+        return null;
+    }
+
+    /**
+     * Refresh time table with new data set.
      *
      * @return the string
      */
     public String refreshTimeTable() {
-        persistTimeTable();
         timeTable.clear();
+        recycleBin.clear();
         resetTotalHours();
-
-        if (currentWeek == 0 || currentYear == 0) {
-            setDateAsToday();
-        }
+        emptyTimeTableAlert = false;
 
         for (TimeSheet timeSheet : timeSheetManager.getDataSource()) {
             if (timeSheet.getEmployeeID() == userSession.getEmployeeID()
-                    && timeSheet.getWeek() == currentWeek) {
+                    && timeSheet.getWeek() == currentWeek
+                    && timeSheet.getYear() == currentYear) {
                 timeTable.add(timeSheet);
                 addTotalHours(timeSheet);
             }
         }
+
+        // only fill in blank timesheets when current week is today/future.
+        if (timeTable.size() <= 0) {
+            for (int i = 1; i <= 5; i++) {
+                addTimeTableRow();
+            }
+
+            if (!isPresentOrFuture()) {
+                emptyTimeTableAlert = true;
+            }
+        }
+
         return null;
+    }
+
+    /**
+     * Persist time table.
+     */
+    public void persistTimeTable() {
+        timeSheetManager.getDataSource().removeAll(recycleBin);
+        recycleBin.clear();
+        timeSheetManager.getDataSource().removeAll(timeTable);
+        timeSheetManager.getDataSource().addAll(timeTable);
+    }
+
+    /**
+     * Adds the time table row.
+     *
+     * @return the string
+     */
+    public String addTimeTableRow() {
+        timeTable.add(new TimeSheet(userSession.getEmployeeID(), currentWeek,
+                currentYear));
+        return null;
+    }
+
+    /**
+     * Delete time table row.
+     *
+     * @param toDelete
+     *            the to delete
+     * @return the string
+     */
+    public String deleteTimeTableRow(final TimeSheet toDelete) {
+        timeTable.remove(toDelete);
+        recycleBin.add(toDelete);
+        return null;
+    }
+
+    /**
+     * Gets the week ending.
+     *
+     * @return the week ending
+     */
+    public String getWeekEnding() {
+        SimpleDateFormat f = new SimpleDateFormat("MM/dd/yyyy");
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, currentYear);
+        c.set(Calendar.WEEK_OF_YEAR, currentWeek);
+        c.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
+
+        return f.format(c.getTime());
     }
 
     /**
@@ -136,58 +259,39 @@ public class TimeTable implements Serializable {
     }
 
     /**
-     * Persist time table.
-     */
-    public void persistTimeTable() {
-        timeSheetManager.getDataSource().removeAll(timeTable);
-        timeSheetManager.getDataSource().addAll(timeTable);
-    }
-
-    /**
-     * Adds the time table row.
+     * Gets the weekday total hours.
      *
-     * @return the string
+     * @return the weekday total
      */
-    public String addTimeTableRow() {
-        timeTable.add(new TimeSheet(userSession.getEmployeeID(), currentWeek,
-                currentYear));
-        return null;
+    public double getWeekdayTotal() {
+        return monTotal + tueTotal + wedTotal + thuTotal + friTotal;
     }
 
     /**
-     * Delete time table row.
+     * Checks if is present or future.
      *
-     * @param toDelete
-     *            the to delete
-     * @return the string
+     * @return true, if is present or future
      */
-    public String deleteTimeTableRow(final TimeSheet toDelete) {
-        timeTable.remove(toDelete);
-        timeSheetManager.getDataSource().remove(toDelete);
-        return null;
+    public boolean isPresentOrFuture() {
+        return currentWeek >= getWeekOfYear();
     }
 
     /**
-     * Sets the date as today.
-     */
-    void setDateAsToday() {
-        currentWeek = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
-        currentYear = Calendar.getInstance().get(Calendar.YEAR);
-    }
-
-    /**
-     * Gets the week ending.
+     * Gets the week of year.
      *
-     * @return the week ending
+     * @return the week of year
      */
-    public String getWeekEnding() {
-        SimpleDateFormat f = new SimpleDateFormat("MM/dd/yyyy");
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.YEAR, currentYear);
-        c.set(Calendar.WEEK_OF_YEAR, currentWeek);
-        c.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
+    public int getWeekOfYear() {
+        return Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
+    }
 
-        return f.format(c.getTime());
+    /**
+     * Gets the year.
+     *
+     * @return the year
+     */
+    public int getYear() {
+        return Calendar.getInstance().get(Calendar.YEAR);
     }
 
     /**
@@ -196,7 +300,6 @@ public class TimeTable implements Serializable {
      * @return the time table
      */
     public List<TimeSheet> getTimeTable() {
-        refreshTimeTable();
         return timeTable;
     }
 
@@ -208,7 +311,6 @@ public class TimeTable implements Serializable {
      */
     public void setTimeTable(final List<TimeSheet> timeTable) {
         this.timeTable = timeTable;
-        persistTimeTable();
     }
 
     /**
@@ -221,32 +323,12 @@ public class TimeTable implements Serializable {
     }
 
     /**
-     * Sets the current week.
-     *
-     * @param currentWeek
-     *            the new current week
-     */
-    public void setCurrentWeek(final int currentWeek) {
-        this.currentWeek = currentWeek;
-    }
-
-    /**
      * Gets the current year.
      *
      * @return the current year
      */
     public int getCurrentYear() {
         return currentYear;
-    }
-
-    /**
-     * Sets the current year.
-     *
-     * @param currentYear
-     *            the new current year
-     */
-    public void setCurrentYear(final int currentYear) {
-        this.currentYear = currentYear;
     }
 
     /**
@@ -312,13 +394,12 @@ public class TimeTable implements Serializable {
         return friTotal;
     }
 
-    /**
-     * Gets the weekday total.
-     *
-     * @return the weekday total
-     */
-    public double getWeekdayTotal() {
-        return monTotal + tueTotal + wedTotal + thuTotal + friTotal;
+    public boolean isEmptyTimeTableAlert() {
+        return emptyTimeTableAlert;
+    }
+
+    public void setEmptyTimeTableAlert(final boolean emptyTimeTableAlert) {
+        this.emptyTimeTableAlert = emptyTimeTableAlert;
     }
 
 }

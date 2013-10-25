@@ -1,22 +1,13 @@
 <h:form styleClass="form-horizontal"
 	xmlns:h="http://java.sun.com/jsf/html">
+	<div class="text-center">
+		<h2>#{msgs.loginPrompt}</h2>
+		<label for="inputUser1" class="control-label">#{msgs.username}</label><br />
+		<h:inputText value="#{UserSession.username}" size="20" id="inputUser1" />
+		<br /> <label for="inputPassword1" class="control-label">#{msgs.password}</label><br />
+		<h:inputSecret value="#{UserSession.password}" size="20"
+			id="inputPassword1" /><br /><br />
+		<h:commandButton value="#{msgs.logIn}" action="#{UserSession.logIn}" />
 
-	<div class="form-group">
-		<label for="inputUser1" class="col-md-2 control-label">Username:</label>
-		<h:inputText value="#{UserSession.username}" styleClass="form-control"
-			id="inputUser1" />
 	</div>
-
-	<div class="form-group">
-		<label for="inputPassword1" class="col-md-2 control-label">Password:</label>
-		<h:inputSecret value="#{UserSession.password}"
-			styleClass="form-control" id="inputPassword1" />
-	</div>
-
-	<div class="form-group">
-		<div class="col-md-offset-2">
-			<h:commandButton value="Login" action="#{UserSession.logIn}" />
-		</div>
-	</div>
-
 </h:form>

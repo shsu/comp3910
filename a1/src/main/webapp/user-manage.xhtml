@@ -1,18 +1,67 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
 <head>
 <title>IGNORED</title>
 </head>
 <body>
-    <ui:composition template="/templates/masterLayout.xhtml">
-        <ui:define name="windowTitle">
+	<ui:composition template="/templates/masterLayout.xhtml">
+		<ui:define name="windowTitle">
             #{msgs.pageTitle} - #{msgs.userManage}
          </ui:define>
-        <ui:define name="content-private">
-        <h2>#{msgs.userManage}</h2>
+
+		<ui:define name="pageHeader">
+            #{msgs.userManage}
         </ui:define>
-    </ui:composition>
+
+		<ui:define name="content-superUser">
+
+			<div class="panel panel-defualt">
+				<h:form>
+					<h:dataTable value="#{UserSession.users}" var="user"
+						styleClass="table table-hover">
+
+						<h:column>
+							<f:facet name="header">#{msgs.employeeID}</f:facet>
+							<h:inputText value="#{user.employeeID}" rendered="#{user.edit}"
+								size="10" />
+							<h:outputText value="#{user.employeeID}"
+								rendered="#{not user.edit}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">#{msgs.username}</f:facet>
+							<h:inputText value="#{user.username}" rendered="#{user.edit}"
+								size="10" />
+							<h:outputText value="#{user.username}"
+								rendered="#{not user.edit}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">#{msgs.password}</f:facet>
+							<h:inputText value="#{user.password}" rendered="#{user.edit}"
+								size="10" />
+							<h:outputText value="#{user.password}"
+								rendered="#{not user.edit}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">#{msgs.editUser}</f:facet>
+							<h:selectBooleanCheckbox value="#{user.edit}" onclick="submit()" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">Delete</f:facet>
+							<h:commandLink action="#{UserSession.deleteUser(user)}"
+								value="Yes" />
+						</h:column>
+
+					</h:dataTable>
+					<div class="panel-footer text-center">
+						<h:commandButton action="#{UserSession.createUser()}"
+							value="Add New User" />
+						<br />
+					</div>
+				</h:form>
+			</div>
+		</ui:define>
+	</ui:composition>
 </body>
 </html>

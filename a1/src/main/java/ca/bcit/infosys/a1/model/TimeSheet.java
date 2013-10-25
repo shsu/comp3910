@@ -77,15 +77,32 @@ public class TimeSheet {
      *            the week
      * @param year
      *            the year
+     * @param mon
+     *            the mon
+     * @param tue
+     *            the tue
+     * @param wed
+     *            the wed
+     * @param thu
+     *            the thu
+     * @param fri
+     *            the fri
      */
     public TimeSheet(final int employeeID, final int projectNumber,
-            final String workPackage, final int week, final int year) {
+            final String workPackage, final int week, final int year,
+            final int mon, final int tue, final int wed, final int thu,
+            final int fri) {
         super();
         this.employeeID = employeeID;
         this.projectNumber = projectNumber;
         this.workPackage = workPackage;
         this.week = week;
         this.year = year;
+        this.mon = mon;
+        this.tue = tue;
+        this.wed = wed;
+        this.thu = thu;
+        this.fri = fri;
     }
 
     /**

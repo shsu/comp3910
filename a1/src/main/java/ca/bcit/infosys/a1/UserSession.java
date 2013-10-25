@@ -52,25 +52,11 @@ public class UserSession implements Serializable {
     /**
      * Creates the user.
      *
-     * @param employeeID
-     *            the employee id
-     * @param newUsername
-     *            the username
-     * @param newPassword
-     *            the password
-     * @param superUser
-     *            the super user
-     * @param edit
-     *            the edit
      * @return the string
      */
-    public String createUser(final int employeeID, final String newUsername,
-            final String newPassword, final boolean superUser,
-            final boolean edit) {
-        if (loggedIn && this.superUser) {
-            getUsers().add(
-                    new User(employeeID, newUsername, newPassword, superUser,
-                            edit));
+    public String createUser() {
+        if (loggedIn && superUser) {
+            getUsers().add(new User(0, "", "", false, true));
         }
         return null;
     }
@@ -85,18 +71,6 @@ public class UserSession implements Serializable {
     public String deleteUser(final User userToDelete) {
         if (loggedIn && superUser) {
             getUsers().remove(userToDelete);
-        }
-        return null;
-    }
-
-    /**
-     * Save all users by setting edit to false, then refresh.
-     *
-     * @return the string
-     */
-    public String saveUsers() {
-        for (User user : getUsers()) {
-            user.setEdit(false);
         }
         return null;
     }
