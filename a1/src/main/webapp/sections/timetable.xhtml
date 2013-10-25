@@ -9,12 +9,21 @@
 			</div>
 		</h:panelGroup>
 
+		<h:panelGroup rendered="#{TimeTable.savedSuccessfulNotify}">
+			<div class="alert alert-success alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-hidden="true">X</button>
+				<strong>#{msgs.success}</strong> #{msgs.saveSuccessfulNotify}
+			</div>
+		</h:panelGroup>
+
 		<div class="text-center" style="margin: 20px">
 			<h:commandButton action="#{TimeTable.previousWeek()}"
 				value="&lt; Week" />
 			<h:commandButton action="#{TimeTable.thisWeek()}" value="Today" />
 			<h:commandButton action="#{TimeTable.nextWeek()}" value="Week &gt;" />
 		</div>
+
 		<div class="panel panel-primary">
 			<div class="panel-heading">
 				<h3 class="panel-title">
@@ -98,7 +107,10 @@
 				</h:column>
 
 				<h:column headerClass="columnHeader">
-					<f:facet name="header">#{msgs.deleteRow}</f:facet>
+					<f:facet name="header">
+						<h:outputText value="#{msgs.deleteRow}"
+							rendered="#{TimeTable.isPresentOrFuture()}" />
+					</f:facet>
 					<h:commandLink action="#{TimeTable.deleteTimeTableRow(timesheet)}"
 						value="#{msgs.deleteRow}"
 						rendered="#{TimeTable.isPresentOrFuture()}" />
@@ -120,7 +132,8 @@
 						action="#{TimeTable.persistTimeTable()}"
 						rendered="#{TimeTable.isPresentOrFuture()}" />
 				</div>
-				<br /><br />
+				<br />
+				<br />
 			</div>
 		</div>
 	</h:form>

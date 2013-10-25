@@ -25,7 +25,16 @@ import ca.bcit.infosys.a1.model.TimeSheet;
 @Named("TimeTable")
 public class TimeTable implements Serializable {
 
-    /** The time sheet manager. */
+	/** The Constant MAXIMUM_TIMESHEETS. */
+    private static final int MAXIMUM_TIMESHEETS = 50;
+
+	/** The Constant WEEKS_IN_A_YEAR. */
+	private static final int WEEKS_IN_A_YEAR = 52;
+
+	/** The Constant DEFAULT_TIMESHEETS_TIMETABLE. */
+	private static final int DEFAULT_TIMESHEETS_TIMETABLE = 5;
+
+	/** The time sheet manager. */
     @Inject
     private TimeSheetManager timeSheetManager;
 
@@ -69,12 +78,15 @@ public class TimeTable implements Serializable {
     /** The empty time table alert. */
     private boolean emptyTimeTableAlert;
 
+	/** The saved successful notify. */
+	private boolean savedSuccessfulNotify;
+
     /**
      * Instantiates a new time table.
      */
     public TimeTable() {
-        timeTable = new ArrayList<TimeSheet>(50);
-        recycleBin = new ArrayList<TimeSheet>(50);
+        timeTable = new ArrayList<TimeSheet>(MAXIMUM_TIMESHEETS);
+		recycleBin = new ArrayList<TimeSheet>(MAXIMUM_TIMESHEETS);
 
     }
 
@@ -88,9 +100,9 @@ public class TimeTable implements Serializable {
     }
 
     /**
-     * Populate sample data.
-     */
-    public void populateSampleData() {
+	 * Populate sample data. May contain some magic numbers!
+	 */
+	private void populateSampleData() {
         Random random = new Random();
         for (int i = 2; i < 10; i++) {
             for (int j = 1; j <= 3; j++) {
@@ -144,7 +156,7 @@ public class TimeTable implements Serializable {
      * @return the string
      */
     public String nextWeek() {
-        if (currentWeek < 52 && currentWeek < getWeekOfYear()) {
+        if (currentWeek < WEEKS_IN_A_YEAR && currentWeek < getWeekOfYear()) {
             currentWeek++;
         }
         refreshTimeTable();
@@ -152,16 +164,15 @@ public class TimeTable implements Serializable {
         return null;
     }
 
-    /**
-     * Refresh time table with new data set.
-     *
-     * @return the string
-     */
-    public String refreshTimeTable() {
+	/**
+	 * Refresh time table.
+	 */
+	private void refreshTimeTable() {
         timeTable.clear();
         recycleBin.clear();
         resetTotalHours();
         emptyTimeTableAlert = false;
+		savedSuccessfulNotify = false;
 
         for (TimeSheet timeSheet : timeSheetManager.getDataSource()) {
             if (timeSheet.getEmployeeID() == userSession.getEmployeeID()
@@ -174,7 +185,7 @@ public class TimeTable implements Serializable {
 
         // only fill in blank timesheets when current week is today/future.
         if (timeTable.size() <= 0) {
-            for (int i = 1; i <= 5; i++) {
+            for (int i = 1; i <= DEFAULT_TIMESHEETS_TIMETABLE; i++) {
                 addTimeTableRow();
             }
 
@@ -182,18 +193,21 @@ public class TimeTable implements Serializable {
                 emptyTimeTableAlert = true;
             }
         }
-
-        return null;
     }
 
-    /**
-     * Persist time table.
-     */
-    public void persistTimeTable() {
+	/**
+	 * Persist time table.
+	 *
+	 * @return the string
+	 */
+	public String persistTimeTable() {
         timeSheetManager.getDataSource().removeAll(recycleBin);
         recycleBin.clear();
         timeSheetManager.getDataSource().removeAll(timeTable);
         timeSheetManager.getDataSource().addAll(timeTable);
+		savedSuccessfulNotify = true;
+
+		return null;
     }
 
     /**
@@ -238,8 +252,14 @@ public class TimeTable implements Serializable {
     /**
      * Reset total hours.
      */
-    public void resetTotalHours() {
-        satTotal = sunTotal = monTotal = tueTotal = wedTotal = thuTotal = friTotal = 0;
+	private void resetTotalHours() {
+		satTotal = 0;
+		sunTotal = 0;
+		monTotal = 0;
+		tueTotal = 0;
+		wedTotal = 0;
+		thuTotal = 0;
+		friTotal = 0;
     }
 
     /**
@@ -248,7 +268,7 @@ public class TimeTable implements Serializable {
      * @param toAdd
      *            the to add
      */
-    public void addTotalHours(final TimeSheet toAdd) {
+	private void addTotalHours(final TimeSheet toAdd) {
         satTotal += toAdd.getSat();
         sunTotal += toAdd.getSun();
         monTotal += toAdd.getMon();
@@ -281,7 +301,7 @@ public class TimeTable implements Serializable {
      *
      * @return the week of year
      */
-    public int getWeekOfYear() {
+	private int getWeekOfYear() {
         return Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
     }
 
@@ -290,7 +310,7 @@ public class TimeTable implements Serializable {
      *
      * @return the year
      */
-    public int getYear() {
+	private int getYear() {
         return Calendar.getInstance().get(Calendar.YEAR);
     }
 
@@ -394,12 +414,22 @@ public class TimeTable implements Serializable {
         return friTotal;
     }
 
+	/**
+	 * Checks if is empty time table alert.
+	 *
+	 * @return true, if is empty time table alert
+	 */
     public boolean isEmptyTimeTableAlert() {
         return emptyTimeTableAlert;
     }
 
-    public void setEmptyTimeTableAlert(final boolean emptyTimeTableAlert) {
-        this.emptyTimeTableAlert = emptyTimeTableAlert;
-    }
+	/**
+	 * Checks if is saved successful notify.
+	 *
+	 * @return true, if is saved successful notify
+	 */
+	public boolean isSavedSuccessfulNotify() {
+		return savedSuccessfulNotify;
+	}
 
 }

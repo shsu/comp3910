@@ -90,7 +90,7 @@ public class UserSession implements Serializable {
                 return "index";
             }
         }
-        System.err.print("Auth Failure");
+
         return null;
     }
 
@@ -104,7 +104,8 @@ public class UserSession implements Serializable {
         password = "";
         superUser = false;
         loggedIn = false;
-        return "index";
+
+		return null;
     }
 
     /**
@@ -209,15 +210,5 @@ public class UserSession implements Serializable {
      */
     public boolean isSuperUser() {
         return superUser;
-    }
-
-    /**
-     * Sets the super user.
-     *
-     * @param superUser
-     *            the new super user
-     */
-    public void setSuperUser(final boolean superUser) {
-        this.superUser = superUser;
     }
 }
