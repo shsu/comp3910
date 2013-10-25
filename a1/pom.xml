@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>ca.bcit.infosys</groupId>
-	<artifactId>a1</artifactId>
+	<artifactId>a1-jhou-shsu</artifactId>
 	<version>0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
@@ -126,7 +126,7 @@
 					<plugin>
 						<groupId>org.jboss.as.plugins</groupId>
 						<artifactId>jboss-as-maven-plugin</artifactId>
-						<version>7.4.Final</version>
+						<version>7.5.Final</version>
 						<executions>
 							<execution>
 								<phase>install</phase>
