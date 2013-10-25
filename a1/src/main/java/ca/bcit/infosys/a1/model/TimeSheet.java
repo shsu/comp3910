@@ -2,7 +2,7 @@ package ca.bcit.infosys.a1.model;
 
 /**
  * TimeSheet Model.
- *
+ * 
  * @author shsu
  * @version 0.1
  */
@@ -49,7 +49,7 @@ public class TimeSheet {
 
     /**
      * Instantiates a new time sheet.
-     *
+     * 
      * @param employeeID
      *            the employee id
      * @param week
@@ -66,7 +66,7 @@ public class TimeSheet {
 
     /**
      * Instantiates a new time sheet.
-     *
+     * 
      * @param employeeID
      *            the employee id
      * @param projectNumber
@@ -107,7 +107,7 @@ public class TimeSheet {
 
     /**
      * Gets the total.
-     *
+     * 
      * @return the total
      */
     public double getTotal() {
@@ -116,7 +116,7 @@ public class TimeSheet {
 
     /**
      * Gets the employee id.
-     *
+     * 
      * @return the employee id
      */
     public int getEmployeeID() {
@@ -125,7 +125,7 @@ public class TimeSheet {
 
     /**
      * Sets the employee id.
-     *
+     * 
      * @param employeeID
      *            the new employee id
      */
@@ -135,7 +135,7 @@ public class TimeSheet {
 
     /**
      * Gets the project number.
-     *
+     * 
      * @return the project number
      */
     public int getProjectNumber() {
@@ -144,7 +144,7 @@ public class TimeSheet {
 
     /**
      * Sets the project number.
-     *
+     * 
      * @param projectNumber
      *            the new project number
      */
@@ -154,7 +154,7 @@ public class TimeSheet {
 
     /**
      * Gets the work package.
-     *
+     * 
      * @return the work package
      */
     public String getWorkPackage() {
@@ -163,7 +163,7 @@ public class TimeSheet {
 
     /**
      * Sets the work package.
-     *
+     * 
      * @param workPackage
      *            the new work package
      */
@@ -173,7 +173,7 @@ public class TimeSheet {
 
     /**
      * Gets the sat.
-     *
+     * 
      * @return the sat
      */
     public double getSat() {
@@ -182,7 +182,7 @@ public class TimeSheet {
 
     /**
      * Sets the sat.
-     *
+     * 
      * @param sat
      *            the new sat
      */
@@ -192,7 +192,7 @@ public class TimeSheet {
 
     /**
      * Gets the sun.
-     *
+     * 
      * @return the sun
      */
     public double getSun() {
@@ -201,7 +201,7 @@ public class TimeSheet {
 
     /**
      * Sets the sun.
-     *
+     * 
      * @param sun
      *            the new sun
      */
@@ -211,7 +211,7 @@ public class TimeSheet {
 
     /**
      * Gets the mon.
-     *
+     * 
      * @return the mon
      */
     public double getMon() {
@@ -220,7 +220,7 @@ public class TimeSheet {
 
     /**
      * Sets the mon.
-     *
+     * 
      * @param mon
      *            the new mon
      */
@@ -230,7 +230,7 @@ public class TimeSheet {
 
     /**
      * Gets the tue.
-     *
+     * 
      * @return the tue
      */
     public double getTue() {
@@ -239,7 +239,7 @@ public class TimeSheet {
 
     /**
      * Sets the tue.
-     *
+     * 
      * @param tue
      *            the new tue
      */
@@ -249,7 +249,7 @@ public class TimeSheet {
 
     /**
      * Gets the wed.
-     *
+     * 
      * @return the wed
      */
     public double getWed() {
@@ -258,7 +258,7 @@ public class TimeSheet {
 
     /**
      * Sets the wed.
-     *
+     * 
      * @param wed
      *            the new wed
      */
@@ -268,7 +268,7 @@ public class TimeSheet {
 
     /**
      * Gets the thu.
-     *
+     * 
      * @return the thu
      */
     public double getThu() {
@@ -277,7 +277,7 @@ public class TimeSheet {
 
     /**
      * Sets the thu.
-     *
+     * 
      * @param thu
      *            the new thu
      */
@@ -287,7 +287,7 @@ public class TimeSheet {
 
     /**
      * Gets the fri.
-     *
+     * 
      * @return the fri
      */
     public double getFri() {
@@ -296,7 +296,7 @@ public class TimeSheet {
 
     /**
      * Sets the fri.
-     *
+     * 
      * @param fri
      *            the new fri
      */
@@ -306,7 +306,7 @@ public class TimeSheet {
 
     /**
      * Gets the notes.
-     *
+     * 
      * @return the notes
      */
     public String getNotes() {
@@ -315,7 +315,7 @@ public class TimeSheet {
 
     /**
      * Sets the notes.
-     *
+     * 
      * @param notes
      *            the new notes
      */
@@ -325,7 +325,7 @@ public class TimeSheet {
 
     /**
      * Gets the week.
-     *
+     * 
      * @return the week
      */
     public int getWeek() {
@@ -334,7 +334,7 @@ public class TimeSheet {
 
     /**
      * Sets the week.
-     *
+     * 
      * @param week
      *            the new week
      */
@@ -344,7 +344,7 @@ public class TimeSheet {
 
     /**
      * Gets the year.
-     *
+     * 
      * @return the year
      */
     public int getYear() {
@@ -353,7 +353,7 @@ public class TimeSheet {
 
     /**
      * Sets the year.
-     *
+     * 
      * @param year
      *            the new year
      */

@@ -12,7 +12,7 @@ import ca.bcit.infosys.a1.model.User;
 /**
  * Handles CRUD actions for User class. In this assignment, we are not writing
  * to the database, hence passing on the responsibility to UserSession class.
- *
+ * 
  * @author shsu
  * @version 0.1
  */
@@ -29,7 +29,7 @@ public class UserManager implements Serializable {
 
     /**
      * Gets the data source.
-     *
+     * 
      * @return the data source
      */
     public List<User> getDataSource() {
@@ -38,7 +38,7 @@ public class UserManager implements Serializable {
 
     /**
      * Sets the data source.
-     *
+     * 
      * @param dataSource
      *            the new data source
      */

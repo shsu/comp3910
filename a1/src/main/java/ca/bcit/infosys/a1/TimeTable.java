@@ -17,7 +17,7 @@ import ca.bcit.infosys.a1.model.TimeSheet;
 
 /**
  * TimeTable CDI Bean.
- *
+ * 
  * @author shsu
  * @version 0.1
  */
@@ -25,16 +25,16 @@ import ca.bcit.infosys.a1.model.TimeSheet;
 @Named("TimeTable")
 public class TimeTable implements Serializable {
 
-	/** The Constant MAXIMUM_TIMESHEETS. */
+    /** The Constant MAXIMUM_TIMESHEETS. */
     private static final int MAXIMUM_TIMESHEETS = 50;
 
-	/** The Constant WEEKS_IN_A_YEAR. */
-	private static final int WEEKS_IN_A_YEAR = 52;
+    /** The Constant WEEKS_IN_A_YEAR. */
+    private static final int WEEKS_IN_A_YEAR = 52;
 
-	/** The Constant DEFAULT_TIMESHEETS_TIMETABLE. */
-	private static final int DEFAULT_TIMESHEETS_TIMETABLE = 5;
+    /** The Constant DEFAULT_TIMESHEETS_TIMETABLE. */
+    private static final int DEFAULT_TIMESHEETS_TIMETABLE = 5;
 
-	/** The time sheet manager. */
+    /** The time sheet manager. */
     @Inject
     private TimeSheetManager timeSheetManager;
 
@@ -78,15 +78,15 @@ public class TimeTable implements Serializable {
     /** The empty time table alert. */
     private boolean emptyTimeTableAlert;
 
-	/** The saved successful notify. */
-	private boolean savedSuccessfulNotify;
+    /** The saved successful notify. */
+    private boolean savedSuccessfulNotify;
 
     /**
      * Instantiates a new time table.
      */
     public TimeTable() {
         timeTable = new ArrayList<TimeSheet>(MAXIMUM_TIMESHEETS);
-		recycleBin = new ArrayList<TimeSheet>(MAXIMUM_TIMESHEETS);
+        recycleBin = new ArrayList<TimeSheet>(MAXIMUM_TIMESHEETS);
 
     }
 
@@ -100,9 +100,9 @@ public class TimeTable implements Serializable {
     }
 
     /**
-	 * Populate sample data. May contain some magic numbers!
-	 */
-	private void populateSampleData() {
+     * Populate sample data. May contain some magic numbers!
+     */
+    private void populateSampleData() {
         Random random = new Random();
         for (int i = 2; i < 10; i++) {
             for (int j = 1; j <= 3; j++) {
@@ -111,20 +111,20 @@ public class TimeTable implements Serializable {
                                 + random.nextInt(9999), getWeekOfYear() - i,
                                 2013, random.nextInt(9), random.nextInt(9),
                                 random.nextInt(9), random.nextInt(9), random
-                                        .nextInt(9)));
+                                .nextInt(9)));
                 timeSheetManager.getDataSource().add(
                         new TimeSheet(2, random.nextInt(10), "A"
                                 + random.nextInt(9999), getWeekOfYear() - i,
                                 2013, random.nextInt(9), random.nextInt(9),
                                 random.nextInt(9), random.nextInt(9), random
-                                        .nextInt(9)));
+                                .nextInt(9)));
             }
         }
     }
 
     /**
      * Navigate to previous week.
-     *
+     * 
      * @return the string
      */
     public String previousWeek() {
@@ -139,7 +139,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Navigate to this week.
-     *
+     * 
      * @return the string
      */
     public String thisWeek() {
@@ -152,7 +152,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Navigate to next week.
-     *
+     * 
      * @return the string
      */
     public String nextWeek() {
@@ -164,15 +164,15 @@ public class TimeTable implements Serializable {
         return null;
     }
 
-	/**
-	 * Refresh time table.
-	 */
-	private void refreshTimeTable() {
+    /**
+     * Refresh time table.
+     */
+    private void refreshTimeTable() {
         timeTable.clear();
         recycleBin.clear();
         resetTotalHours();
         emptyTimeTableAlert = false;
-		savedSuccessfulNotify = false;
+        savedSuccessfulNotify = false;
 
         for (TimeSheet timeSheet : timeSheetManager.getDataSource()) {
             if (timeSheet.getEmployeeID() == userSession.getEmployeeID()
@@ -195,24 +195,24 @@ public class TimeTable implements Serializable {
         }
     }
 
-	/**
-	 * Persist time table.
-	 *
-	 * @return the string
-	 */
-	public String persistTimeTable() {
+    /**
+     * Persist time table.
+     * 
+     * @return the string
+     */
+    public String persistTimeTable() {
         timeSheetManager.getDataSource().removeAll(recycleBin);
         recycleBin.clear();
         timeSheetManager.getDataSource().removeAll(timeTable);
         timeSheetManager.getDataSource().addAll(timeTable);
-		savedSuccessfulNotify = true;
+        savedSuccessfulNotify = true;
 
-		return null;
+        return null;
     }
 
     /**
      * Adds the time table row.
-     *
+     * 
      * @return the string
      */
     public String addTimeTableRow() {
@@ -223,7 +223,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Delete time table row.
-     *
+     * 
      * @param toDelete
      *            the to delete
      * @return the string
@@ -236,7 +236,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Gets the week ending.
-     *
+     * 
      * @return the week ending
      */
     public String getWeekEnding() {
@@ -252,23 +252,23 @@ public class TimeTable implements Serializable {
     /**
      * Reset total hours.
      */
-	private void resetTotalHours() {
-		satTotal = 0;
-		sunTotal = 0;
-		monTotal = 0;
-		tueTotal = 0;
-		wedTotal = 0;
-		thuTotal = 0;
-		friTotal = 0;
+    private void resetTotalHours() {
+        satTotal = 0;
+        sunTotal = 0;
+        monTotal = 0;
+        tueTotal = 0;
+        wedTotal = 0;
+        thuTotal = 0;
+        friTotal = 0;
     }
 
     /**
      * Adds the total hours.
-     *
+     * 
      * @param toAdd
      *            the to add
      */
-	private void addTotalHours(final TimeSheet toAdd) {
+    private void addTotalHours(final TimeSheet toAdd) {
         satTotal += toAdd.getSat();
         sunTotal += toAdd.getSun();
         monTotal += toAdd.getMon();
@@ -280,7 +280,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Gets the weekday total hours.
-     *
+     * 
      * @return the weekday total
      */
     public double getWeekdayTotal() {
@@ -289,7 +289,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Checks if is present or future.
-     *
+     * 
      * @return true, if is present or future
      */
     public boolean isPresentOrFuture() {
@@ -298,25 +298,25 @@ public class TimeTable implements Serializable {
 
     /**
      * Gets the week of year.
-     *
+     * 
      * @return the week of year
      */
-	private int getWeekOfYear() {
+    private int getWeekOfYear() {
         return Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
     }
 
     /**
      * Gets the year.
-     *
+     * 
      * @return the year
      */
-	private int getYear() {
+    private int getYear() {
         return Calendar.getInstance().get(Calendar.YEAR);
     }
 
     /**
      * Gets the time table.
-     *
+     * 
      * @return the time table
      */
     public List<TimeSheet> getTimeTable() {
@@ -325,7 +325,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Sets the time table.
-     *
+     * 
      * @param timeTable
      *            the new time table
      */
@@ -335,7 +335,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Gets the current week.
-     *
+     * 
      * @return the current week
      */
     public int getCurrentWeek() {
@@ -344,7 +344,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Gets the current year.
-     *
+     * 
      * @return the current year
      */
     public int getCurrentYear() {
@@ -353,7 +353,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Gets the sat total.
-     *
+     * 
      * @return the sat total
      */
     public double getSatTotal() {
@@ -362,7 +362,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Gets the sun total.
-     *
+     * 
      * @return the sun total
      */
     public double getSunTotal() {
@@ -371,7 +371,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Gets the mon total.
-     *
+     * 
      * @return the mon total
      */
     public double getMonTotal() {
@@ -380,7 +380,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Gets the tue total.
-     *
+     * 
      * @return the tue total
      */
     public double getTueTotal() {
@@ -389,7 +389,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Gets the wed total.
-     *
+     * 
      * @return the wed total
      */
     public double getWedTotal() {
@@ -398,7 +398,7 @@ public class TimeTable implements Serializable {
 
     /**
      * Gets the thu total.
-     *
+     * 
      * @return the thu total
      */
     public double getThuTotal() {
@@ -407,29 +407,29 @@ public class TimeTable implements Serializable {
 
     /**
      * Gets the fri total.
-     *
+     * 
      * @return the fri total
      */
     public double getFriTotal() {
         return friTotal;
     }
 
-	/**
-	 * Checks if is empty time table alert.
-	 *
-	 * @return true, if is empty time table alert
-	 */
+    /**
+     * Checks if is empty time table alert.
+     * 
+     * @return true, if is empty time table alert
+     */
     public boolean isEmptyTimeTableAlert() {
         return emptyTimeTableAlert;
     }
 
-	/**
-	 * Checks if is saved successful notify.
-	 *
-	 * @return true, if is saved successful notify
-	 */
-	public boolean isSavedSuccessfulNotify() {
-		return savedSuccessfulNotify;
-	}
+    /**
+     * Checks if is saved successful notify.
+     * 
+     * @return true, if is saved successful notify
+     */
+    public boolean isSavedSuccessfulNotify() {
+        return savedSuccessfulNotify;
+    }
 
 }

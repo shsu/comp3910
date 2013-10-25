@@ -6,7 +6,9 @@
 		<h:inputText value="#{UserSession.username}" size="20" id="inputUser1" />
 		<br /> <label for="inputPassword1" class="control-label">#{msgs.password}</label><br />
 		<h:inputSecret value="#{UserSession.password}" size="20"
-			id="inputPassword1" /><br /><br />
+			id="inputPassword1" />
+		<br />
+		<br />
 		<h:commandButton value="#{msgs.logIn}" action="#{UserSession.logIn}" />
 
 	</div>

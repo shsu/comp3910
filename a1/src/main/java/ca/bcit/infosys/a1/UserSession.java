@@ -13,7 +13,7 @@ import ca.bcit.infosys.a1.model.User;
 
 /**
  * UserSession CDI Bean.
- *
+ * 
  * @author shsu
  * @version 0.1
  */
@@ -51,7 +51,7 @@ public class UserSession implements Serializable {
 
     /**
      * Creates the user.
-     *
+     * 
      * @return the string
      */
     public String createUser() {
@@ -63,7 +63,7 @@ public class UserSession implements Serializable {
 
     /**
      * Delete user.
-     *
+     * 
      * @param userToDelete
      *            the user to delete
      * @return the string
@@ -77,7 +77,7 @@ public class UserSession implements Serializable {
 
     /**
      * Log in.
-     *
+     * 
      * @return the string
      */
     public String logIn() {
@@ -96,7 +96,7 @@ public class UserSession implements Serializable {
 
     /**
      * Log out.
-     *
+     * 
      * @return the string
      */
     public String logOut() {
@@ -105,12 +105,12 @@ public class UserSession implements Serializable {
         superUser = false;
         loggedIn = false;
 
-		return null;
+        return null;
     }
 
     /**
      * Gets the users.
-     *
+     * 
      * @return the users
      */
     public List<User> getUsers() {
@@ -119,7 +119,7 @@ public class UserSession implements Serializable {
 
     /**
      * Sets the users.
-     *
+     * 
      * @param users
      *            the new users
      */
@@ -129,7 +129,7 @@ public class UserSession implements Serializable {
 
     /**
      * Gets the employee id.
-     *
+     * 
      * @return the employee id
      */
     public int getEmployeeID() {
@@ -138,7 +138,7 @@ public class UserSession implements Serializable {
 
     /**
      * Sets the employee id.
-     *
+     * 
      * @param employeeID
      *            the new employee id
      */
@@ -148,7 +148,7 @@ public class UserSession implements Serializable {
 
     /**
      * Gets the username.
-     *
+     * 
      * @return the username
      */
     public String getUsername() {
@@ -157,7 +157,7 @@ public class UserSession implements Serializable {
 
     /**
      * Sets the username.
-     *
+     * 
      * @param username
      *            the new username
      */
@@ -167,7 +167,7 @@ public class UserSession implements Serializable {
 
     /**
      * Gets the password.
-     *
+     * 
      * @return the password
      */
     public String getPassword() {
@@ -176,7 +176,7 @@ public class UserSession implements Serializable {
 
     /**
      * Sets the password.
-     *
+     * 
      * @param password
      *            the new password
      */
@@ -186,7 +186,7 @@ public class UserSession implements Serializable {
 
     /**
      * Checks if is logged in.
-     *
+     * 
      * @return true, if is logged in
      */
     public boolean isLoggedIn() {
@@ -195,7 +195,7 @@ public class UserSession implements Serializable {
 
     /**
      * Sets the logged in.
-     *
+     * 
      * @param loggedIn
      *            the new logged in
      */
@@ -205,7 +205,7 @@ public class UserSession implements Serializable {
 
     /**
      * Checks if is super user.
-     *
+     * 
      * @return true, if is super user
      */
     public boolean isSuperUser() {

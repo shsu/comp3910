@@ -2,7 +2,7 @@ package ca.bcit.infosys.a1.model;
 
 /**
  * User Model.
- *
+ * 
  * @author shsu
  * @version 0.1
  */
@@ -25,7 +25,7 @@ public class User {
 
     /**
      * Instantiates a new user bean.
-     *
+     * 
      * @param employeeID
      *            the employee id
      * @param username
@@ -49,7 +49,7 @@ public class User {
 
     /**
      * Sets the employee id.
-     *
+     * 
      * @param employeeID
      *            the new employee id
      */
@@ -59,7 +59,7 @@ public class User {
 
     /**
      * Gets the username.
-     *
+     * 
      * @return the username
      */
     public String getUsername() {
@@ -68,7 +68,7 @@ public class User {
 
     /**
      * Sets the username.
-     *
+     * 
      * @param username
      *            the new username
      */
@@ -78,7 +78,7 @@ public class User {
 
     /**
      * Gets the password.
-     *
+     * 
      * @return the password
      */
     public String getPassword() {
@@ -87,7 +87,7 @@ public class User {
 
     /**
      * Sets the password.
-     *
+     * 
      * @param password
      *            the new password
      */
@@ -97,7 +97,7 @@ public class User {
 
     /**
      * Checks if is super user.
-     *
+     * 
      * @return true, if is super user
      */
     public boolean isSuperUser() {
@@ -106,7 +106,7 @@ public class User {
 
     /**
      * Sets the super user.
-     *
+     * 
      * @param superUser
      *            the new super user
      */
@@ -116,7 +116,7 @@ public class User {
 
     /**
      * Gets the employee id.
-     *
+     * 
      * @return the employee id
      */
     public int getEmployeeID() {
@@ -125,7 +125,7 @@ public class User {
 
     /**
      * Checks if is edits the.
-     *
+     * 
      * @return true, if is edits the
      */
     public boolean isEdit() {
@@ -134,7 +134,7 @@ public class User {
 
     /**
      * Sets the edits the.
-     *
+     * 
      * @param edit
      *            the new edits the
      */

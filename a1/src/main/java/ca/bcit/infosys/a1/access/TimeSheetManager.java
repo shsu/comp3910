@@ -13,7 +13,7 @@ import ca.bcit.infosys.a1.model.TimeSheet;
  * Handles CRUD actions for TimeSheet class. In this assignment, we are not
  * writing to the database, hence passing on the responsibility to TimeTable
  * class.
- *
+ * 
  * @author shsu
  * @version 0.1
  */
@@ -30,7 +30,7 @@ public class TimeSheetManager implements Serializable {
 
     /**
      * Gets the data source.
-     *
+     * 
      * @return the data source
      */
     public List<TimeSheet> getDataSource() {
@@ -39,7 +39,7 @@ public class TimeSheetManager implements Serializable {
 
     /**
      * Sets the data source.
-     *
+     * 
      * @param dataSource
      *            the new data source
      */

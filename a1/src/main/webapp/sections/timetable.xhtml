@@ -34,7 +34,8 @@
 					<div class="col-md-4 text-center">#{msgs.weekEnding}:
 						#{TimeTable.weekEnding}</div>
 				</h3>
-				<br /> <br />
+				<br />
+				<br />
 			</div>
 			<h:dataTable value="#{TimeTable.timeTable}" var="timesheet"
 				styleClass="table table-hover">
@@ -132,8 +133,7 @@
 						action="#{TimeTable.persistTimeTable()}"
 						rendered="#{TimeTable.isPresentOrFuture()}" />
 				</div>
-				<br />
-				<br />
+				<br /> <br />
 			</div>
 		</div>
 	</h:form>
