@@ -19,9 +19,9 @@
 
 		<div class="text-center" style="margin: 20px">
 			<h:commandButton action="#{TimeTable.previousWeek()}"
-				value="&lt; Week" />
-			<h:commandButton action="#{TimeTable.thisWeek()}" value="Today" />
-			<h:commandButton action="#{TimeTable.nextWeek()}" value="Week &gt;" />
+				value="&lt; #{msgs.week}" />
+			<h:commandButton action="#{TimeTable.thisWeek()}" value="#{msgs.today}" />
+			<h:commandButton action="#{TimeTable.nextWeek()}" value="#{msgs.week} &gt;" />
 		</div>
 
 		<div class="panel panel-primary">

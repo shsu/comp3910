@@ -48,15 +48,15 @@
 							<h:selectBooleanCheckbox value="#{user.edit}" onclick="submit()" />
 						</h:column>
 						<h:column>
-							<f:facet name="header">Delete</f:facet>
+							<f:facet name="header">#{msgs.delete}</f:facet>
 							<h:commandLink action="#{UserSession.deleteUser(user)}"
-								value="Yes" />
+								value="#{msgs.yes}" />
 						</h:column>
 
 					</h:dataTable>
 					<div class="panel-footer text-center">
 						<h:commandButton action="#{UserSession.createUser()}"
-							value="Add New User" />
+							value="#{msgs.addNewUser}" />
 						<br />
 					</div>
 				</h:form>
