@@ -105,7 +105,7 @@ public class UserSession implements Serializable {
         superUser = false;
         loggedIn = false;
 
-        return null;
+        return "login";
     }
 
     /**
