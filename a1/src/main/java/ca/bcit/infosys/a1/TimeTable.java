@@ -172,7 +172,6 @@ public class TimeTable implements Serializable {
         recycleBin.clear();
         resetTotalHours();
         emptyTimeTableAlert = false;
-        savedSuccessfulNotify = false;
 
         for (TimeSheet timeSheet : timeSheetManager.getDataSource()) {
             if (timeSheet.getEmployeeID() == userSession.getEmployeeID()
@@ -320,6 +319,7 @@ public class TimeTable implements Serializable {
      * @return the time table
      */
     public List<TimeSheet> getTimeTable() {
+        savedSuccessfulNotify = false;
         return timeTable;
     }
 
