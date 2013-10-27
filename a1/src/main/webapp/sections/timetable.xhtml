@@ -20,8 +20,10 @@
 		<div class="text-center" style="margin: 20px">
 			<h:commandButton action="#{TimeTable.previousWeek()}"
 				value="&lt; #{msgs.week}" />
-			<h:commandButton action="#{TimeTable.thisWeek()}" value="#{msgs.today}" />
-			<h:commandButton action="#{TimeTable.nextWeek()}" value="#{msgs.week} &gt;" />
+			<h:commandButton action="#{TimeTable.thisWeek()}"
+				value="#{msgs.today}" />
+			<h:commandButton action="#{TimeTable.nextWeek()}"
+				value="#{msgs.week} &gt;" />
 		</div>
 
 		<div class="panel panel-primary">
@@ -34,8 +36,7 @@
 					<div class="col-md-4 text-center">#{msgs.weekEnding}:
 						#{TimeTable.weekEnding}</div>
 				</h3>
-				<br />
-				<br />
+				<br /> <br />
 			</div>
 			<h:dataTable value="#{TimeTable.timeTable}" var="timesheet"
 				styleClass="table table-hover">
@@ -57,47 +58,61 @@
 				<h:column headerClass="columnHeader">
 					<f:facet name="header">#{msgs.sat}</f:facet>
 					<h:inputText value="#{timesheet.sat}" size="2" maxlength="4"
-						readonly="#{not TimeTable.isPresentOrFuture()}" />
+						readonly="#{not TimeTable.isPresentOrFuture()}">
+						<f:validateDoubleRange minimum="0" maximum="24" />
+					</h:inputText>
 					<f:facet name="footer">#{TimeTable.satTotal}</f:facet>
 				</h:column>
 
 				<h:column headerClass="columnHeader">
 					<f:facet name="header">#{msgs.sun}</f:facet>
 					<h:inputText value="#{timesheet.sun}" size="2" maxlength="4"
-						readonly="#{not TimeTable.isPresentOrFuture()}" />
+						readonly="#{not TimeTable.isPresentOrFuture()}">
+						<f:validateDoubleRange minimum="0" maximum="24" />
+					</h:inputText>
 					<f:facet name="footer">#{TimeTable.sunTotal}</f:facet>
 				</h:column>
 
 				<h:column headerClass="columnHeader">
 					<f:facet name="header">#{msgs.mon}</f:facet>
 					<h:inputText value="#{timesheet.mon}" size="2" maxlength="4"
-						readonly="#{not TimeTable.isPresentOrFuture()}" />
+						readonly="#{not TimeTable.isPresentOrFuture()}">
+						<f:validateDoubleRange minimum="0" maximum="24" />
+					</h:inputText>
 					<f:facet name="footer">#{TimeTable.monTotal}</f:facet>
 				</h:column>
 
 				<h:column headerClass="columnHeader">
 					<f:facet name="header">#{msgs.tue}</f:facet>
 					<h:inputText value="#{timesheet.tue}" size="2" maxlength="4"
-						readonly="#{not TimeTable.isPresentOrFuture()}" />
+						readonly="#{not TimeTable.isPresentOrFuture()}">
+						<f:validateDoubleRange minimum="0" maximum="24" />
+					</h:inputText>
 					<f:facet name="footer">#{TimeTable.tueTotal}</f:facet>
 				</h:column>
 
 				<h:column headerClass="columnHeader">
 					<f:facet name="header">#{msgs.wed}</f:facet>
 					<h:inputText value="#{timesheet.wed}" size="2" maxlength="4"
-						readonly="#{not TimeTable.isPresentOrFuture()}" />
+						readonly="#{not TimeTable.isPresentOrFuture()}">
+						<f:validateDoubleRange minimum="0" maximum="24" />
+					</h:inputText>
 					<f:facet name="footer">#{TimeTable.wedTotal}</f:facet>
 				</h:column>
 				<h:column headerClass="columnHeader">
 					<f:facet name="header">#{msgs.thu}</f:facet>
 					<h:inputText value="#{timesheet.thu}" size="2" maxlength="4"
-						readonly="#{not TimeTable.isPresentOrFuture()}" />
+						readonly="#{not TimeTable.isPresentOrFuture()}">
+						<f:validateDoubleRange minimum="0" maximum="24" />
+					</h:inputText>
 					<f:facet name="footer">#{TimeTable.thuTotal}</f:facet>
 				</h:column>
 				<h:column headerClass="columnHeader">
 					<f:facet name="header">#{msgs.fri}</f:facet>
 					<h:inputText value="#{timesheet.fri}" size="2" maxlength="4"
-						readonly="#{not TimeTable.isPresentOrFuture()}" />
+						readonly="#{not TimeTable.isPresentOrFuture()}">
+						<f:validateDoubleRange minimum="0" maximum="24" />
+					</h:inputText>
 					<f:facet name="footer">#{TimeTable.friTotal}</f:facet>
 				</h:column>
 
