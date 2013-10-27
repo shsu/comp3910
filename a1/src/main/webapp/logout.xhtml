@@ -1,0 +1,22 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<head>
+<title>IGNORED</title>
+</head>
+<body>
+	<ui:composition template="/templates/masterLayout.xhtml">
+		<ui:define name="windowTitle">
+            #{msgs.pageTitle}
+         </ui:define>
+		<ui:define name="pageHeader">
+			#{msgs.logOut}: #{UserSession.username} 
+			<span style="color: #fff"> #{UserSession.logOut()} </span>
+		</ui:define>
+		<ui:define name="content-loggedIn">
+			<h:link outcome="index" value="Click here to log in again." />
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

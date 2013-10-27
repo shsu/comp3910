@@ -23,14 +23,8 @@
 									outcome="timesheet-manage" /></li>
 						</ul></li>
 				</h:panelGroup>
-				<h:panelGroup styleClass="pull-right">
-					<h:form>
-						<h:commandLink value="#{msgs.logOut}"
-							actions="#{UserSession.logOut}"
-							rendered="#{UserSession.loggedIn}" 
-							 />
-					</h:form>
-				</h:panelGroup>
+				<li><h:link value="#{msgs.logOut}" outcome="logout"
+						rendered="#{UserSession.loggedIn}" /></li>
 			</ul>
 		</div>
 	</div>
