@@ -111,6 +111,10 @@ public class UserSession implements Serializable {
         return loggedIn;
     }
 
+    public void setLoggedIn() {
+        loggedIn = false;
+    }
+    
     /**
      * Checks if is super user.
      * 

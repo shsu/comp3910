@@ -8,14 +8,14 @@
 <body>
 	<ui:composition template="/templates/masterLayout.xhtml">
 		<ui:define name="windowTitle">
-            #{msgs.pageTitle}
+            #{msgs.pageTitle}          
          </ui:define>
 		<ui:define name="pageHeader">
-			#{msgs.logOut}: #{UserSession.username} 
-			<span style="color: #fff"> #{UserSession.logOut()} </span>
+			#{msgs.logOutMsg}: #{UserSession.username} 
+		<span style="color: #fff"> #{UserSession.logOut()} </span> 
 		</ui:define>
 		<ui:define name="content-loggedIn">
-			<h:link outcome="index" value="Click here to log in again." />
+			<h:link outcome="index" value="#{msgs.relogin}" />
 		</ui:define>
 	</ui:composition>
 </body>
