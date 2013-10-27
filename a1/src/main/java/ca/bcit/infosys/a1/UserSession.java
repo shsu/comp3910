@@ -41,15 +41,6 @@ public class UserSession implements Serializable {
     private boolean superUser;
 
     /**
-     * Populate sample data.
-     */
-    @PostConstruct
-    public void populateSampleData() {
-        getUsers().add(new User(1, "shsu", "1234", true, false));
-        getUsers().add(new User(2, "jhou", "1234", false, false));
-    }
-
-    /**
      * Creates the user.
      * 
      * @return the string
@@ -73,6 +64,60 @@ public class UserSession implements Serializable {
             getUsers().remove(userToDelete);
         }
         return null;
+    }
+
+    /**
+     * Gets the employee id.
+     * 
+     * @return the employee id
+     */
+    public int getEmployeeID() {
+        return employeeID;
+    }
+
+    /**
+     * Gets the password.
+     * 
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * Gets the username.
+     * 
+     * @return the username
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * Gets the users.
+     * 
+     * @return the users
+     */
+    public List<User> getUsers() {
+        return userManager.getDataSource();
+    }
+
+    /**
+     * Checks if is logged in.
+     * 
+     * @return true, if is logged in
+     */
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    /**
+     * Checks if is super user.
+     * 
+     * @return true, if is super user
+     */
+    public boolean isSuperUser() {
+        return superUser;
     }
 
     /**
@@ -109,31 +154,12 @@ public class UserSession implements Serializable {
     }
 
     /**
-     * Gets the users.
-     * 
-     * @return the users
+     * Populate sample data.
      */
-    public List<User> getUsers() {
-        return userManager.getDataSource();
-    }
-
-    /**
-     * Sets the users.
-     * 
-     * @param users
-     *            the new users
-     */
-    public void setUsers(final List<User> users) {
-        userManager.setDataSource(users);
-    }
-
-    /**
-     * Gets the employee id.
-     * 
-     * @return the employee id
-     */
-    public int getEmployeeID() {
-        return employeeID;
+    @PostConstruct
+    public void populateSampleData() {
+        getUsers().add(new User(1, "shsu", "1234", true, false));
+        getUsers().add(new User(2, "jhou", "1234", false, false));
     }
 
     /**
@@ -147,12 +173,13 @@ public class UserSession implements Serializable {
     }
 
     /**
-     * Gets the username.
+     * Sets the password.
      * 
-     * @return the username
+     * @param password
+     *            the new password
      */
-    public String getUsername() {
-        return username;
+    public void setPassword(final String password) {
+        this.password = password;
     }
 
     /**
@@ -166,49 +193,12 @@ public class UserSession implements Serializable {
     }
 
     /**
-     * Gets the password.
+     * Sets the users.
      * 
-     * @return the password
+     * @param users
+     *            the new users
      */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * Sets the password.
-     * 
-     * @param password
-     *            the new password
-     */
-    public void setPassword(final String password) {
-        this.password = password;
-    }
-
-    /**
-     * Checks if is logged in.
-     * 
-     * @return true, if is logged in
-     */
-    public boolean isLoggedIn() {
-        return loggedIn;
-    }
-
-    /**
-     * Sets the logged in.
-     * 
-     * @param loggedIn
-     *            the new logged in
-     */
-    public void setLoggedIn(final boolean loggedIn) {
-        this.loggedIn = loggedIn;
-    }
-
-    /**
-     * Checks if is super user.
-     * 
-     * @return true, if is super user
-     */
-    public boolean isSuperUser() {
-        return superUser;
+    public void setUsers(final List<User> users) {
+        userManager.setDataSource(users);
     }
 }
