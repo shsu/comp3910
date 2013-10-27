@@ -104,20 +104,16 @@ public class TimeTable implements Serializable {
      */
     private void populateSampleData() {
         Random random = new Random();
-        for (int i = 2; i < 10; i++) {
-            for (int j = 1; j <= 3; j++) {
+        for (int i = 0; i <= 2 * 2 * 2; i++) {
+            for (int j = 0; j <= 2; j++) {
                 timeSheetManager.getDataSource().add(
-                        new TimeSheet(1, random.nextInt(10), "A"
+                        new TimeSheet(1, random.nextInt(2 * 2 * 2), "A"
                                 + random.nextInt(9999), getWeekOfYear() - i,
-                                2013, random.nextInt(9), random.nextInt(9),
-                                random.nextInt(9), random.nextInt(9), random
-                                .nextInt(9)));
+                                getYear(), 2, 2, 2, 2, 2));
                 timeSheetManager.getDataSource().add(
-                        new TimeSheet(2, random.nextInt(10), "A"
+                        new TimeSheet(2, random.nextInt(2 * 2 * 2), "A"
                                 + random.nextInt(9999), getWeekOfYear() - i,
-                                2013, random.nextInt(9), random.nextInt(9),
-                                random.nextInt(9), random.nextInt(9), random
-                                .nextInt(9)));
+                                getYear(), 2, 2, 2, 2, 2));
             }
         }
     }
