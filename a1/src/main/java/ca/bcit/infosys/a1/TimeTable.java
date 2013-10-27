@@ -371,7 +371,7 @@ public class TimeTable implements Serializable {
      */
     private void populateSampleData() {
         Random random = new Random();
-        for (int i = 0; i <= 2 * 2 * 2; i++) {
+        for (int i = 2; i <= 2 * 2 * 2; i++) {
             for (int j = 0; j <= 2; j++) {
                 timeSheetManager.getDataSource().add(
                         new TimeSheet(1, random.nextInt(2 * 2 * 2), "A"
@@ -405,12 +405,13 @@ public class TimeTable implements Serializable {
 
         // only fill in blank timesheets when current week is today/future.
         if (timeTable.size() <= 0) {
-            for (int i = 1; i <= DEFAULT_TIMESHEETS_TIMETABLE; i++) {
-                addTimeTableRow();
-            }
 
             if (!isPresentOrFuture()) {
                 emptyTimeTableAlert = true;
+            } else {
+                for (int i = 1; i <= DEFAULT_TIMESHEETS_TIMETABLE; i++) {
+                    addTimeTableRow();
+                }
             }
         }
     }
