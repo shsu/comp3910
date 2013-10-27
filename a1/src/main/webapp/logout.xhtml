@@ -12,10 +12,9 @@
          </ui:define>
 		<ui:define name="pageHeader">
 			#{msgs.logOutMsg}: #{UserSession.username} 
-		<span style="color: #fff"> #{UserSession.logOut()} </span> 
 		</ui:define>
 		<ui:define name="content-loggedIn">
-			<h:link outcome="index" value="#{msgs.relogin}" />
+			<h:link outcome="#{UserSession.logOut()}" value="#{msgs.relogin}" />
 		</ui:define>
 	</ui:composition>
 </body>

@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -111,10 +113,6 @@ public class UserSession implements Serializable {
         return loggedIn;
     }
 
-    public void setLoggedIn() {
-        loggedIn = false;
-    }
-    
     /**
      * Checks if is super user.
      * 
@@ -139,6 +137,11 @@ public class UserSession implements Serializable {
                 return "index";
             }
         }
+        FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage("Authentication Failure"));
+        // Still looking
+        // into how to
+        // localize this.
 
         return null;
     }
@@ -154,7 +157,7 @@ public class UserSession implements Serializable {
         superUser = false;
         loggedIn = false;
 
-        return null;
+        return "index";
     }
 
     /**
