@@ -4,13 +4,13 @@
 		<h2>#{msgs.loginPrompt}</h2>
 		<label for="inputUser1" class="control-label">#{msgs.username}</label><br />
 		<h:inputText value="#{UserSession.username}" size="20" id="inputUser1"
-			required="true" requiredMessage="#{msgs.usernameRequired}" />
+			required="true"
+			requiredMessage="#{msgs.pleaseEnter} #{msgs.username}" />
 		<br /> <label for="inputPassword1" class="control-label">#{msgs.password}</label><br />
 		<h:inputSecret value="#{UserSession.password}" size="20"
 			id="inputPassword1" required="true"
-			requiredMessage="#{msgs.passwordRequired}" />
+			requiredMessage="#{msgs.pleaseEnter} #{msgs.password}" />
 		<br /> <br />
 		<h:commandButton value="#{msgs.logIn}" action="#{UserSession.logIn}" />
-
 	</div>
 </h:form>
