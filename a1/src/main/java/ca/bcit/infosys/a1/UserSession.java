@@ -137,11 +137,10 @@ public class UserSession implements Serializable {
                 return "index";
             }
         }
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage("Authentication Failure"));
-        // Still looking
-        // into how to
-        // localize this.
+        FacesContext error = FacesContext.getCurrentInstance();
+        error.addMessage(null, new FacesMessage("Authentication Failure"));
+        error.addMessage(null, new FacesMessage("登錄失敗"));
+        // Still looking into how to localize this through message bundles.
 
         return null;
     }
