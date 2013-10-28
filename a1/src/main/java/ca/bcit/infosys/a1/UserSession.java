@@ -163,10 +163,10 @@ public class UserSession implements Serializable {
      */
     @PostConstruct
     public void populateSampleData() {
-        getUsers().add(new User(1, "shsu", "1234", true, false));
-        getUsers().add(new User(2, "jhou", "1234", false, false));
-        getUsers().add(new User(3, "admin", "admin", true, false));
-        getUsers().add(new User(4, "regular", "regular", false, false));
+        getUsers().add(new User(1,"admin", "admin", true, false));
+        getUsers().add(new User(2,"regular", "regular", false, false));
+        getUsers().add(new User(3,"shsu", "1234", true, false));
+        getUsers().add(new User(4,"jhou", "1234" , false, false));
     }
 
     /**
