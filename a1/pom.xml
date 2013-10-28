@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>ca.bcit.infosys</groupId>
-	<artifactId>a1-jhou-shsu</artifactId>
-	<version>0.1-SNAPSHOT</version>
+	<artifactId>a2-jhou-shsu</artifactId>
+	<version>0.2-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>COMP3910 Assignment 1</name>
-	<description>COMP3910 Assignment 1</description>
+	<name>COMP3910 Assignment 2</name>
+	<description>COMP3910 Assignment 2</description>
 
 	<properties>
 		<!-- Explicitly declaring the source encoding eliminates the following 
@@ -72,7 +72,12 @@
 			<version>3.0.2.Final</version>
 			<type>pom</type>
 			<scope>provided</scope>
-		</dependency>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>15.0</version>
+    </dependency>
 	</dependencies>
 
 	<build>
