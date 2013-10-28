@@ -235,7 +235,6 @@ public class TimeTable implements Serializable {
     @PostConstruct
     public void initialSetUp() {
         populateSampleData();
-        thisWeek();
     }
 
     /**

@@ -27,6 +27,10 @@ public class UserSession implements Serializable {
     @Inject
     private UserManager userManager;
 
+    /** The time table. */
+    @Inject
+    private TimeTable timeTable;
+
     /** The employee id. */
     private int employeeID;
 
@@ -134,6 +138,7 @@ public class UserSession implements Serializable {
                 loggedIn = true;
                 employeeID = user.getEmployeeID();
                 superUser = user.isSuperUser();
+                timeTable.thisWeek();
                 return "index";
             }
         }
