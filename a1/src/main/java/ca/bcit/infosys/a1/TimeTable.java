@@ -289,6 +289,7 @@ public class TimeTable implements Serializable {
         recycleBin.clear();
         timeSheetManager.getDataSource().removeAll(timeTable);
         timeSheetManager.getDataSource().addAll(timeTable);
+        timeTable.clear();
         savedSuccessfulNotify = true;
 
         return null;
@@ -405,7 +406,6 @@ public class TimeTable implements Serializable {
 
         // only fill in blank timesheets when current week is today/future.
         if (timeTable.size() <= 0) {
-
             if (!isPresentOrFuture()) {
                 emptyTimeTableAlert = true;
             } else {

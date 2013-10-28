@@ -26,7 +26,7 @@
 							<f:facet name="header">#{msgs.employeeID}</f:facet>
 							<h:inputText value="#{user.employeeID}" rendered="#{user.edit}"
 								size="10" required="true"
-								requiredMessage="#{msgs.pleaseEnter} #{msgs.employeeID}" />
+								requiredMessage="#{msgs.pleaseEnter} #{msgs.employeeID}" label="#{msgs.employeeID}"/>
 							<h:outputText value="#{user.employeeID}"
 								rendered="#{not user.edit}" />
 						</h:column>
@@ -34,7 +34,7 @@
 							<f:facet name="header">#{msgs.username}</f:facet>
 							<h:inputText value="#{user.username}" rendered="#{user.edit}"
 								size="10" required="true"
-								requiredMessage="#{msgs.pleaseEnter} #{msgs.username}" />
+								requiredMessage="#{msgs.pleaseEnter} #{msgs.username}" label="#{msgs.username}" />
 							<h:outputText value="#{user.username}"
 								rendered="#{not user.edit}" />
 						</h:column>
@@ -42,7 +42,7 @@
 							<f:facet name="header">#{msgs.password}</f:facet>
 							<h:inputText value="#{user.password}" rendered="#{user.edit}"
 								size="10" required="true"
-								requiredMessage="#{msgs.pleaseEnter} #{msgs.password}" />
+								requiredMessage="#{msgs.pleaseEnter} #{msgs.password}" label="#{msgs.password}" />
 							<h:outputText value="#{user.password}"
 								rendered="#{not user.edit}" />
 						</h:column>
