@@ -1,155 +1,158 @@
 <h:panelGroup xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
-	<h:form>
-		<h:panelGroup rendered="#{TimeTable.emptyTimeTableAlert}">
-			<div class="alert alert-warning alert-dismissable">
-				<button type="button" class="close" data-dismiss="alert"
-					aria-hidden="true">X</button>
-				<strong>#{msgs.warning}</strong> #{msgs.emptyTimeTableAlert}
-			</div>
-		</h:panelGroup>
+              xmlns:f="http://java.sun.com/jsf/core">
+    <h:form>
+        <h:panelGroup rendered="#{TimeTable.emptyTimeTableAlert}">
+            <div class="alert alert-warning alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert"
+                        aria-hidden="true">X
+                </button>
+                <strong>#{msgs.warning}</strong> #{msgs.emptyTimeTableAlert}
+            </div>
+        </h:panelGroup>
 
-		<h:panelGroup rendered="#{TimeTable.savedSuccessfulNotify}">
-			<div class="alert alert-success alert-dismissable">
-				<button type="button" class="close" data-dismiss="alert"
-					aria-hidden="true">X</button>
-				<strong>#{msgs.success}</strong> #{msgs.saveSuccessfulNotify}
-			</div>
-		</h:panelGroup>
+        <h:panelGroup rendered="#{TimeTable.savedSuccessfulNotify}">
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert"
+                        aria-hidden="true">X
+                </button>
+                <strong>#{msgs.success}</strong> #{msgs.saveSuccessfulNotify}
+            </div>
+        </h:panelGroup>
 
-		<div class="text-center" style="margin: 20px">
-			<h:commandButton action="#{TimeTable.previousWeek()}"
-				value="&lt; #{msgs.week}" immediate="true" />
-			<h:commandButton action="#{TimeTable.thisWeek()}"
-				value="#{msgs.today}" immediate="true" />
-			<h:commandButton action="#{TimeTable.nextWeek()}"
-				value="#{msgs.week} &gt;" immediate="true" />
-		</div>
+        <div class="text-center" style="margin: 20px">
+            <h:commandButton action="#{TimeTable.previousWeek()}"
+                             value="&lt; #{msgs.week}" immediate="true"/>
+            <h:commandButton action="#{TimeTable.thisWeek()}"
+                             value="#{msgs.today}" immediate="true"/>
+            <h:commandButton action="#{TimeTable.nextWeek()}"
+                             value="#{msgs.week} &gt;" immediate="true"/>
+        </div>
 
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<h3 class="panel-title">
-					<div class="col-md-4 text-center">#{msgs.employeeID}:
-						#{UserSession.employeeID}</div>
-					<div class="col-md-4 text-center">#{msgs.currentWeek}:
-						#{TimeTable.currentWeek}</div>
-					<div class="col-md-4 text-center">#{msgs.weekEnding}:
-						#{TimeTable.weekEnding}</div>
-				</h3>
-				<br /> <br />
-			</div>
-			<h:dataTable value="#{TimeTable.timeTable}" var="timesheet"
-				styleClass="table table-hover">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <div class="col-md-4 text-center">#{msgs.employeeID}:
+                        #{UserSession.employeeID}</div>
+                    <div class="col-md-4 text-center">#{msgs.currentWeek}:
+                        #{TimeTable.currentWeek}</div>
+                    <div class="col-md-4 text-center">#{msgs.weekEnding}:
+                        #{TimeTable.weekEnding}</div>
+                </h3>
+                <br/> <br/>
+            </div>
+            <h:dataTable value="#{TimeTable.timeTable}" var="timesheet"
+                         styleClass="table table-hover">
 
-				<h:column headerClass="columnHeader">
-					<f:facet name="header">#{msgs.projectNumber}</f:facet>
-					<h:inputText value="#{timesheet.projectNumber}" size="5"
-						readonly="#{not TimeTable.isPresentOrFuture()}" label="#{msgs.projectNumber}" />
-					<f:facet name="footer">#{msgs.total}: </f:facet>
-				</h:column>
+                <h:column headerClass="columnHeader">
+                    <f:facet name="header">#{msgs.projectNumber}</f:facet>
+                    <h:inputText value="#{timesheet.projectNumber}" size="5"
+                                 readonly="#{not TimeTable.isPresentOrFuture()}" label="#{msgs.projectNumber}"/>
+                    <f:facet name="footer">#{msgs.total}: </f:facet>
+                </h:column>
 
-				<h:column headerClass="columnHeader">
-					<f:facet name="header">#{msgs.workPackage}</f:facet>
-					<h:inputText value="#{timesheet.workPackage}" size="5"
-						readonly="#{not TimeTable.isPresentOrFuture()}" label="#{msgs.workPackage}" />
-					<f:facet name="footer">#{TimeTable.weekdayTotal}</f:facet>
-				</h:column>
+                <h:column headerClass="columnHeader">
+                    <f:facet name="header">#{msgs.workPackage}</f:facet>
+                    <h:inputText value="#{timesheet.workPackage}" size="5"
+                                 readonly="#{not TimeTable.isPresentOrFuture()}" label="#{msgs.workPackage}"/>
+                    <f:facet name="footer">#{TimeTable.weekdayTotal}</f:facet>
+                </h:column>
 
-				<h:column headerClass="columnHeader">
-					<f:facet name="header">#{msgs.sat}</f:facet>
-					<h:inputText value="#{timesheet.sat}" size="2" maxlength="4"
-						readonly="#{not TimeTable.isPresentOrFuture()}" label="#{msgs.sat}">
-						<f:validateDoubleRange minimum="0" maximum="24" />
-					</h:inputText>
-					<f:facet name="footer">#{TimeTable.satTotal}</f:facet>
-				</h:column>
+                <h:column headerClass="columnHeader">
+                    <f:facet name="header">#{msgs.sat}</f:facet>
+                    <h:inputText value="#{timesheet.sat}" size="2" maxlength="4"
+                                 readonly="#{not TimeTable.isPresentOrFuture()}" label="#{msgs.sat}">
+                        <f:validateDoubleRange minimum="0" maximum="24"/>
+                    </h:inputText>
+                    <f:facet name="footer">#{TimeTable.satTotal}</f:facet>
+                </h:column>
 
-				<h:column headerClass="columnHeader">
-					<f:facet name="header">#{msgs.sun}</f:facet>
-					<h:inputText value="#{timesheet.sun}" size="2" maxlength="4"
-						readonly="#{not TimeTable.isPresentOrFuture()}" label="#{msgs.sun}">
-						<f:validateDoubleRange minimum="0" maximum="24" />
-					</h:inputText>
-					<f:facet name="footer">#{TimeTable.sunTotal}</f:facet>
-				</h:column>
+                <h:column headerClass="columnHeader">
+                    <f:facet name="header">#{msgs.sun}</f:facet>
+                    <h:inputText value="#{timesheet.sun}" size="2" maxlength="4"
+                                 readonly="#{not TimeTable.isPresentOrFuture()}" label="#{msgs.sun}">
+                        <f:validateDoubleRange minimum="0" maximum="24"/>
+                    </h:inputText>
+                    <f:facet name="footer">#{TimeTable.sunTotal}</f:facet>
+                </h:column>
 
-				<h:column headerClass="columnHeader">
-					<f:facet name="header">#{msgs.mon}</f:facet>
-					<h:inputText value="#{timesheet.mon}" size="2" maxlength="4"
-						readonly="#{not TimeTable.isPresentOrFuture()}" label="#{msgs.mon}">
-						<f:validateDoubleRange minimum="0" maximum="24" />
-					</h:inputText>
-					<f:facet name="footer">#{TimeTable.monTotal}</f:facet>
-				</h:column>
+                <h:column headerClass="columnHeader">
+                    <f:facet name="header">#{msgs.mon}</f:facet>
+                    <h:inputText value="#{timesheet.mon}" size="2" maxlength="4"
+                                 readonly="#{not TimeTable.isPresentOrFuture()}" label="#{msgs.mon}">
+                        <f:validateDoubleRange minimum="0" maximum="24"/>
+                    </h:inputText>
+                    <f:facet name="footer">#{TimeTable.monTotal}</f:facet>
+                </h:column>
 
-				<h:column headerClass="columnHeader">
-					<f:facet name="header">#{msgs.tue}</f:facet>
-					<h:inputText value="#{timesheet.tue}" size="2" maxlength="4"
-						readonly="#{not TimeTable.isPresentOrFuture()}" label="#{msgs.tue}">
-						<f:validateDoubleRange minimum="0" maximum="24" />
-					</h:inputText>
-					<f:facet name="footer">#{TimeTable.tueTotal}</f:facet>
-				</h:column>
+                <h:column headerClass="columnHeader">
+                    <f:facet name="header">#{msgs.tue}</f:facet>
+                    <h:inputText value="#{timesheet.tue}" size="2" maxlength="4"
+                                 readonly="#{not TimeTable.isPresentOrFuture()}" label="#{msgs.tue}">
+                        <f:validateDoubleRange minimum="0" maximum="24"/>
+                    </h:inputText>
+                    <f:facet name="footer">#{TimeTable.tueTotal}</f:facet>
+                </h:column>
 
-				<h:column headerClass="columnHeader">
-					<f:facet name="header">#{msgs.wed}</f:facet>
-					<h:inputText value="#{timesheet.wed}" size="2" maxlength="4"
-						readonly="#{not TimeTable.isPresentOrFuture()}" label="#{msgs.wed}">
-						<f:validateDoubleRange minimum="0" maximum="24" />
-					</h:inputText>
-					<f:facet name="footer">#{TimeTable.wedTotal}</f:facet>
-				</h:column>
-				<h:column headerClass="columnHeader">
-					<f:facet name="header">#{msgs.thu}</f:facet>
-					<h:inputText value="#{timesheet.thu}" size="2" maxlength="4"
-						readonly="#{not TimeTable.isPresentOrFuture()}" label="#{msgs.thu}">
-						<f:validateDoubleRange minimum="0" maximum="24" />
-					</h:inputText>
-					<f:facet name="footer">#{TimeTable.thuTotal}</f:facet>
-				</h:column>
-				<h:column headerClass="columnHeader">
-					<f:facet name="header">#{msgs.fri}</f:facet>
-					<h:inputText value="#{timesheet.fri}" size="2" maxlength="4"
-						readonly="#{not TimeTable.isPresentOrFuture()}" label="#{msgs.fri}">
-						<f:validateDoubleRange minimum="0" maximum="24" />
-					</h:inputText>
-					<f:facet name="footer">#{TimeTable.friTotal}</f:facet>
-				</h:column>
+                <h:column headerClass="columnHeader">
+                    <f:facet name="header">#{msgs.wed}</f:facet>
+                    <h:inputText value="#{timesheet.wed}" size="2" maxlength="4"
+                                 readonly="#{not TimeTable.isPresentOrFuture()}" label="#{msgs.wed}">
+                        <f:validateDoubleRange minimum="0" maximum="24"/>
+                    </h:inputText>
+                    <f:facet name="footer">#{TimeTable.wedTotal}</f:facet>
+                </h:column>
+                <h:column headerClass="columnHeader">
+                    <f:facet name="header">#{msgs.thu}</f:facet>
+                    <h:inputText value="#{timesheet.thu}" size="2" maxlength="4"
+                                 readonly="#{not TimeTable.isPresentOrFuture()}" label="#{msgs.thu}">
+                        <f:validateDoubleRange minimum="0" maximum="24"/>
+                    </h:inputText>
+                    <f:facet name="footer">#{TimeTable.thuTotal}</f:facet>
+                </h:column>
+                <h:column headerClass="columnHeader">
+                    <f:facet name="header">#{msgs.fri}</f:facet>
+                    <h:inputText value="#{timesheet.fri}" size="2" maxlength="4"
+                                 readonly="#{not TimeTable.isPresentOrFuture()}" label="#{msgs.fri}">
+                        <f:validateDoubleRange minimum="0" maximum="24"/>
+                    </h:inputText>
+                    <f:facet name="footer">#{TimeTable.friTotal}</f:facet>
+                </h:column>
 
-				<h:column headerClass="columnHeader">
-					<f:facet name="header">#{msgs.notes}</f:facet>
-					<h:inputText value="#{timesheet.notes}" size="20"
-						readonly="#{not TimeTable.isPresentOrFuture()}" />
-				</h:column>
+                <h:column headerClass="columnHeader">
+                    <f:facet name="header">#{msgs.notes}</f:facet>
+                    <h:inputText value="#{timesheet.notes}" size="20"
+                                 readonly="#{not TimeTable.isPresentOrFuture()}"/>
+                </h:column>
 
-				<h:column headerClass="columnHeader">
-					<f:facet name="header">
-						<h:outputText value="#{msgs.deleteRow}"
-							rendered="#{TimeTable.isPresentOrFuture()}" />
-					</f:facet>
-					<h:commandLink action="#{TimeTable.deleteTimeTableRow(timesheet)}"
-						value="#{msgs.deleteRow}"
-						rendered="#{TimeTable.isPresentOrFuture()}" />
-				</h:column>
-			</h:dataTable>
-			<div class="panel-footer">
-				<div class="col-md-4 text-center">
-					<h:commandButton value="#{msgs.saveAllRows}"
-						action="#{TimeTable.persistTimeTable()}"
-						rendered="#{TimeTable.isPresentOrFuture()}" />
-				</div>
-				<div class="col-md-4 text-center">
-					<h:commandButton value="#{msgs.addRow}"
-						action="#{TimeTable.addTimeTableRow()}"
-						rendered="#{TimeTable.isPresentOrFuture()}" />
-				</div>
-				<div class="col-md-4 text-center">
-					<h:commandButton value="#{msgs.saveAllRows}"
-						action="#{TimeTable.persistTimeTable()}"
-						rendered="#{TimeTable.isPresentOrFuture()}" />
-				</div>
-				<br /> <br />
-			</div>
-		</div>
-	</h:form>
+                <h:column headerClass="columnHeader">
+                    <f:facet name="header">
+                        <h:outputText value="#{msgs.deleteRow}"
+                                      rendered="#{TimeTable.isPresentOrFuture()}"/>
+                    </f:facet>
+                    <h:commandLink action="#{TimeTable.deleteTimeTableRow(timesheet)}"
+                                   value="#{msgs.deleteRow}"
+                                   rendered="#{TimeTable.isPresentOrFuture()}"/>
+                </h:column>
+            </h:dataTable>
+
+            <div class="panel-footer">
+                <div class="col-md-4 text-center">
+                    <h:commandButton value="#{msgs.saveAllRows}"
+                                     action="#{TimeTable.persistTimeTable()}"
+                                     rendered="#{TimeTable.isPresentOrFuture()}"/>
+                </div>
+                <div class="col-md-4 text-center">
+                    <h:commandButton value="#{msgs.addRow}"
+                                     action="#{TimeTable.addTimeTableRow()}"
+                                     rendered="#{TimeTable.isPresentOrFuture()}"/>
+                </div>
+                <div class="col-md-4 text-center">
+                    <h:commandButton value="#{msgs.saveAllRows}"
+                                     action="#{TimeTable.persistTimeTable()}"
+                                     rendered="#{TimeTable.isPresentOrFuture()}"/>
+                </div>
+                <br/> <br/>
+            </div>
+        </div>
+    </h:form>
 </h:panelGroup>

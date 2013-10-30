@@ -1,18 +1,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
 <head>
-<title>IGNORED</title>
+    <title>IGNORED</title>
 </head>
 <body>
-	<ui:composition template="/templates/masterLayout.xhtml">
-		<ui:define name="windowTitle">
-            #{msgs.pageTitle} - #{UserSession.logOut()}
-         </ui:define>
-		<ui:define name="content">
-			<h2>#{msgs.logOutMsg}. <h:link outcome="#{UserSession.logOut()}" value="#{msgs.relogin}" /></h2>
-		</ui:define>
-	</ui:composition>
+<ui:composition template="/templates/masterLayout.xhtml">
+    <ui:define name="windowTitle">
+        #{msgs.pageTitle} - #{UserSession.logOut()}
+    </ui:define>
+    <ui:define name="content">
+        <h2>#{msgs.logOutMsg}. <h:link outcome="#{UserSession.logOut()}" value="#{msgs.relogin}"/></h2>
+    </ui:define>
+</ui:composition>
 </body>
 </html>
