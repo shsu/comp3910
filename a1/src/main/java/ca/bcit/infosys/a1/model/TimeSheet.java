@@ -1,364 +1,182 @@
 package ca.bcit.infosys.a1.model;
 
+import javax.persistence.*;
+import java.io.Serializable;
+
 /**
  * TimeSheet Model.
- * 
+ *
  * @author shsu
- * @version 0.1
+ * @version 0.2
  */
-public class TimeSheet {
+@Entity
+@Table(name = "TimeSheets")
+public class TimeSheet implements Serializable {
 
-    /** The employee id. */
+    private int timeSheetID;
     private int employeeID;
-
-    /** The project number. */
+    private int week;
+    private int year;
     private int projectNumber;
-
-    /** The work package. */
     private String workPackage;
-
-    /** The sat. */
     private double sat;
-
-    /** The sun. */
     private double sun;
-
-    /** The mon. */
     private double mon;
-
-    /** The tue. */
     private double tue;
-
-    /** The wed. */
     private double wed;
-
-    /** The thu. */
     private double thu;
-
-    /** The fri. */
     private double fri;
-
-    /** The notes. */
     private String notes;
 
-    /** The week. */
-    private int week;
+    public TimeSheet() {
+    }
 
-    /** The year. */
-    private int year;
-
-    /**
-     * Instantiates a new time sheet.
-     * 
-     * @param employeeID
-     *            the employee id
-     * @param week
-     *            the week
-     * @param year
-     *            the year
-     */
-    public TimeSheet(final int employeeID, final int week, final int year) {
+    public TimeSheet(final int timeSheetID, final int employeeID, final int week, final int year) {
         super();
+        this.timeSheetID = timeSheetID;
         this.employeeID = employeeID;
         this.week = week;
         this.year = year;
     }
 
-    /**
-     * Instantiates a new time sheet.
-     * 
-     * @param employeeID
-     *            the employee id
-     * @param projectNumber
-     *            the project number
-     * @param workPackage
-     *            the work package
-     * @param week
-     *            the week
-     * @param year
-     *            the year
-     * @param mon
-     *            the mon
-     * @param tue
-     *            the tue
-     * @param wed
-     *            the wed
-     * @param thu
-     *            the thu
-     * @param fri
-     *            the fri
-     */
-    public TimeSheet(final int employeeID, final int projectNumber,
-            final String workPackage, final int week, final int year,
-            final int mon, final int tue, final int wed, final int thu,
-            final int fri) {
-        super();
-        this.employeeID = employeeID;
-        this.projectNumber = projectNumber;
-        this.workPackage = workPackage;
-        this.week = week;
-        this.year = year;
-        this.mon = mon;
-        this.tue = tue;
-        this.wed = wed;
-        this.thu = thu;
-        this.fri = fri;
+    @Id
+    @Column(name = "timeSheetID", nullable = false, length = 10)
+    public int getTimeSheetID() {
+        return timeSheetID;
     }
 
-    /**
-     * Gets the total.
-     * 
-     * @return the total
-     */
-    public double getTotal() {
-        return sat + sun + mon + tue + wed + thu + fri;
+    public void setTimeSheetID(int timeSheetID) {
+        this.timeSheetID = timeSheetID;
     }
 
-    /**
-     * Gets the employee id.
-     * 
-     * @return the employee id
-     */
+    @Basic
+    @Column(name = "employeeID", nullable = false, length = 10)
     public int getEmployeeID() {
         return employeeID;
     }
 
-    /**
-     * Sets the employee id.
-     * 
-     * @param employeeID
-     *            the new employee id
-     */
-    public void setEmployeeID(final int employeeID) {
+    public void setEmployeeID(int employeeID) {
         this.employeeID = employeeID;
     }
 
-    /**
-     * Gets the project number.
-     * 
-     * @return the project number
-     */
-    public int getProjectNumber() {
-        return projectNumber;
-    }
-
-    /**
-     * Sets the project number.
-     * 
-     * @param projectNumber
-     *            the new project number
-     */
-    public void setProjectNumber(final int projectNumber) {
-        this.projectNumber = projectNumber;
-    }
-
-    /**
-     * Gets the work package.
-     * 
-     * @return the work package
-     */
-    public String getWorkPackage() {
-        return workPackage;
-    }
-
-    /**
-     * Sets the work package.
-     * 
-     * @param workPackage
-     *            the new work package
-     */
-    public void setWorkPackage(final String workPackage) {
-        this.workPackage = workPackage;
-    }
-
-    /**
-     * Gets the sat.
-     * 
-     * @return the sat
-     */
-    public double getSat() {
-        return sat;
-    }
-
-    /**
-     * Sets the sat.
-     * 
-     * @param sat
-     *            the new sat
-     */
-    public void setSat(final double sat) {
-        this.sat = sat;
-    }
-
-    /**
-     * Gets the sun.
-     * 
-     * @return the sun
-     */
-    public double getSun() {
-        return sun;
-    }
-
-    /**
-     * Sets the sun.
-     * 
-     * @param sun
-     *            the new sun
-     */
-    public void setSun(final double sun) {
-        this.sun = sun;
-    }
-
-    /**
-     * Gets the mon.
-     * 
-     * @return the mon
-     */
-    public double getMon() {
-        return mon;
-    }
-
-    /**
-     * Sets the mon.
-     * 
-     * @param mon
-     *            the new mon
-     */
-    public void setMon(final double mon) {
-        this.mon = mon;
-    }
-
-    /**
-     * Gets the tue.
-     * 
-     * @return the tue
-     */
-    public double getTue() {
-        return tue;
-    }
-
-    /**
-     * Sets the tue.
-     * 
-     * @param tue
-     *            the new tue
-     */
-    public void setTue(final double tue) {
-        this.tue = tue;
-    }
-
-    /**
-     * Gets the wed.
-     * 
-     * @return the wed
-     */
-    public double getWed() {
-        return wed;
-    }
-
-    /**
-     * Sets the wed.
-     * 
-     * @param wed
-     *            the new wed
-     */
-    public void setWed(final double wed) {
-        this.wed = wed;
-    }
-
-    /**
-     * Gets the thu.
-     * 
-     * @return the thu
-     */
-    public double getThu() {
-        return thu;
-    }
-
-    /**
-     * Sets the thu.
-     * 
-     * @param thu
-     *            the new thu
-     */
-    public void setThu(final double thu) {
-        this.thu = thu;
-    }
-
-    /**
-     * Gets the fri.
-     * 
-     * @return the fri
-     */
-    public double getFri() {
-        return fri;
-    }
-
-    /**
-     * Sets the fri.
-     * 
-     * @param fri
-     *            the new fri
-     */
-    public void setFri(final double fri) {
-        this.fri = fri;
-    }
-
-    /**
-     * Gets the notes.
-     * 
-     * @return the notes
-     */
-    public String getNotes() {
-        return notes;
-    }
-
-    /**
-     * Sets the notes.
-     * 
-     * @param notes
-     *            the new notes
-     */
-    public void setNotes(final String notes) {
-        this.notes = notes;
-    }
-
-    /**
-     * Gets the week.
-     * 
-     * @return the week
-     */
+    @Basic
+    @Column(name = "week", nullable = false, length = 2)
     public int getWeek() {
         return week;
     }
 
-    /**
-     * Sets the week.
-     * 
-     * @param week
-     *            the new week
-     */
-    public void setWeek(final int week) {
+    public void setWeek(int week) {
         this.week = week;
     }
 
-    /**
-     * Gets the year.
-     * 
-     * @return the year
-     */
+    @Basic
+    @Column(name = "year", nullable = false, length = 4)
     public int getYear() {
         return year;
     }
 
-    /**
-     * Sets the year.
-     * 
-     * @param year
-     *            the new year
-     */
-    public void setYear(final int year) {
+    public void setYear(int year) {
         this.year = year;
     }
 
+    @Basic
+    @Column(name = "projectNumber", nullable = false, length = 10)
+    public int getProjectNumber() {
+        return projectNumber;
+    }
+
+    public void setProjectNumber(int projectNumber) {
+        this.projectNumber = projectNumber;
+    }
+
+    //TODO: Verify work package requirements.
+    @Basic
+    @Column(name = "workPackage", nullable = false, length = 5)
+    public String getWorkPackage() {
+        return workPackage;
+    }
+
+    public void setWorkPackage(String workPackage) {
+        this.workPackage = workPackage;
+    }
+
+    @Basic
+    @Column(name = "sat", nullable = true, length = 2)
+    public double getSat() {
+        return sat;
+    }
+
+    public void setSat(double sat) {
+        this.sat = sat;
+    }
+
+    @Basic
+    @Column(name = "sun", nullable = true, length = 2)
+    public double getSun() {
+        return sun;
+    }
+
+    public void setSun(double sun) {
+        this.sun = sun;
+    }
+
+    @Basic
+    @Column(name = "mon", nullable = true, length = 2)
+    public double getMon() {
+        return mon;
+    }
+
+    public void setMon(double mon) {
+        this.mon = mon;
+    }
+
+    @Basic
+    @Column(name = "tue", nullable = true, length = 2)
+    public double getTue() {
+        return tue;
+    }
+
+    public void setTue(double tue) {
+        this.tue = tue;
+    }
+
+    @Basic
+    @Column(name = "wed", nullable = true, length = 2)
+    public double getWed() {
+        return wed;
+    }
+
+    public void setWed(double wed) {
+        this.wed = wed;
+    }
+
+    @Basic
+    @Column(name = "thu", nullable = true, length = 2)
+    public double getThu() {
+        return thu;
+    }
+
+    public void setThu(double thu) {
+        this.thu = thu;
+    }
+
+    @Basic
+    @Column(name = "fri", nullable = true, length = 2)
+    public double getFri() {
+        return fri;
+    }
+
+    public void setFri(double fri) {
+        this.fri = fri;
+    }
+
+    @Basic
+    @Column(name = "notes", nullable = true, length = 200)
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 }
