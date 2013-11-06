@@ -1,48 +1,61 @@
 package ca.bcit.infosys.a1.access;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Named;
-
 import ca.bcit.infosys.a1.model.User;
 
+import javax.ejb.Stateful;
+import javax.enterprise.context.SessionScoped;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import java.io.Serializable;
+import java.util.List;
+
 /**
- * Handles CRUD actions for User class. In this assignment, we are not writing
- * to the database, hence passing on the responsibility to UserSession class.
- * 
+ * Handles CRUD actions for User class.
+ *
  * @author shsu
- * @version 0.1
+ * @version 0.2
  */
-@ApplicationScoped
-@Named("UserManager")
+@SessionScoped
+@Stateful
 public class UserManager implements Serializable {
+    @PersistenceContext(unitName = "assignment2")
+    EntityManager em;
 
-    /** The data source. */
-    private List<User> dataSource;
-
-    public UserManager() {
-        dataSource = new ArrayList<User>();
+    public User find(final int id) {
+        return em.find(User.class, id);
     }
 
-    /**
-     * Gets the data source.
-     * 
-     * @return the data source
-     */
-    public List<User> getDataSource() {
-        return dataSource;
+    public void persist(final User user) {
+        em.persist(user);
     }
 
-    /**
-     * Sets the data source.
-     * 
-     * @param dataSource
-     *            the new data source
-     */
-    public void setDataSource(final List<User> dataSource) {
-        this.dataSource = dataSource;
+    public void merge(final User user) {
+        em.merge(user);
+    }
+
+    public void remove(final User user) {
+        em.remove(find(user.getEmployeeID()));
+    }
+
+    public void removeAll() {
+        for (User user : getAll()) {
+            em.remove(user);
+        }
+    }
+
+    public List<User> getAll() {
+        TypedQuery<User> query = em.createQuery("select u from User u", User.class);
+        return query.getResultList();
+    }
+
+    public User authenticate(final String username, final String password) {
+        for (User user : getAll()) {
+            if (user.getUsername().equals(username)
+                    && user.getPassword().equals(password)) {
+                return user;
+            }
+        }
+        return null;
     }
 }

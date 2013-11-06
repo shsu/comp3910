@@ -1,49 +1,52 @@
 package ca.bcit.infosys.a1.access;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Named;
-
 import ca.bcit.infosys.a1.model.TimeSheet;
 
+import javax.ejb.Stateful;
+import javax.enterprise.context.SessionScoped;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import java.io.Serializable;
+import java.util.List;
+
 /**
- * Handles CRUD actions for TimeSheet class. In this assignment, we are not
- * writing to the database, hence passing on the responsibility to TimeTable
- * class.
- * 
+ * Handles CRUD actions for TimeSheet class.
+ *
  * @author shsu
- * @version 0.1
+ * @version 0.2
  */
-@ApplicationScoped
-@Named("TimeSheetManager")
+@SessionScoped
+@Stateful
 public class TimeSheetManager implements Serializable {
+    @PersistenceContext(unitName = "assignment2")
+    EntityManager em;
 
-    /** The data source. */
-    private List<TimeSheet> dataSource;
-
-    public TimeSheetManager() {
-        dataSource = new ArrayList<TimeSheet>();
+    public TimeSheet find(final int id) {
+        return em.find(TimeSheet.class, id);
     }
 
-    /**
-     * Gets the data source.
-     * 
-     * @return the data source
-     */
-    public List<TimeSheet> getDataSource() {
-        return dataSource;
+    public void persist(final TimeSheet timeSheet) {
+        em.persist(timeSheet);
     }
 
-    /**
-     * Sets the data source.
-     * 
-     * @param dataSource
-     *            the new data source
-     */
-    public void setDataSource(final List<TimeSheet> dataSource) {
-        this.dataSource = dataSource;
+    public void merge(final TimeSheet timeSheet) {
+        em.merge(timeSheet);
     }
+
+    public void remove(final TimeSheet timeSheet) {
+        em.remove(find(timeSheet.getTimeSheetID()));
+    }
+
+    public void removeAll() {
+        for (TimeSheet timeSheet : getAll()) {
+            em.remove(timeSheet);
+        }
+    }
+
+    public List<TimeSheet> getAll() {
+        TypedQuery<TimeSheet> query = em.createQuery("select t from TimeSheet t", TimeSheet.class);
+        return query.getResultList();
+    }
+
 }
