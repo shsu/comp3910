@@ -1,0 +1,3 @@
+CREATE DATABASE IF NOT EXISTS a2;
+CREATE USER 'a2'@'localhost' IDENTIFIED BY 'a2';
+GRANT ALL ON a2.* TO 'a2'@'localhost';
