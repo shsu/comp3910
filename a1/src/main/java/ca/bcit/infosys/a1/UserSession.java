@@ -38,18 +38,6 @@ public class UserSession implements Serializable {
     private User currentLoggedInUser;
 
     /**
-     * Populate sample data.
-     */
-    @PostConstruct
-    public void populateSampleData() {
-        userManager.removeAll();
-        userManager.persist(new User("admin", "admin", true));
-        userManager.persist(new User("regular", "regular", false));
-        userManager.persist(new User("shsu", "1234", true));
-        userManager.persist(new User("jhou", "1234", false));
-    }
-
-    /**
      * Log in.
      *
      * @return the string

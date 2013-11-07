@@ -194,14 +194,6 @@ public class TimeTable implements Serializable {
     }
 
     /**
-     * Populate time table.
-     */
-    @PostConstruct
-    public void initialSetUp() {
-        populateSampleData();
-    }
-
-    /**
      * Checks if is empty time table alert.
      *
      * @return true, if is empty time table alert
@@ -333,19 +325,6 @@ public class TimeTable implements Serializable {
      */
     private int getYear() {
         return Calendar.getInstance().get(Calendar.YEAR);
-    }
-
-    /**
-     * Populate sample data. May contain some magic numbers!
-     */
-    private void populateSampleData() {
-        Random random = new Random();
-        for (int i = 2; i <= 2 * 2 * 2; i++) {
-            for (int j = 0; j <= 2; j++) {
-                timeSheetManager.persist(new TimeSheet(1, getWeekOfYear() - i, getYear(), random.nextInt(2 * 2 * 2), "A", 2));
-                timeSheetManager.persist(new TimeSheet(2, getWeekOfYear() - i, getYear(), random.nextInt(2 * 2 * 2), "A", 2));
-            }
-        }
     }
 
     /**
