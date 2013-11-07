@@ -31,15 +31,28 @@ public class TimeSheet implements Serializable {
     public TimeSheet() {
     }
 
-    public TimeSheet(final int timeSheetID, final int employeeID, final int week, final int year) {
+    public TimeSheet(final int employeeID, final int week, final int year) {
         super();
-        this.timeSheetID = timeSheetID;
         this.employeeID = employeeID;
         this.week = week;
         this.year = year;
     }
 
+    public TimeSheet(int employeeID, int week, int year, int projectNumber, String workPackage, double hours) {
+        this.employeeID = employeeID;
+        this.week = week;
+        this.year = year;
+        this.projectNumber = projectNumber;
+        this.workPackage = workPackage;
+        this.mon = hours;
+        this.tue = hours;
+        this.wed = hours;
+        this.thu = hours;
+        this.fri = hours;
+    }
+
     @Id
+    @GeneratedValue
     @Column(name = "timeSheetID", nullable = false, length = 10)
     public int getTimeSheetID() {
         return timeSheetID;
