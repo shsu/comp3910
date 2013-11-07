@@ -16,7 +16,7 @@
         </div>
     </ui:define>
     <ui:define name="pageHeader">
-        #{msgs.timeTable}: #{UserSession.username}
+        #{msgs.timeTable}: #{UserSession.currentLoggedInUser.username}
     </ui:define>
     <ui:define name="content-loggedIn">
         <ui:include src="/sections/timetable.xhtml"/>

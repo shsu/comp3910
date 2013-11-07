@@ -3,14 +3,15 @@
     <div class="text-center">
         <h2>#{msgs.loginPrompt}</h2>
         <label for="inputUser1" class="control-label">#{msgs.username}</label><br/>
-        <h:inputText value="#{UserSession.username}" size="20" id="inputUser1"
+        <h:inputText binding="#{usernameField}" size="20" id="inputUser1"
                      required="true"
                      requiredMessage="#{msgs.pleaseEnter} #{msgs.username}"/>
         <br/> <label for="inputPassword1" class="control-label">#{msgs.password}</label><br/>
-        <h:inputSecret value="#{UserSession.password}" size="20"
+        <h:inputSecret binding="#{passwordField}" size="20"
                        id="inputPassword1" required="true"
                        requiredMessage="#{msgs.pleaseEnter} #{msgs.password}"/>
         <br/> <br/>
-        <h:commandButton value="#{msgs.logIn}" action="#{UserSession.logIn}"/>
+        <h:commandButton value="#{msgs.logIn}"
+                         action="#{UserSession.logIn(usernameField.value,passwordField.value)}"/>
     </div>
 </h:form>

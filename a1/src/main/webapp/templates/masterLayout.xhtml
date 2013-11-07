@@ -32,16 +32,16 @@
             </div>
         </h:panelGroup>
 
-        <h:panelGroup layout="block" rendered="#{!UserSession.loggedIn}">
+        <h:panelGroup layout="block" rendered="#{UserSession.currentLoggedInUser ==  null}">
             <ui:insert name="content"/>
         </h:panelGroup>
-        <h:panelGroup layout="block" rendered="#{UserSession.loggedIn}">
+        <h:panelGroup layout="block" rendered="#{UserSession.currentLoggedInUser != null}">
             <h1>
                 <ui:insert name="pageHeader"/>
             </h1>
             <ui:insert name="content-loggedIn"/>
             <ui:insert name="content-superUser"
-                       rendered="#{UserSession.superUser}"/>
+                       rendered="#{UserSession.currentLoggedInUser.superUser}"/>
         </h:panelGroup>
     </div>
     <ui:debug/>

@@ -21,17 +21,15 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(final int employeeID, final String username,
-                final String password, final boolean superUser, final boolean edit) {
+    public User(final String username, final String password, final boolean superUser) {
         super();
-        this.employeeID = employeeID;
         this.username = username;
         this.password = password;
         this.superUser = superUser;
     }
 
     @Id
-    @Basic
+    @GeneratedValue
     @Column(name = "employeeID", nullable = false, length = 10)
     public int getEmployeeID() {
         return employeeID;

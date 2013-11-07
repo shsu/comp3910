@@ -1,7 +1,7 @@
 package ca.bcit.infosys.a1;
 
-import java.io.Serializable;
-import java.util.List;
+import ca.bcit.infosys.a1.access.UserManager;
+import ca.bcit.infosys.a1.model.User;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -9,208 +9,103 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import ca.bcit.infosys.a1.access.UserManager;
-import ca.bcit.infosys.a1.model.User;
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * UserSession CDI Bean.
- * 
+ *
  * @author shsu
- * @version 0.1
+ * @version 0.2
  */
 @SessionScoped
 @Named("UserSession")
 public class UserSession implements Serializable {
 
-    /** The user manager. */
+    /**
+     * The user manager.
+     */
     @Inject
     private UserManager userManager;
 
-    /** The time table. */
+    /**
+     * The time table.
+     */
     @Inject
     private TimeTable timeTable;
 
-    /** The employee id. */
-    private int employeeID;
-
-    /** The username. */
-    private String username;
-
-    /** The password. */
-    private String password;
-
-    /** The is logged in. */
-    private boolean loggedIn;
-
-    /** The super user. */
-    private boolean superUser;
-
-    /**
-     * Creates the user.
-     * 
-     * @return the string
-     */
-    public String createUser() {
-        if (loggedIn && superUser) {
-            getUsers().add(new User(0, "", "", false, true));
-        }
-        return null;
-    }
-
-    /**
-     * Delete user.
-     * 
-     * @param userToDelete
-     *            the user to delete
-     * @return the string
-     */
-    public String deleteUser(final User userToDelete) {
-        if (loggedIn && superUser) {
-            getUsers().remove(userToDelete);
-        }
-        return null;
-    }
-
-    /**
-     * Gets the employee id.
-     * 
-     * @return the employee id
-     */
-    public int getEmployeeID() {
-        return employeeID;
-    }
-
-    /**
-     * Gets the password.
-     * 
-     * @return the password
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * Gets the username.
-     * 
-     * @return the username
-     */
-    public String getUsername() {
-        return username;
-    }
-
-    /**
-     * Gets the users.
-     * 
-     * @return the users
-     */
-    public List<User> getUsers() {
-        return userManager.getDataSource();
-    }
-
-    /**
-     * Checks if is logged in.
-     * 
-     * @return true, if is logged in
-     */
-    public boolean isLoggedIn() {
-        return loggedIn;
-    }
-
-    /**
-     * Checks if is super user.
-     * 
-     * @return true, if is super user
-     */
-    public boolean isSuperUser() {
-        return superUser;
-    }
-
-    /**
-     * Log in.
-     * 
-     * @return the string
-     */
-    public String logIn() {
-        for (User user : getUsers()) {
-            if (user.getUsername().equals(username)
-                    && user.getPassword().equals(password)) {
-                loggedIn = true;
-                employeeID = user.getEmployeeID();
-                superUser = user.isSuperUser();
-                timeTable.thisWeek();
-                return "index";
-            }
-        }
-        FacesContext error = FacesContext.getCurrentInstance();
-        error.addMessage(null, new FacesMessage("Authentication Failure"));
-        // Still looking into how to localize this through message bundles.
-
-        return null;
-    }
-
-    /**
-     * Log out.
-     * 
-     * @return the string
-     */
-    public String logOut() {
-        username = "";
-        password = "";
-        superUser = false;
-        loggedIn = false;
-
-        return "index";
-    }
+    private User currentLoggedInUser;
 
     /**
      * Populate sample data.
      */
     @PostConstruct
     public void populateSampleData() {
-        getUsers().add(new User(1,"admin", "admin", true, false));
-        getUsers().add(new User(2,"regular", "regular", false, false));
-        getUsers().add(new User(3,"shsu", "1234", true, false));
-        getUsers().add(new User(4,"jhou", "1234" , false, false));
+        userManager.removeAll();
+        userManager.persist(new User("admin", "admin", true));
+        userManager.persist(new User("regular", "regular", false));
+        userManager.persist(new User("shsu", "1234", true));
+        userManager.persist(new User("jhou", "1234", false));
     }
 
     /**
-     * Sets the employee id.
-     * 
-     * @param employeeID
-     *            the new employee id
+     * Log in.
+     *
+     * @return the string
      */
-    public void setEmployeeID(final int employeeID) {
-        this.employeeID = employeeID;
+    public String logIn(final String username, final String password) {
+
+        currentLoggedInUser = userManager.authenticate(username, password);
+
+        if (currentLoggedInUser == null) {
+            FacesContext error = FacesContext.getCurrentInstance();
+            error.addMessage(null, new FacesMessage("Authentication Failure"));
+            // Still looking into how to localize this through message bundles.
+        } else {
+            timeTable.thisWeek();
+        }
+
+        return null;
     }
 
     /**
-     * Sets the password.
-     * 
-     * @param password
-     *            the new password
+     * Log out.
+     *
+     * @return the string
      */
-    public void setPassword(final String password) {
-        this.password = password;
+    public String logOut() {
+        currentLoggedInUser = null;
+
+        return null;
     }
 
-    /**
-     * Sets the username.
-     * 
-     * @param username
-     *            the new username
-     */
-    public void setUsername(final String username) {
-        this.username = username;
+    public String createUser() {
+        if (currentLoggedInUser != null && currentLoggedInUser.isSuperUser()) {
+            userManager.persist(new User("", "", false));
+        }
+        return null;
     }
 
-    /**
-     * Sets the users.
-     * 
-     * @param users
-     *            the new users
-     */
-    public void setUsers(final List<User> users) {
-        userManager.setDataSource(users);
+    public String deleteUser(final User userToDelete) {
+        if (currentLoggedInUser != null && currentLoggedInUser.isSuperUser()) {
+            userManager.remove(userToDelete);
+        }
+        return null;
+    }
+
+    public List<User> getAllUsers() {
+        if (currentLoggedInUser != null && currentLoggedInUser.isSuperUser()) {
+            return userManager.getAll();
+        }
+        return Collections.EMPTY_LIST;
+    }
+
+    public User getCurrentLoggedInUser() {
+        return currentLoggedInUser;
+    }
+
+    public void setCurrentLoggedInUser(User currentLoggedInUser) {
+        this.currentLoggedInUser = currentLoggedInUser;
     }
 }
