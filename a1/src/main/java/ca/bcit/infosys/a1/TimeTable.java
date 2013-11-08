@@ -335,13 +335,9 @@ public class TimeTable implements Serializable {
         savedSuccessfulNotify = false;
         emptyTimeTableAlert = false;
 
-        for (TimeSheet timeSheet : timeSheetManager.getAll()) {
-            if (timeSheet.getEmployeeID() == userSession.getCurrentLoggedInUser().getEmployeeID()
-                    && timeSheet.getWeek() == currentWeek
-                    && timeSheet.getYear() == currentYear) {
-                timeTable.add(timeSheet);
-                addTotalHours(timeSheet);
-            }
+        for (TimeSheet timeSheet : timeSheetManager.getAll(userSession.getCurrentLoggedInUser().getEmployeeID(), currentWeek, currentYear)) {
+            timeTable.add(timeSheet);
+            addTotalHours(timeSheet);
         }
 
         // only fill in blank timesheets when current week is today/future.
