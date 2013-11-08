@@ -248,7 +248,7 @@ public class TimeTable implements Serializable {
         } else {
             savedSuccessfulNotify = false;
             FacesContext error = FacesContext.getCurrentInstance();
-            error.addMessage(null, new FacesMessage(MessagesHelper.getMessages("projectNumberWorkPackageValidationFailed")));
+            error.addMessage(null, new FacesMessage(MessagesHelper.getMessages("projectNumberWorkPackageValidationFailed", error.getViewRoot().getLocale())));
         }
         return null;
     }

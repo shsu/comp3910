@@ -48,7 +48,7 @@ public class UserSession implements Serializable {
 
         if (currentLoggedInUser == null) {
             FacesContext error = FacesContext.getCurrentInstance();
-            error.addMessage(null, new FacesMessage(MessagesHelper.getMessages("authenticationFailed")));
+            error.addMessage(null, new FacesMessage(MessagesHelper.getMessages("authenticationFailed", error.getViewRoot().getLocale())));
         } else {
             timeTable.thisWeek();
         }

@@ -1,19 +1,17 @@
 package ca.bcit.infosys.a1.messages;
 
-import javax.enterprise.context.SessionScoped;
-import javax.faces.context.FacesContext;
 import java.io.Serializable;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- * Created by shsu on 11/8/2013.
+ * Helper class used for retrieving localized messages from resource bundles.
+ * <p/>
+ * http://docs.oracle.com/javaee/6/tutorial/doc/bnaxw.html
  */
-@SessionScoped
 public class MessagesHelper implements Serializable {
 
-    public static String getMessages(String key) {
-        ResourceBundle res = ResourceBundle.getBundle(
-                "ca.bcit.infosys.a1.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
-        return res.getString(key);
+    public static String getMessages(String key, Locale locale) {
+        return ResourceBundle.getBundle("ca.bcit.infosys.a1.messages", locale).getString(key);
     }
 }
