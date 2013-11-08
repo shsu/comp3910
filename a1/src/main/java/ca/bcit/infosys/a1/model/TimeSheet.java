@@ -15,18 +15,18 @@ public class TimeSheet implements Serializable {
 
     private int timeSheetID;
     private int employeeID;
-    private Double fri;
-    private Double mon;
-    private String notes;
-    private int projectNumber;
-    private Double sat;
-    private Double sun;
-    private Double thu;
-    private Double tue;
-    private Double wed;
     private int week;
-    private String workPackage;
     private int year;
+    private int projectNumber;
+    private String workPackage;
+    private double sat;
+    private double sun;
+    private double mon;
+    private double tue;
+    private double wed;
+    private double thu;
+    private double fri;
+    private String notes;
 
     public TimeSheet() {
     }
@@ -36,9 +36,30 @@ public class TimeSheet implements Serializable {
         this.employeeID = employeeID;
         this.week = week;
         this.year = year;
+        this.sat = 0;
+        this.sun = 0;
+        this.mon = 0;
+        this.tue = 0;
+        this.wed = 0;
+        this.thu = 0;
+        this.fri = 0;
+    }
+
+    public TimeSheet(int employeeID, int week, int year, int projectNumber, String workPackage, double hours) {
+        this.employeeID = employeeID;
+        this.week = week;
+        this.year = year;
+        this.projectNumber = projectNumber;
+        this.workPackage = workPackage;
+        this.mon = hours;
+        this.tue = hours;
+        this.wed = hours;
+        this.thu = hours;
+        this.fri = hours;
     }
 
     @Id
+    @GeneratedValue
     @Column(name = "timeSheetID", nullable = false)
     public int getTimeSheetID() {
         return timeSheetID;
@@ -59,33 +80,23 @@ public class TimeSheet implements Serializable {
     }
 
     @Basic
-    @Column(name = "fri")
-    public Double getFri() {
-        return fri;
+    @Column(name = "week", nullable = false, length = 2)
+    public int getWeek() {
+        return week;
     }
 
-    public void setFri(Double fri) {
-        this.fri = fri;
-    }
-
-    @Basic
-    @Column(name = "mon")
-    public Double getMon() {
-        return mon;
-    }
-
-    public void setMon(Double mon) {
-        this.mon = mon;
+    public void setWeek(int week) {
+        this.week = week;
     }
 
     @Basic
-    @Column(name = "notes", length = 200)
-    public String getNotes() {
-        return notes;
+    @Column(name = "year", nullable = false, length = 4)
+    public int getYear() {
+        return year;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setYear(int year) {
+        this.year = year;
     }
 
     @Basic
@@ -99,67 +110,7 @@ public class TimeSheet implements Serializable {
     }
 
     @Basic
-    @Column(name = "sat")
-    public Double getSat() {
-        return sat;
-    }
-
-    public void setSat(Double sat) {
-        this.sat = sat;
-    }
-
-    @Basic
-    @Column(name = "sun")
-    public Double getSun() {
-        return sun;
-    }
-
-    public void setSun(Double sun) {
-        this.sun = sun;
-    }
-
-    @Basic
-    @Column(name = "thu")
-    public Double getThu() {
-        return thu;
-    }
-
-    public void setThu(Double thu) {
-        this.thu = thu;
-    }
-
-    @Basic
-    @Column(name = "tue")
-    public Double getTue() {
-        return tue;
-    }
-
-    public void setTue(Double tue) {
-        this.tue = tue;
-    }
-
-    @Basic
-    @Column(name = "wed")
-    public Double getWed() {
-        return wed;
-    }
-
-    public void setWed(Double wed) {
-        this.wed = wed;
-    }
-
-    @Basic
-    @Column(name = "week", nullable = false)
-    public int getWeek() {
-        return week;
-    }
-
-    public void setWeek(int week) {
-        this.week = week;
-    }
-
-    @Basic
-    @Column(name = "workPackage", nullable = false)
+    @Column(name = "workPackage", nullable = false, length = 5)
     public String getWorkPackage() {
         return workPackage;
     }
@@ -169,56 +120,82 @@ public class TimeSheet implements Serializable {
     }
 
     @Basic
-    @Column(name = "year", nullable = false)
-    public int getYear() {
-        return year;
+    @Column(name = "sat", nullable = false, length = 2)
+    public double getSat() {
+        return sat;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setSat(double sat) {
+        this.sat = sat;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        TimeSheet that = (TimeSheet) o;
-
-        if (employeeID != that.employeeID) return false;
-        if (projectNumber != that.projectNumber) return false;
-        if (timeSheetID != that.timeSheetID) return false;
-        if (week != that.week) return false;
-        if (year != that.year) return false;
-        if (fri != null ? !fri.equals(that.fri) : that.fri != null) return false;
-        if (mon != null ? !mon.equals(that.mon) : that.mon != null) return false;
-        if (notes != null ? !notes.equals(that.notes) : that.notes != null) return false;
-        if (sat != null ? !sat.equals(that.sat) : that.sat != null) return false;
-        if (sun != null ? !sun.equals(that.sun) : that.sun != null) return false;
-        if (thu != null ? !thu.equals(that.thu) : that.thu != null) return false;
-        if (tue != null ? !tue.equals(that.tue) : that.tue != null) return false;
-        if (wed != null ? !wed.equals(that.wed) : that.wed != null) return false;
-        if (workPackage != null ? !workPackage.equals(that.workPackage) : that.workPackage != null) return false;
-
-        return true;
+    @Basic
+    @Column(name = "sun", nullable = false, length = 2)
+    public double getSun() {
+        return sun;
     }
 
-    @Override
-    public int hashCode() {
-        int result = timeSheetID;
-        result = 31 * result + employeeID;
-        result = 31 * result + (fri != null ? fri.hashCode() : 0);
-        result = 31 * result + (mon != null ? mon.hashCode() : 0);
-        result = 31 * result + (notes != null ? notes.hashCode() : 0);
-        result = 31 * result + projectNumber;
-        result = 31 * result + (sat != null ? sat.hashCode() : 0);
-        result = 31 * result + (sun != null ? sun.hashCode() : 0);
-        result = 31 * result + (thu != null ? thu.hashCode() : 0);
-        result = 31 * result + (tue != null ? tue.hashCode() : 0);
-        result = 31 * result + (wed != null ? wed.hashCode() : 0);
-        result = 31 * result + week;
-        result = 31 * result + (workPackage != null ? workPackage.hashCode() : 0);
-        result = 31 * result + year;
-        return result;
+    public void setSun(double sun) {
+        this.sun = sun;
+    }
+
+    @Basic
+    @Column(name = "mon", nullable = false, length = 2)
+    public double getMon() {
+        return mon;
+    }
+
+    public void setMon(double mon) {
+        this.mon = mon;
+    }
+
+    @Basic
+    @Column(name = "tue", nullable = false, length = 2)
+    public double getTue() {
+        return tue;
+    }
+
+    public void setTue(double tue) {
+        this.tue = tue;
+    }
+
+    @Basic
+    @Column(name = "wed", nullable = false, length = 2)
+    public double getWed() {
+        return wed;
+    }
+
+    public void setWed(double wed) {
+        this.wed = wed;
+    }
+
+    @Basic
+    @Column(name = "thu", nullable = false, length = 2)
+    public double getThu() {
+        return thu;
+    }
+
+    public void setThu(double thu) {
+        this.thu = thu;
+    }
+
+    @Basic
+    @Column(name = "fri", nullable = false, length = 2)
+    public double getFri() {
+        return fri;
+    }
+
+    public void setFri(double fri) {
+        this.fri = fri;
+    }
+
+    @Basic
+    @Column(name = "notes", nullable = true, length = 200)
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 }
