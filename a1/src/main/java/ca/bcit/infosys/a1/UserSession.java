@@ -1,6 +1,7 @@
 package ca.bcit.infosys.a1;
 
 import ca.bcit.infosys.a1.access.UserManager;
+import ca.bcit.infosys.a1.messages.MessagesHelper;
 import ca.bcit.infosys.a1.model.User;
 
 import javax.enterprise.context.SessionScoped;
@@ -47,8 +48,7 @@ public class UserSession implements Serializable {
 
         if (currentLoggedInUser == null) {
             FacesContext error = FacesContext.getCurrentInstance();
-            error.addMessage(null, new FacesMessage("Authentication Failure"));
-            // Still looking into how to localize this through message bundles.
+            error.addMessage(null, new FacesMessage(MessagesHelper.getMessages("authenticationFailed")));
         } else {
             timeTable.thisWeek();
         }

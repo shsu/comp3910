@@ -1,6 +1,7 @@
 package ca.bcit.infosys.a1;
 
 import ca.bcit.infosys.a1.access.TimeSheetManager;
+import ca.bcit.infosys.a1.messages.MessagesHelper;
 import ca.bcit.infosys.a1.model.TimeSheet;
 
 import javax.enterprise.context.SessionScoped;
@@ -247,7 +248,7 @@ public class TimeTable implements Serializable {
         } else {
             savedSuccessfulNotify = false;
             FacesContext error = FacesContext.getCurrentInstance();
-            error.addMessage(null, new FacesMessage("Duplicate Project Number and Work Package combination found!"));
+            error.addMessage(null, new FacesMessage(MessagesHelper.getMessages("projectNumberWorkPackageValidationFailed")));
         }
         return null;
     }
