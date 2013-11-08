@@ -54,7 +54,7 @@
                     <f:facet name="header">#{msgs.workPackage}</f:facet>
                     <h:inputText value="#{timesheet.workPackage}" size="5"
                                  readonly="#{not TimeTable.isPresentOrFuture()}" label="#{msgs.workPackage}">
-                        <f:validateLength minimum="1" maximum="5"/>
+                        <f:validateLength maximum="5"/>
                     </h:inputText>
                     <f:facet name="footer">#{TimeTable.weekdayTotal}</f:facet>
                 </h:column>
