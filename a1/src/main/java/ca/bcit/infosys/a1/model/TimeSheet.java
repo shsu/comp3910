@@ -31,31 +31,11 @@ public class TimeSheet implements Serializable {
     public TimeSheet() {
     }
 
-    public TimeSheet(final int employeeID, final int week, final int year) {
-        super();
+    public TimeSheet(int employeeID, int week, int year, String workPackage) {
         this.employeeID = employeeID;
         this.week = week;
         this.year = year;
-        this.sat = 0;
-        this.sun = 0;
-        this.mon = 0;
-        this.tue = 0;
-        this.wed = 0;
-        this.thu = 0;
-        this.fri = 0;
-    }
-
-    public TimeSheet(int employeeID, int week, int year, int projectNumber, String workPackage, double hours) {
-        this.employeeID = employeeID;
-        this.week = week;
-        this.year = year;
-        this.projectNumber = projectNumber;
         this.workPackage = workPackage;
-        this.mon = hours;
-        this.tue = hours;
-        this.wed = hours;
-        this.thu = hours;
-        this.fri = hours;
     }
 
     @Id

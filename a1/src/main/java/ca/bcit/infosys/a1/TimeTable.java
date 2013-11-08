@@ -32,7 +32,6 @@ public class TimeTable implements Serializable {
     private UserSession userSession;
 
     private List<TimeSheet> timeTable;
-    private final List<TimeSheet> recycleBin;
     private int currentWeek;
     private int currentYear;
     private double satTotal;
@@ -51,7 +50,6 @@ public class TimeTable implements Serializable {
      */
     public TimeTable() {
         timeTable = new ArrayList<TimeSheet>(MAXIMUM_TIMESHEETS);
-        recycleBin = new ArrayList<TimeSheet>(MAXIMUM_TIMESHEETS);
     }
 
     /**
@@ -60,8 +58,10 @@ public class TimeTable implements Serializable {
      * @return the string
      */
     public String addTimeTableRow() {
-        timeTable.add(new TimeSheet(userSession.getCurrentLoggedInUser().getEmployeeID(), currentWeek,
-                currentYear));
+        TimeSheet newRow = new TimeSheet(userSession.getCurrentLoggedInUser().getEmployeeID(), currentWeek,
+                currentYear,"");
+        timeTable.add(newRow);
+        timeSheetManager.persist(newRow);
         return null;
     }
 
@@ -73,7 +73,7 @@ public class TimeTable implements Serializable {
      */
     public String deleteTimeTableRow(final TimeSheet toDelete) {
         timeTable.remove(toDelete);
-        recycleBin.add(toDelete);
+        timeSheetManager.remove(toDelete);
         return null;
     }
 
@@ -238,18 +238,10 @@ public class TimeTable implements Serializable {
      * @return the string
      */
     public String persistTimeTable() {
-        for (TimeSheet toRemove : recycleBin) {
-            timeSheetManager.remove(toRemove);
-        }
-        recycleBin.clear();
 
-        // temporary until we find a way to find out who is edited, who is added
         for (TimeSheet displayedOnTimeTable : timeTable) {
-            timeSheetManager.remove(displayedOnTimeTable);
             timeSheetManager.merge(displayedOnTimeTable);
         }
-        timeTable.clear();
-
         savedSuccessfulNotify = true;
 
         return null;
@@ -330,7 +322,6 @@ public class TimeTable implements Serializable {
      */
     private void refreshTimeTable() {
         timeTable.clear();
-        recycleBin.clear();
         resetTotalHours();
         savedSuccessfulNotify = false;
         emptyTimeTableAlert = false;
@@ -364,5 +355,4 @@ public class TimeTable implements Serializable {
         thuTotal = 0;
         friTotal = 0;
     }
-
 }
