@@ -364,6 +364,9 @@ public class TimeTable implements Serializable {
 
     /**
      * Validate Unique Project Number and Work Package
+     *
+     * @param toValidate list of timesheets.
+     * @return false if duplicates found else return true.
      */
     private boolean validateProjectNumberWorkPackage(List<TimeSheet> toValidate) {
         Set<String> temporaryValidationSet = new HashSet<String>();

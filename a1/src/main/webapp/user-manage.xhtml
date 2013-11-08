@@ -17,11 +17,19 @@
 
     <ui:define name="content-superUser">
 
+        <h:panelGroup rendered="#{UserSession.saveSuccessful}">
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert"
+                        aria-hidden="true">X
+                </button>
+                <strong>#{msgs.success}</strong> #{msgs.usersSaveSuccessful}
+            </div>
+        </h:panelGroup>
+
         <div class="panel panel-defualt">
             <h:form>
-                <h:dataTable value="#{UserSession.allUsers}" var="user"
+                <h:dataTable value="#{UserSession.userList}" var="user"
                              styleClass="table table-hover">
-
                     <h:column>
                         <f:facet name="header">#{msgs.employeeID}</f:facet>
                         <h:inputText value="#{user.employeeID}"
@@ -45,15 +53,23 @@
                     <h:column>
                         <f:facet name="header">#{msgs.delete}</f:facet>
                         <h:commandLink action="#{UserSession.deleteUser(user)}"
-                                       value="#{msgs.yes}"/>
+                                       value="#{msgs.yes}" title="#{msgs.changesApplyImmediately}" immediate="true"/>
                     </h:column>
-
                 </h:dataTable>
 
-                <div class="panel-footer text-center">
-                    <h:commandButton action="#{UserSession.createUser()}"
-                                     value="#{msgs.addNewUser}"/>
-                    <br/>
+                <div class="panel-footer">
+                    <div class="col-md-4 text-center">
+                        <h:commandButton value="#{msgs.saveAllRows}"
+                                         action="#{UserSession.persistUsers()}"/>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <h:commandButton action="#{UserSession.createUser()}" value="#{msgs.addNewUser}"/>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <h:commandButton value="#{msgs.saveAllRows}"
+                                         action="#{UserSession.persistUsers()}"/>
+                    </div>
+                    <br/> <br/>
                 </div>
             </h:form>
         </div>
