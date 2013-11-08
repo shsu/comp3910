@@ -38,14 +38,9 @@ public class TimeSheetManager implements Serializable {
         em.remove(find(timeSheet.getTimeSheetID()));
     }
 
-    public void removeAll() {
-        for (TimeSheet timeSheet : getAll()) {
-            em.remove(timeSheet);
-        }
-    }
-
-    public List<TimeSheet> getAll() {
-        TypedQuery<TimeSheet> query = em.createQuery("select t from TimeSheet t", TimeSheet.class);
+    public List<TimeSheet> getAll(final int employeeID, final int week, final int year) {
+        TypedQuery<TimeSheet> query = em.createQuery("select t from TimeSheet t where t.employeeID = "
+                + employeeID + " and t.week = " + week + " and t.year = " + year, TimeSheet.class);
         return query.getResultList();
     }
 

@@ -38,12 +38,6 @@ public class UserManager implements Serializable {
         em.remove(find(user.getEmployeeID()));
     }
 
-    public void removeAll() {
-        for (User user : getAll()) {
-            em.remove(user);
-        }
-    }
-
     public List<User> getAll() {
         TypedQuery<User> query = em.createQuery("select u from User u", User.class);
         return query.getResultList();
