@@ -59,7 +59,7 @@
     <dependencies>
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
+            <artifactId>hibernate-entitymanager</artifactId>
             <version>4.2.7.SP1</version>
         </dependency>
         <!-- Include the JBoss' Java EE 6 APIs -->

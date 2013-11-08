@@ -3,7 +3,6 @@ package ca.bcit.infosys.a1;
 import ca.bcit.infosys.a1.access.TimeSheetManager;
 import ca.bcit.infosys.a1.model.TimeSheet;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -12,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Random;
 
 /**
  * TimeTable CDI Bean.

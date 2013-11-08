@@ -3,7 +3,6 @@ package ca.bcit.infosys.a1;
 import ca.bcit.infosys.a1.access.UserManager;
 import ca.bcit.infosys.a1.model.User;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;

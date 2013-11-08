@@ -1,4 +1,3 @@
-TRUNCATE TABLE hibernate_sequence;
 TRUNCATE TABLE TimeSheets;
 TRUNCATE TABLE Users;
 
