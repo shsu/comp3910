@@ -4,13 +4,13 @@ import ca.bcit.infosys.a1.access.TimeSheetManager;
 import ca.bcit.infosys.a1.model.TimeSheet;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 /**
  * TimeTable CDI Bean.
@@ -59,7 +59,7 @@ public class TimeTable implements Serializable {
      */
     public String addTimeTableRow() {
         TimeSheet newRow = new TimeSheet(userSession.getCurrentLoggedInUser().getEmployeeID(), currentWeek,
-                currentYear,"");
+                currentYear, "");
         timeTable.add(newRow);
         timeSheetManager.persist(newRow);
         return null;
@@ -239,11 +239,16 @@ public class TimeTable implements Serializable {
      */
     public String persistTimeTable() {
 
-        for (TimeSheet displayedOnTimeTable : timeTable) {
-            timeSheetManager.merge(displayedOnTimeTable);
+        if (validateProjectNumberWorkPackage(timeTable)) {
+            for (TimeSheet displayedOnTimeTable : timeTable) {
+                timeSheetManager.merge(displayedOnTimeTable);
+            }
+            savedSuccessfulNotify = true;
+        } else {
+            savedSuccessfulNotify = false;
+            FacesContext error = FacesContext.getCurrentInstance();
+            error.addMessage(null, new FacesMessage("Duplicate Project Number and Work Package combination found!"));
         }
-        savedSuccessfulNotify = true;
-
         return null;
     }
 
@@ -354,5 +359,19 @@ public class TimeTable implements Serializable {
         wedTotal = 0;
         thuTotal = 0;
         friTotal = 0;
+    }
+
+    /**
+     * Validate Unique Project Number and Work Package
+     */
+    private boolean validateProjectNumberWorkPackage(List<TimeSheet> toValidate) {
+        Set<String> temporaryValidationSet = new HashSet<String>();
+
+        for (TimeSheet timeSheet : toValidate) {
+            if (!temporaryValidationSet.add(timeSheet.getProjectNumber() + timeSheet.getWorkPackage())) {
+                return false;
+            }
+        }
+        return true;
     }
 }
