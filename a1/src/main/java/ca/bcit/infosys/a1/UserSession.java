@@ -74,6 +74,7 @@ public class UserSession implements Serializable {
      */
     public String createUser() {
         if (currentLoggedInUser != null && currentLoggedInUser.isSuperUser()) {
+            persistUsers();
             User newUser = new User("", "", false);
             userList.add(newUser);
             userManager.persist(newUser);
