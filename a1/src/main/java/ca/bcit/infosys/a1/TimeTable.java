@@ -242,15 +242,20 @@ public class TimeTable implements Serializable {
      */
     public String persistTimeTable() {
 
-        if (validateProjectNumberWorkPackage(timeTable)) {
+        if (validateProjectNumberWorkPackage(timeTable) && validateTotalHours(timeTable)) {
             for (TimeSheet displayedOnTimeTable : timeTable) {
                 timeSheetManager.merge(displayedOnTimeTable);
             }
             savedSuccessfulNotify = true;
+            refreshTimeTable();
+        } else if (!validateTotalHours(timeTable)) {
+            FacesContext error = FacesContext.getCurrentInstance();
+            error.addMessage(null, new FacesMessage(MessagesHelper.getMessages("nonRealisticWorkingHours", error.getViewRoot().getLocale())));
         } else {
             FacesContext error = FacesContext.getCurrentInstance();
             error.addMessage(null, new FacesMessage(MessagesHelper.getMessages("projectNumberWorkPackageValidationFailed", error.getViewRoot().getLocale())));
         }
+
         return null;
     }
 
@@ -375,6 +380,31 @@ public class TimeTable implements Serializable {
                 return false;
             }
         }
+        return true;
+    }
+
+    private boolean validateTotalHours(List<TimeSheet> toValidate) {
+        int satTotal = 0;
+        int sunTotal = 0;
+        int monTotal = 0;
+        int tueTotal = 0;
+        int wedTotal = 0;
+        int thuTotal = 0;
+        int friTotal = 0;
+
+        for (TimeSheet timeSheet : toValidate) {
+            satTotal += timeSheet.getSat();
+            sunTotal += timeSheet.getSun();
+            monTotal += timeSheet.getMon();
+            tueTotal += timeSheet.getTue();
+            wedTotal += timeSheet.getWed();
+            thuTotal += timeSheet.getThu();
+            friTotal += timeSheet.getFri();
+            if (satTotal > 24 || sunTotal > 24 || monTotal > 24 || tueTotal > 24 || wedTotal > 24 || thuTotal > 24 || friTotal > 24) {
+                return false;
+            }
+        }
+
         return true;
     }
 }
