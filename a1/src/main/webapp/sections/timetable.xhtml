@@ -134,7 +134,8 @@
                     <h:commandLink action="#{TimeTable.deleteTimeTableRow(timesheet)}"
                                    value="#{msgs.deleteRow}" title="#{msgs.changesApplyImmediately}"
                                    immediate="true" rendered="#{TimeTable.isPresentOrFuture()}"/>
-                    <f:facet name="footer"><h:link outcome="index" value="#{msgs.reset}"/></f:facet>
+                    <f:facet name="footer"><h:link outcome="index" value="#{msgs.reset}"
+                                                   rendered="#{TimeTable.isPresentOrFuture()}"/></f:facet>
                 </h:column>
             </h:dataTable>
 
