@@ -134,16 +134,6 @@ public class UserSession implements Serializable {
     }
 
     /**
-     * Checks if user is current user.
-     *
-     * @param user to be verified.
-     * @return True if user is current user, false otherwise.
-     */
-    public boolean isCurrentLoggedInUser(User user) {
-        return user.getEmployeeID() == currentLoggedInUser.getEmployeeID();
-    }
-
-    /**
      * Fetches all users from the database.
      *
      * @return list of users in the system.

@@ -54,7 +54,7 @@
                         <f:facet name="header">#{msgs.delete}</f:facet>
                         <h:commandLink action="#{UserSession.deleteUser(user)}"
                                        value="#{msgs.yes}" title="#{msgs.changesApplyImmediately}" immediate="true"
-                                       rendered="#{!UserSession.isCurrentLoggedInUser(user)}"/>
+                                       rendered="#{UserSession.currentLoggedInUser.employeeID != user.employeeID}"/>
                         <f:facet name="footer"><h:link outcome="user-manage" value="#{msgs.reset}"/></f:facet>
                     </h:column>
                 </h:dataTable>
