@@ -106,6 +106,7 @@ public class UserSession implements Serializable {
                 userManager.merge(user);
             }
             saveSuccessful = true;
+            currentLoggedInUser = userManager.find(currentLoggedInUser.getEmployeeID());
         } else {
             saveSuccessful = false;
             FacesContext error = FacesContext.getCurrentInstance();
