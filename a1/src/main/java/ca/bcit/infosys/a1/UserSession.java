@@ -133,6 +133,21 @@ public class UserSession implements Serializable {
         return true;
     }
 
+    /**
+     * Checks if user is current user.
+     *
+     * @param user to be verified.
+     * @return True if user is current user, false otherwise.
+     */
+    public boolean isCurrentLoggedInUser(User user) {
+        return user.getEmployeeID() == currentLoggedInUser.getEmployeeID();
+    }
+
+    /**
+     * Fetches all users from the database.
+     *
+     * @return list of users in the system.
+     */
     public List<User> getUserList() {
         if (currentLoggedInUser != null && currentLoggedInUser.isSuperUser()) {
             userList = userManager.getAll();
@@ -155,4 +170,5 @@ public class UserSession implements Serializable {
     public boolean isSaveSuccessful() {
         return saveSuccessful;
     }
+
 }

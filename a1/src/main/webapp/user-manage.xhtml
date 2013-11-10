@@ -53,7 +53,8 @@
                     <h:column>
                         <f:facet name="header">#{msgs.delete}</f:facet>
                         <h:commandLink action="#{UserSession.deleteUser(user)}"
-                                       value="#{msgs.yes}" title="#{msgs.changesApplyImmediately}" immediate="true"/>
+                                       value="#{msgs.yes}" title="#{msgs.changesApplyImmediately}" immediate="true"
+                                       rendered="#{!UserSession.isCurrentLoggedInUser(user)}"/>
                         <f:facet name="footer"><h:link outcome="user-manage" value="#{msgs.reset}"/></f:facet>
                     </h:column>
                 </h:dataTable>
@@ -64,7 +65,7 @@
                                          action="#{UserSession.persistUsers()}"/>
                     </div>
                     <div class="col-md-4 text-center">
-                        <h:commandButton action="#{UserSession.createUser()}" value="#{msgs.addNewUser}"/>
+                        <h:commandButton action="#{UserSession.createUser()}" value="#{msgs.addRow}"/>
                     </div>
                     <div class="col-md-4 text-center">
                         <h:commandButton value="#{msgs.saveAllRows}"
