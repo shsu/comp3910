@@ -147,6 +147,8 @@ public class TimeTable implements Serializable {
      * @return the time table
      */
     public List<TimeSheet> getTimeTable() {
+        savedSuccessfulNotify = false;
+        emptyTimeTableAlert = false;
         return timeTable;
     }
 
@@ -246,7 +248,6 @@ public class TimeTable implements Serializable {
             }
             savedSuccessfulNotify = true;
         } else {
-            savedSuccessfulNotify = false;
             FacesContext error = FacesContext.getCurrentInstance();
             error.addMessage(null, new FacesMessage(MessagesHelper.getMessages("projectNumberWorkPackageValidationFailed", error.getViewRoot().getLocale())));
         }
@@ -329,8 +330,6 @@ public class TimeTable implements Serializable {
     private void refreshTimeTable() {
         timeTable.clear();
         resetTotalHours();
-        savedSuccessfulNotify = false;
-        emptyTimeTableAlert = false;
 
         for (TimeSheet timeSheet : timeSheetManager.getAll(userSession.getCurrentLoggedInUser().getEmployeeID(), currentWeek, currentYear)) {
             timeTable.add(timeSheet);
