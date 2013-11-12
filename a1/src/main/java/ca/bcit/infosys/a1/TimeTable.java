@@ -374,7 +374,7 @@ public class TimeTable implements Serializable {
     /**
      * Refresh time table.
      */
-    private void refreshTimeTable() {
+    public void refreshTimeTable() {
         timeTable.clear();
         resetTotalHours();
 

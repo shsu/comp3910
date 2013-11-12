@@ -136,9 +136,10 @@
                                      immediate="true" rendered="#{TimeTable.isPresentOrFuture()}"
                                      onclick="return confirm('#{msgs.confirmation}')"
                                      styleClass="btn btn-danger"/>
-                    <f:facet name="footer"><h:link outcome="index" value="#{msgs.reset}"
-                                                   rendered="#{TimeTable.isPresentOrFuture()}"
-                                                   styleClass="btn btn-warning"/></f:facet>
+                    <f:facet name="footer"><h:commandButton outcome="index" value="#{msgs.reset}"
+                                                            action="#{TimeTable.refreshTimeTable}"
+                                                            rendered="#{TimeTable.isPresentOrFuture()}"
+                                                            styleClass="btn btn-warning"/></f:facet>
                 </h:column>
             </h:dataTable>
 
