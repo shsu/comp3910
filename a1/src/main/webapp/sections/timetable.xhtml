@@ -21,11 +21,11 @@
 
         <div class="text-center" style="margin: 20px">
             <h:commandButton action="#{TimeTable.previousWeek()}"
-                             value="&lt; #{msgs.week}" immediate="true"/>
+                             value="&lt; #{msgs.week}" immediate="true" styleClass="btn btn-default"/>
             <h:commandButton action="#{TimeTable.thisWeek()}"
-                             value="#{msgs.today}" immediate="true"/>
+                             value="#{msgs.today}" immediate="true" styleClass="btn btn-success"/>
             <h:commandButton action="#{TimeTable.nextWeek()}"
-                             value="#{msgs.week} &gt;" immediate="true"/>
+                             value="#{msgs.week} &gt;" immediate="true" styleClass="btn btn-default"/>
         </div>
 
         <div class="panel panel-primary">
@@ -128,14 +128,17 @@
 
                 <h:column headerClass="columnHeader">
                     <f:facet name="header">
-                        <h:outputText value="#{msgs.deleteRow}"
+                        <h:outputText value="#{msgs.delete}"
                                       rendered="#{TimeTable.isPresentOrFuture()}"/>
                     </f:facet>
-                    <h:commandLink action="#{TimeTable.deleteTimeTableRow(timesheet)}"
-                                   value="#{msgs.deleteRow}" title="#{msgs.changesApplyImmediately}"
-                                   immediate="true" rendered="#{TimeTable.isPresentOrFuture()}"/>
+                    <h:commandButton action="#{TimeTable.deleteTimeTableRow(timesheet)}"
+                                     value="#{msgs.delete}" title="#{msgs.changesApplyImmediately}"
+                                     immediate="true" rendered="#{TimeTable.isPresentOrFuture()}"
+                                     onclick="return confirm('#{msgs.confirmation}')"
+                                     styleClass="btn btn-danger"/>
                     <f:facet name="footer"><h:link outcome="index" value="#{msgs.reset}"
-                                                   rendered="#{TimeTable.isPresentOrFuture()}"/></f:facet>
+                                                   rendered="#{TimeTable.isPresentOrFuture()}"
+                                                   styleClass="btn btn-warning"/></f:facet>
                 </h:column>
             </h:dataTable>
 
@@ -143,17 +146,20 @@
                 <div class="col-md-4 text-center">
                     <h:commandButton value="#{msgs.saveAllRows}"
                                      action="#{TimeTable.persistTimeTable()}"
-                                     rendered="#{TimeTable.isPresentOrFuture()}"/>
+                                     rendered="#{TimeTable.isPresentOrFuture()}"
+                                     styleClass="btn btn-primary"/>
                 </div>
                 <div class="col-md-4 text-center">
                     <h:commandButton value="#{msgs.addRow}"
                                      action="#{TimeTable.addTimeTableRow()}"
-                                     rendered="#{TimeTable.isPresentOrFuture()}"/>
+                                     rendered="#{TimeTable.isPresentOrFuture()}"
+                                     styleClass="btn btn-info"/>
                 </div>
                 <div class="col-md-4 text-center">
                     <h:commandButton value="#{msgs.saveAllRows}"
                                      action="#{TimeTable.persistTimeTable()}"
-                                     rendered="#{TimeTable.isPresentOrFuture()}"/>
+                                     rendered="#{TimeTable.isPresentOrFuture()}"
+                                     styleClass="btn btn-primary"/>
                 </div>
                 <br/> <br/>
             </div>

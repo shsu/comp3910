@@ -12,6 +12,7 @@
                        requiredMessage="#{msgs.pleaseEnter} #{msgs.password}"/>
         <br/> <br/>
         <h:commandButton value="#{msgs.logIn}"
-                         action="#{UserSession.logIn(usernameField.value,passwordField.value)}"/>
+                         action="#{UserSession.logIn(usernameField.value,passwordField.value)}"
+                         styleClass="btn btn-primary btn-lg"/>
     </div>
 </h:form>
