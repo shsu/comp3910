@@ -19,28 +19,69 @@ import java.util.List;
 @SessionScoped
 @Stateful
 public class TimeSheetManager implements Serializable {
+
+    /** The em. */
     @PersistenceContext(unitName = "assignment2")
     EntityManager em;
 
+    /**
+     * Find.
+     * 
+     * @param id
+     *            the id
+     * @return the time sheet
+     */
     public TimeSheet find(final int id) {
         return em.find(TimeSheet.class, id);
     }
 
+    /**
+     * Persist.
+     * 
+     * @param timeSheet
+     *            the time sheet
+     */
     public void persist(final TimeSheet timeSheet) {
         em.persist(timeSheet);
     }
 
+    /**
+     * Merge.
+     * 
+     * @param timeSheet
+     *            the time sheet
+     */
     public void merge(final TimeSheet timeSheet) {
         em.merge(timeSheet);
     }
 
+    /**
+     * Removes the.
+     * 
+     * @param timeSheet
+     *            the time sheet
+     */
     public void remove(final TimeSheet timeSheet) {
         em.remove(find(timeSheet.getTimeSheetID()));
     }
 
-    public List<TimeSheet> getAll(final int employeeID, final int week, final int year) {
-        TypedQuery<TimeSheet> query = em.createQuery("select t from TimeSheet t where t.employeeID = "
-                + employeeID + " and t.week = " + week + " and t.year = " + year, TimeSheet.class);
+    /**
+     * Gets the all.
+     * 
+     * @param employeeID
+     *            the employee id
+     * @param week
+     *            the week
+     * @param year
+     *            the year
+     * @return the all
+     */
+    public List<TimeSheet> getAll(final int employeeID, final int week,
+            final int year) {
+        TypedQuery<TimeSheet> query = em.createQuery(
+                "select t from TimeSheet t where t.employeeID = " + employeeID
+                        + " and t.week = " + week + " and t.year = " + year,
+                TimeSheet.class);
         return query.getResultList();
     }
 

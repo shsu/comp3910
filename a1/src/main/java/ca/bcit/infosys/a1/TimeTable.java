@@ -23,27 +23,60 @@ import java.util.*;
 @Named("TimeTable")
 public class TimeTable implements Serializable {
 
+    /** The Constant MAXIMUM_HOURS_PER_DAY. */
+    private static final int MAXIMUM_HOURS_PER_DAY = 24;
+
+    /** The Constant MAXIMUM_TIMESHEETS. */
     private static final int MAXIMUM_TIMESHEETS = 50;
+
+    /** The Constant WEEKS_IN_A_YEAR. */
     private static final int WEEKS_IN_A_YEAR = 52;
+
+    /** The Constant DEFAULT_TIMESHEETS_TIMETABLE. */
     private static final int DEFAULT_TIMESHEETS_TIMETABLE = 5;
 
+    /** The time sheet manager. */
     @Inject
     private TimeSheetManager timeSheetManager;
+
+    /** The user session. */
     @Inject
     private UserSession userSession;
 
+    /** The time table. */
     private List<TimeSheet> timeTable;
+
+    /** The current week. */
     private int currentWeek;
+
+    /** The current year. */
     private int currentYear;
+
+    /** The sat total. */
     private double satTotal;
+
+    /** The sun total. */
     private double sunTotal;
+
+    /** The mon total. */
     private double monTotal;
+
+    /** The tue total. */
     private double tueTotal;
+
+    /** The wed total. */
     private double wedTotal;
+
+    /** The thu total. */
     private double thuTotal;
+
+    /** The fri total. */
     private double friTotal;
 
+    /** The empty time table alert. */
     private boolean emptyTimeTableAlert;
+
+    /** The saved successful notify. */
     private boolean savedSuccessfulNotify;
 
     /**
@@ -59,7 +92,8 @@ public class TimeTable implements Serializable {
      * @return the string
      */
     public String addTimeTableRow() {
-        TimeSheet newRow = new TimeSheet(userSession.getCurrentLoggedInUser().getEmployeeID(), currentWeek,
+        TimeSheet newRow = new TimeSheet(userSession.getCurrentLoggedInUser()
+                .getEmployeeID(), currentWeek,
                 currentYear, "");
         timeTable.add(newRow);
         timeSheetManager.persist(newRow);
@@ -242,7 +276,8 @@ public class TimeTable implements Serializable {
      */
     public String persistTimeTable() {
 
-        if (validateProjectNumberWorkPackage(timeTable) && validateTotalHours(timeTable)) {
+        if (validateProjectNumberWorkPackage(timeTable)
+                && validateTotalHours(timeTable)) {
             for (TimeSheet displayedOnTimeTable : timeTable) {
                 timeSheetManager.merge(displayedOnTimeTable);
             }
@@ -250,10 +285,17 @@ public class TimeTable implements Serializable {
             refreshTimeTable();
         } else if (!validateTotalHours(timeTable)) {
             FacesContext error = FacesContext.getCurrentInstance();
-            error.addMessage(null, new FacesMessage(MessagesHelper.getMessages("nonRealisticWorkingHours", error.getViewRoot().getLocale())));
+            error.addMessage(
+                    null,
+                    new FacesMessage(MessagesHelper.getMessages(
+                            "nonRealisticWorkingHours", error.getViewRoot()
+                                    .getLocale())));
         } else {
             FacesContext error = FacesContext.getCurrentInstance();
-            error.addMessage(null, new FacesMessage(MessagesHelper.getMessages("projectNumberWorkPackageValidationFailed", error.getViewRoot().getLocale())));
+            error.addMessage(null,
+                    new FacesMessage(MessagesHelper.getMessages(
+                            "projectNumberWorkPackageValidationFailed", error
+                                    .getViewRoot().getLocale())));
         }
 
         return null;
@@ -336,7 +378,9 @@ public class TimeTable implements Serializable {
         timeTable.clear();
         resetTotalHours();
 
-        for (TimeSheet timeSheet : timeSheetManager.getAll(userSession.getCurrentLoggedInUser().getEmployeeID(), currentWeek, currentYear)) {
+        for (TimeSheet timeSheet : timeSheetManager.getAll(userSession
+                .getCurrentLoggedInUser().getEmployeeID(), currentWeek,
+                currentYear)) {
             timeTable.add(timeSheet);
             addTotalHours(timeSheet);
         }
@@ -367,7 +411,7 @@ public class TimeTable implements Serializable {
     }
 
     /**
-     * Validate Unique Project Number and Work Package
+     * Validate Unique Project Number and Work Package.
      *
      * @param toValidate list of timesheets.
      * @return false if duplicates found else return true.
@@ -376,31 +420,45 @@ public class TimeTable implements Serializable {
         Set<String> temporaryValidationSet = new HashSet<String>();
 
         for (TimeSheet timeSheet : toValidate) {
-            if (!temporaryValidationSet.add(timeSheet.getProjectNumber() + timeSheet.getWorkPackage())) {
+            if (!temporaryValidationSet.add(timeSheet.getProjectNumber()
+                    + timeSheet.getWorkPackage())) {
                 return false;
             }
         }
         return true;
     }
 
+    /**
+     * Validate total hours.
+     *
+     * @param toValidate the to validate
+     * @return true, if successful
+     */
     private boolean validateTotalHours(List<TimeSheet> toValidate) {
-        int satTotal = 0;
-        int sunTotal = 0;
-        int monTotal = 0;
-        int tueTotal = 0;
-        int wedTotal = 0;
-        int thuTotal = 0;
-        int friTotal = 0;
+        int validateSatTotal = 0;
+        int validateSunTotal = 0;
+        int validateMonTotal = 0;
+        int validateTueTotal = 0;
+        int validateWedTotal = 0;
+        int validateThuTotal = 0;
+        int validateFriTotal = 0;
 
         for (TimeSheet timeSheet : toValidate) {
-            satTotal += timeSheet.getSat();
-            sunTotal += timeSheet.getSun();
-            monTotal += timeSheet.getMon();
-            tueTotal += timeSheet.getTue();
-            wedTotal += timeSheet.getWed();
-            thuTotal += timeSheet.getThu();
-            friTotal += timeSheet.getFri();
-            if (satTotal > 24 || sunTotal > 24 || monTotal > 24 || tueTotal > 24 || wedTotal > 24 || thuTotal > 24 || friTotal > 24) {
+            validateSatTotal += timeSheet.getSat();
+            validateSunTotal += timeSheet.getSun();
+            validateMonTotal += timeSheet.getMon();
+            validateTueTotal += timeSheet.getTue();
+            validateWedTotal += timeSheet.getWed();
+            validateThuTotal += timeSheet.getThu();
+            validateFriTotal += timeSheet.getFri();
+
+            if (validateSatTotal > MAXIMUM_HOURS_PER_DAY
+                    || validateSunTotal > MAXIMUM_HOURS_PER_DAY
+                    || validateMonTotal > MAXIMUM_HOURS_PER_DAY
+                    || validateTueTotal > MAXIMUM_HOURS_PER_DAY
+                    || validateWedTotal > MAXIMUM_HOURS_PER_DAY
+                    || validateThuTotal > MAXIMUM_HOURS_PER_DAY
+                    || validateFriTotal > MAXIMUM_HOURS_PER_DAY) {
                 return false;
             }
         }
