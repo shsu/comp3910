@@ -5,6 +5,7 @@ import ca.bcit.infosys.a3.server.access.ResultDao;
 import ca.bcit.infosys.a3.server.domain.Question;
 import ca.bcit.infosys.a3.server.domain.Result;
 import ca.bcit.infosys.a3.server.logic.UserSession;
+import org.json.simple.JSONObject;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -53,8 +54,8 @@ public class QuizResource implements Serializable {
     @PUT
     @Path("{week}/mark")
     @Consumes("application/json")
-    @Produces("text/plain")
-    public int markQuiz(@HeaderParam("token") final String token, @PathParam("week") int week, List<Character> results) {
+    @Produces("application/json")
+    public String markQuiz(@HeaderParam("token") final String token, @PathParam("week") int week, List<Character> results) {
         if (!userSession.verifyToken(token)) {
             throw new WebApplicationException(Response.Status.UNAUTHORIZED);
         }
@@ -74,7 +75,11 @@ public class QuizResource implements Serializable {
 
         resultDao.update(new Result(userSession.getUserID(), week, score, answerKey.size()));
 
-        return score;
+        Result result = resultDao.getResultForWeek(userSession.getUserID(), week);
+        JSONObject obj = new JSONObject();
+        obj.put("marked", true);
+
+        return obj.toJSONString();
     }
 
 }

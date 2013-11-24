@@ -4,6 +4,7 @@ import ca.bcit.infosys.a3.server.access.QuestionDao;
 import ca.bcit.infosys.a3.server.access.ResultDao;
 import ca.bcit.infosys.a3.server.domain.Result;
 import ca.bcit.infosys.a3.server.logic.UserSession;
+import org.json.simple.JSONObject;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -28,8 +29,8 @@ public class ResultResource implements Serializable {
 
     @POST
     @Path("average")
-    @Produces("text/plain")
-    public int getAverage(@HeaderParam("token") final String token) {
+    @Produces("application/json")
+    public String getAverage(@HeaderParam("token") final String token) {
         if (!userSession.verifyToken(token)) {
             throw new WebApplicationException(Response.Status.UNAUTHORIZED);
         }
@@ -47,12 +48,17 @@ public class ResultResource implements Serializable {
             totalPossibleScore += result.getTotalPossibleScore();
         }
 
-        return score / totalPossibleScore;
+        JSONObject obj = new JSONObject();
+        obj.put("cumulativeAverage", score / totalPossibleScore);
+        obj.put("cumulativeScore", score);
+        obj.put("totalPossibleScore", totalPossibleScore);
+
+        return obj.toJSONString();
     }
 
     @POST
     @Path("{week}")
-    @Produces("text/plain")
+    @Produces("application/json")
     public String getResult(@HeaderParam("token") final String token, @PathParam("week") final int week) {
         if (!userSession.verifyToken(token)) {
             throw new WebApplicationException(Response.Status.UNAUTHORIZED);
@@ -63,6 +69,10 @@ public class ResultResource implements Serializable {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
 
-        return result.getScore() + "/" + result.getTotalPossibleScore();
+        JSONObject obj = new JSONObject();
+        obj.put("score", result.getScore());
+        obj.put("totalPossibleScore", result.getTotalPossibleScore());
+
+        return obj.toJSONString();
     }
 }
