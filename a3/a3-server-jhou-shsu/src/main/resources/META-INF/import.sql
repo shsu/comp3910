@@ -1,0 +1,1 @@
+INSERT INTO `a3server`.`Users` (`id`, `firstName`, `lastName`, `password`, `studentNumber`, `username`) VALUES ('100', 'admin', 'admin', 'admin', 'a00000000', 'admin');
