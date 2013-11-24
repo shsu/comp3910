@@ -117,7 +117,21 @@ public class UserResourceTest {
 
     @Test
     public void testLogout() throws Exception {
+        String myToken = authenticateWithAdmin();
 
+        HttpGet getRequest = new HttpGet(resourceURL + "logout");
+        HttpResponse response = httpClient.execute(getRequest);
+
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatusLine().getStatusCode());
+
+        cleanUp();
+        setUp();
+
+        getRequest = new HttpGet(resourceURL + "profile");
+        getRequest.setHeader("token", myToken);
+        response = httpClient.execute(getRequest);
+
+        assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), response.getStatusLine().getStatusCode());
     }
 
     @After
