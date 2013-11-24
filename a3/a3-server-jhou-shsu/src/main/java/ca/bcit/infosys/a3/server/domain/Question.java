@@ -1,6 +1,12 @@
 package ca.bcit.infosys.a3.server.domain;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "Questions")
@@ -21,6 +27,7 @@ public class Question {
     @Id
     @GeneratedValue
     @Column(name = "id", nullable = false)
+    @Min(1)
     public int getId() {
         return id;
     }
@@ -31,6 +38,8 @@ public class Question {
 
     @Basic
     @Column(name = "week", nullable = false, length = 2)
+    @Min(1)
+    @Max(53)
     public int getWeek() {
         return week;
     }
@@ -41,6 +50,8 @@ public class Question {
 
     @Basic
     @Column(name = "questionNumber", nullable = false, length = 2)
+    @Min(1)
+    @Max(99)
     public int getQuestionNumber() {
         return questionNumber;
     }
@@ -51,6 +62,9 @@ public class Question {
 
     @Basic
     @Column(name = "question", nullable = false, length = 300)
+    @NotNull
+    @NotBlank
+    @Size(max = 300)
     public String getQuestion() {
         return question;
     }
@@ -61,6 +75,9 @@ public class Question {
 
     @Basic
     @Column(name = "choiceA", nullable = false, length = 300)
+    @NotNull
+    @NotBlank
+    @Size(max = 300)
     public String getChoiceA() {
         return choiceA;
     }
@@ -71,6 +88,9 @@ public class Question {
 
     @Basic
     @Column(name = "choiceB", nullable = false, length = 300)
+    @NotNull
+    @NotBlank
+    @Size(max = 300)
     public String getChoiceB() {
         return choiceB;
     }
@@ -81,6 +101,9 @@ public class Question {
 
     @Basic
     @Column(name = "choiceC", nullable = true, length = 300)
+    @NotNull
+    @NotBlank
+    @Size(max = 300)
     public String getChoiceC() {
         return choiceC;
     }
@@ -91,6 +114,9 @@ public class Question {
 
     @Basic
     @Column(name = "choiceD", nullable = true, length = 300)
+    @NotNull
+    @NotBlank
+    @Size(max = 300)
     public String getChoiceD() {
         return choiceD;
     }
@@ -101,6 +127,9 @@ public class Question {
 
     @Basic
     @Column(name = "correctAnswer", nullable = false, length = 1)
+    @NotNull
+    @NotBlank
+    @Size(min = 1, max = 1)
     public Character getAnswer() {
         return answer;
     }

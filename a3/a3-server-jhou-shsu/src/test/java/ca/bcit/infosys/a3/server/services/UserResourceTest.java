@@ -65,7 +65,7 @@ public class UserResourceTest {
     }
 
     @Test
-    public void testCreateInvalidUser() throws Exception {
+    public void testCreateInvalidUser1() throws Exception {
         HttpPost postRequest = new HttpPost(resourceURL + "register");
         postRequest.setHeader("content-type", "application/json");
 
@@ -83,11 +83,26 @@ public class UserResourceTest {
     }
 
     @Test
+    public void testCreateInvalidUser2() throws Exception {
+        HttpPost postRequest = new HttpPost(resourceURL + "register");
+        postRequest.setHeader("content-type", "application/json");
+
+        JSONObject jsonRequestObject = new JSONObject();
+        jsonRequestObject.put("username", "admin2");
+        jsonRequestObject.put("password", "admin2");
+
+        postRequest.setEntity(new StringEntity(jsonRequestObject.toJSONString()));
+        HttpResponse response = httpClient.execute(postRequest);
+
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatusLine().getStatusCode());
+    }
+
+    @Test
     public void testGetUser() throws Exception {
         HttpGet getRequest = new HttpGet(resourceURL + "profile");
         getRequest.setHeader("token", authenticateWithAdmin());
-
         HttpResponse response = httpClient.execute(getRequest);
+
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatusLine().getStatusCode());
 
         try {

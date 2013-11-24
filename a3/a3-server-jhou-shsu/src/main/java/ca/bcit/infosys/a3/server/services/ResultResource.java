@@ -13,8 +13,6 @@ import javax.ws.rs.core.Response;
 import java.io.Serializable;
 import java.util.List;
 
-//TODO: Validate inputs such as week range.
-
 @RequestScoped
 @Path("/results")
 public class ResultResource implements Serializable {

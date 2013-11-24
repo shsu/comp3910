@@ -1,6 +1,11 @@
 package ca.bcit.infosys.a3.server.domain;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 //TODO: validation
 
@@ -29,6 +34,7 @@ public class User {
     @Id
     @GeneratedValue
     @Column(name = "id", nullable = false)
+    @Min(1)
     public int getId() {
         return id;
     }
@@ -39,6 +45,9 @@ public class User {
 
     @Basic
     @Column(name = "username", nullable = false, length = 20)
+    @NotNull
+    @NotBlank
+    @Size(max = 20)
     public String getUsername() {
         return username;
     }
@@ -49,6 +58,9 @@ public class User {
 
     @Basic
     @Column(name = "password", nullable = false, length = 20)
+    @NotNull
+    @NotBlank
+    @Size(max = 20)
     public String getPassword() {
         return password;
     }
@@ -59,6 +71,9 @@ public class User {
 
     @Basic
     @Column(name = "studentNumber", nullable = false, length = 10)
+    @NotNull
+    @NotBlank
+    @Size(max = 10)
     public String getStudentNumber() {
         return studentNumber;
     }
@@ -69,6 +84,9 @@ public class User {
 
     @Basic
     @Column(name = "firstName", nullable = false, length = 30)
+    @NotNull
+    @NotBlank
+    @Size(max = 30)
     public String getFirstName() {
         return firstName;
     }
@@ -79,6 +97,9 @@ public class User {
 
     @Basic
     @Column(name = "lastName", nullable = false, length = 30)
+    @NotNull
+    @NotBlank
+    @Size(max = 30)
     public String getLastName() {
         return lastName;
     }

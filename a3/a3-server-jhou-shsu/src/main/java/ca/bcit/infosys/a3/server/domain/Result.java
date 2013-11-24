@@ -1,6 +1,9 @@
 package ca.bcit.infosys.a3.server.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 //TODO: validation
 
@@ -26,6 +29,7 @@ public class Result {
     @Id
     @GeneratedValue
     @Column(name = "id", nullable = false)
+    @Min(1)
     public int getId() {
         return id;
     }
@@ -36,6 +40,7 @@ public class Result {
 
     @Basic
     @Column(name = "userID", nullable = false)
+    @Min(1)
     public int getUserID() {
         return userID;
     }
@@ -46,6 +51,8 @@ public class Result {
 
     @Basic
     @Column(name = "week", nullable = false, length = 2)
+    @Min(1)
+    @Max(53)
     public int getWeek() {
         return week;
     }
@@ -56,6 +63,7 @@ public class Result {
 
     @Basic
     @Column(name = "score", nullable = false, length = 4)
+    @Max(9999)
     public int getScore() {
         return score;
     }
@@ -66,6 +74,7 @@ public class Result {
 
     @Basic
     @Column(name = "totalPossibleScore", nullable = false, length = 4)
+    @Max(9999)
     public int getTotalPossibleScore() {
         return totalPossibleScore;
     }

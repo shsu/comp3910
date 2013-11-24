@@ -3,16 +3,17 @@ package ca.bcit.infosys.a3.server.services;
 import ca.bcit.infosys.a3.server.access.UserDao;
 import ca.bcit.infosys.a3.server.domain.User;
 import ca.bcit.infosys.a3.server.logic.UserSession;
+import ca.bcit.infosys.a3.server.validation.ValidationHelper;
 import org.json.simple.JSONObject;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.validation.ConstraintViolation;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.io.Serializable;
-
-//TODO: Validate inputs such as week range.
+import java.util.Set;
 
 @RequestScoped
 @Path("/user")
@@ -59,7 +60,14 @@ public class UserResource implements Serializable {
         if (userDao.findByUsername(user.getUsername()) != null) {
             throw new WebApplicationException(Response.Status.CONFLICT);
         }
-        userDao.create(new User(user.getUsername(), user.getPassword(), user.getStudentNumber(), user.getFirstName(), user.getLastName()));
+
+        User newUser = new User(user.getUsername(), user.getPassword(), user.getStudentNumber(), user.getFirstName(), user.getLastName());
+        Set<ConstraintViolation<User>> constraintViolations = ValidationHelper.getValidator().validate(newUser);
+
+        if (constraintViolations.size() > 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        userDao.create(newUser);
 
         return Response.status(Response.Status.CREATED).entity(userDao.findByUsername(user.getUsername())).build();
     }

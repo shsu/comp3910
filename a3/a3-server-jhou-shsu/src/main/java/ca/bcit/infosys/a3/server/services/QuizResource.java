@@ -15,8 +15,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO: Validate inputs such as week range.
-
 @RequestScoped
 @Path("/quiz")
 public class QuizResource implements Serializable {
