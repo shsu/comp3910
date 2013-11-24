@@ -5,7 +5,6 @@ import ca.bcit.infosys.a3.server.access.ResultDao;
 import ca.bcit.infosys.a3.server.domain.Question;
 import ca.bcit.infosys.a3.server.domain.Result;
 import ca.bcit.infosys.a3.server.logic.UserSession;
-import org.json.simple.JSONObject;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -13,6 +12,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.io.Serializable;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,10 +54,13 @@ public class QuizResource implements Serializable {
     @PUT
     @Path("{week}/mark")
     @Consumes("application/json")
-    @Produces("application/json")
-    public String markQuiz(@HeaderParam("token") final String token, @PathParam("week") int week, List<Character> results) {
+    public Response markQuiz(@HeaderParam("token") final String token, @PathParam("week") int week, List<Character> results) {
         if (!userSession.verifyToken(token)) {
             throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+        }
+
+        if (results == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
         List<Question> answerKey = questionDao.getAllForWeek(week);
@@ -75,11 +78,7 @@ public class QuizResource implements Serializable {
 
         resultDao.update(new Result(userSession.getUserID(), week, score, answerKey.size()));
 
-        Result result = resultDao.getResultForWeek(userSession.getUserID(), week);
-        JSONObject obj = new JSONObject();
-        obj.put("marked", true);
-
-        return obj.toJSONString();
+        return Response.created(URI.create("/results/" + week)).build();
     }
 
 }
