@@ -87,10 +87,13 @@ public class UserResource implements Serializable {
     @Path("logout")
     @Produces("application/json")
     public String logout() {
+        JSONObject obj = new JSONObject();
+
+        if (userSession.getToken() == null) {
+            obj.put("loggedOut", false);
+        }
         userSession.setUserID(0);
         userSession.clearToken();
-
-        JSONObject obj = new JSONObject();
         obj.put("loggedOut", true);
 
         return obj.toJSONString();
