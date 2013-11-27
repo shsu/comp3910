@@ -29,7 +29,6 @@ public class Result {
     @Id
     @GeneratedValue
     @Column(name = "id", nullable = false)
-    @Min(1)
     public int getId() {
         return id;
     }

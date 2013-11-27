@@ -3,6 +3,7 @@ package ca.bcit.infosys.a3.server.services;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.simple.JSONObject;
@@ -13,9 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import javax.ws.rs.core.Response;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
@@ -106,7 +105,7 @@ public class UserResourceTest {
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatusLine().getStatusCode());
 
         try {
-            Object object = parser.parse(parseResponse(response));//reusable
+            Object object = parser.parse(ParseResponseHelper.parseResponse(response));//reusable
             JSONObject jsonResponseObject = (JSONObject) object;
             String username = (String) jsonResponseObject.get("username");
             assertEquals("admin", username);
@@ -139,46 +138,30 @@ public class UserResourceTest {
         httpClient.getConnectionManager().shutdown();
     }
 
-    private String parseResponse(final HttpResponse response) throws IOException {
-        StringBuilder stringBuilder = new StringBuilder();
-        String outputLine;
-
-        try {
-            BufferedReader bufferedReader = new BufferedReader(
-                    new InputStreamReader((response.getEntity().getContent())));
-
-            while ((outputLine = bufferedReader.readLine()) != null) {
-                stringBuilder.append(outputLine);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return stringBuilder.toString();
-    }
-
-    private String authenticateWithAdmin() throws IOException {
-        HttpPost postRequest = new HttpPost(resourceURL + "authenticate");
-        postRequest.setHeader("content-type", "application/json");
+    public String authenticateWithAdmin() throws IOException {
+        HttpPut putRequest = new HttpPut(resourceURL + "authenticate");
+        putRequest.setHeader("content-type", "application/json");
 
         JSONObject jsonRequestObject = new JSONObject();
         jsonRequestObject.put("username", "admin");
         jsonRequestObject.put("password", "admin");
 
-        postRequest.setEntity(new StringEntity(jsonRequestObject.toJSONString()));
-        HttpResponse response = httpClient.execute(postRequest);
+        putRequest.setEntity(new StringEntity(jsonRequestObject.toJSONString()));
+        HttpResponse response = httpClient.execute(putRequest);
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatusLine().getStatusCode());
 
         String token = null;
 
         try {
-            Object object = parser.parse(parseResponse(response));//reusable
+            Object object = parser.parse(ParseResponseHelper.parseResponse(response));//reusable
             JSONObject jsonResponseObject = (JSONObject) object;
             token = (String) jsonResponseObject.get("token");
             assertNotNull(token);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
         return token;
     }
 

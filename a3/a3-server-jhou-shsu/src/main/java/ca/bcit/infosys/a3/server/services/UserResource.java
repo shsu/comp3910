@@ -32,7 +32,7 @@ public class UserResource implements Serializable {
      * Authenticates the user and return a string token.
      * If user is already logged in, do something!
      */
-    @POST
+    @PUT
     @Path("authenticate")
     @Consumes("application/json")
     @Produces("application/json")
@@ -62,11 +62,13 @@ public class UserResource implements Serializable {
         }
 
         User newUser = new User(user.getUsername(), user.getPassword(), user.getStudentNumber(), user.getFirstName(), user.getLastName());
+
         Set<ConstraintViolation<User>> constraintViolations = ValidationHelper.getValidator().validate(newUser);
 
         if (constraintViolations.size() > 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
+
         userDao.create(newUser);
 
         return Response.status(Response.Status.CREATED).entity(userDao.findByUsername(user.getUsername())).build();
