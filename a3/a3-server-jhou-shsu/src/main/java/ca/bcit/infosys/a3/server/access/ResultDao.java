@@ -34,14 +34,14 @@ public class ResultDao {
     }
 
     public Result getResultForWeek(int userID, int week) {
-        TypedQuery<Result> query = em.createQuery("select r from Results r where r.userID = " + userID + " and t.week = " + week,
+        TypedQuery<Result> query = em.createQuery("select r from Result r where r.userID = " + userID + " and r.week = " + week,
                 Result.class);
 
         List<Result> result = query.getResultList();
         if (result.isEmpty()) {
             return null;
         }
-        
+
         return result.get(0);
 
     }

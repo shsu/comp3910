@@ -52,12 +52,12 @@ public class ResultResource implements Serializable {
 
             JSONObject quizResult = new JSONObject();
             quizResult.put("week", result.getWeek());
-            quizResult.put("score", result.getScore());
             quizResult.put("totalPossibleScore", result.getTotalPossibleScore());
+            quizResult.put("score", result.getScore());
             userQuizResults.add(quizResult);
         }
 
-        outputJSON.put("cumulativeAverage", score / totalPossibleScore);
+        outputJSON.put("cumulativeAverage", ((double) score / totalPossibleScore));
         outputJSON.put("results", userQuizResults);
 
         return outputJSON.toJSONString();

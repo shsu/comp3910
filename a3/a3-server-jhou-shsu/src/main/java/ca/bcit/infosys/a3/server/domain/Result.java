@@ -75,7 +75,7 @@ public class Result {
         return totalPossibleScore;
     }
 
-    public void setTotalPossibleScore(short totalPossibleScore) {
+    public void setTotalPossibleScore(int totalPossibleScore) {
         this.totalPossibleScore = totalPossibleScore;
     }
 }
