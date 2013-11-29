@@ -2,6 +2,7 @@ package ca.bcit.infosys.a3.server.access;
 
 import ca.bcit.infosys.a3.server.domain.Result;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -10,6 +11,7 @@ import java.util.List;
 /**
  * Created by shsu on 11/21/2013.
  */
+@Stateless
 public class ResultDao {
 
     @PersistenceContext(unitName = "a3server")
@@ -44,8 +46,8 @@ public class ResultDao {
 
     }
 
-    public List<Result> getAll(int userID) {
-        TypedQuery<Result> query = em.createQuery("select r from Results r where r.userID = " + userID,
+    public List<Result> getAll(final int userID) {
+        TypedQuery<Result> query = em.createQuery("select r from Result r where r.userID = " + userID,
                 Result.class);
         return query.getResultList();
     }

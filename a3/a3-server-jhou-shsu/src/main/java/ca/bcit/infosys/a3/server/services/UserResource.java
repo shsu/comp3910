@@ -20,17 +20,17 @@ import java.util.Set;
 public class UserResource implements Serializable {
 
     @EJB
-    UserDao userDao;
+    private UserDao userDao;
 
     @Inject
-    UserSession userSession;
+    private UserSession userSession;
 
     public UserResource() {
     }
 
     /**
      * Authenticates the user and return a string token.
-     * If user is already logged in, do something!
+     * If user is already logged in, return string token.
      */
     @PUT
     @Path("authenticate")
@@ -47,6 +47,7 @@ public class UserResource implements Serializable {
         }
 
         JSONObject obj = new JSONObject();
+        obj.put("userID", userSession.getUserID());
         obj.put("token", userSession.getToken());
 
         return obj.toJSONString();

@@ -2,6 +2,7 @@ package ca.bcit.infosys.a3.server.access;
 
 import ca.bcit.infosys.a3.server.domain.Question;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -10,6 +11,7 @@ import java.util.List;
 /**
  * Created by shsu on 11/21/2013.
  */
+@Stateless
 public class QuestionDao {
 
     @PersistenceContext(unitName = "a3server")
@@ -31,8 +33,8 @@ public class QuestionDao {
         em.remove(read(user.getId()));
     }
 
-    public List<Question> getAllForWeek(int week) {
-        TypedQuery<Question> query = em.createQuery("select q from Questions q where q.week = " + week,
+    public List<Question> getAllForWeek(final int week) {
+        TypedQuery<Question> query = em.createQuery("select q from Question q where q.week = " + week + " ORDER BY q.questionNumber ASC",
                 Question.class);
         return query.getResultList();
     }

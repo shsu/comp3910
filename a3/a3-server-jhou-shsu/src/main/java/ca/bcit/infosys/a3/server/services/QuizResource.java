@@ -18,13 +18,13 @@ import java.util.List;
 public class QuizResource implements Serializable {
 
     @EJB
-    QuestionDao questionDao;
+    private QuestionDao questionDao;
 
     @EJB
-    ResultDao resultDao;
+    private ResultDao resultDao;
 
     @Inject
-    UserSession userSession;
+    private UserSession userSession;
 
     @GET
     @Path("{week}")

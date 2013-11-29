@@ -1,6 +1,5 @@
 package ca.bcit.infosys.a3.server.services;
 
-import ca.bcit.infosys.a3.server.access.QuestionDao;
 import ca.bcit.infosys.a3.server.access.ResultDao;
 import ca.bcit.infosys.a3.server.domain.Result;
 import ca.bcit.infosys.a3.server.logic.UserSession;
@@ -24,17 +23,14 @@ import java.util.Set;
 public class ResultResource implements Serializable {
 
     @EJB
-    QuestionDao questionDao;
-
-    @EJB
-    ResultDao resultDao;
+    private ResultDao resultDao;
 
     @Inject
-    UserSession userSession;
+    private UserSession userSession;
 
     @GET
     @Produces("application/json")
-    public String getResult(@HeaderParam("token") final String token) {
+    public String getResults(@HeaderParam("token") final String token) {
         if (!userSession.verifyToken(token)) {
             throw new WebApplicationException(Response.Status.UNAUTHORIZED);
         }

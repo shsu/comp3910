@@ -43,7 +43,7 @@ public class Question {
         return week;
     }
 
-    public void setWeek(byte week) {
+    public void setWeek(int week) {
         this.week = week;
     }
 
@@ -55,7 +55,7 @@ public class Question {
         return questionNumber;
     }
 
-    public void setQuestionNumber(byte questionNumber) {
+    public void setQuestionNumber(int questionNumber) {
         this.questionNumber = questionNumber;
     }
 

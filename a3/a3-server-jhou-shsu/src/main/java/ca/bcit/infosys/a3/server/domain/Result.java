@@ -3,9 +3,6 @@ package ca.bcit.infosys.a3.server.domain;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-
-//TODO: validation
 
 @Entity
 @Table(name = "Results")
@@ -56,7 +53,7 @@ public class Result {
         return week;
     }
 
-    public void setWeek(byte week) {
+    public void setWeek(int week) {
         this.week = week;
     }
 
@@ -67,7 +64,7 @@ public class Result {
         return score;
     }
 
-    public void setScore(byte score) {
+    public void setScore(int score) {
         this.score = score;
     }
 
