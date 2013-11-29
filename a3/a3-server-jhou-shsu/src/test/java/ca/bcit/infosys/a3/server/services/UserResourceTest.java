@@ -1,5 +1,6 @@
 package ca.bcit.infosys.a3.server.services;
 
+import ca.bcit.infosys.a3.server.logic.UserSession;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -14,7 +15,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import javax.ws.rs.core.Response;
-import java.io.IOException;
 import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
@@ -40,7 +40,28 @@ public class UserResourceTest {
 
     @Test
     public void testAuthenticateUser() throws Exception {
-        authenticateWithAdmin();
+        HttpPut putRequest = new HttpPut(resourceURL + "authenticate");
+        putRequest.setHeader("content-type", "application/json");
+
+        JSONObject jsonRequestObject = new JSONObject();
+        jsonRequestObject.put("username", "admin");
+        jsonRequestObject.put("password", "admin");
+
+        putRequest.setEntity(new StringEntity(jsonRequestObject.toJSONString()));
+        HttpResponse response = httpClient.execute(putRequest);
+
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatusLine().getStatusCode());
+
+        String token = null;
+
+        try {
+            Object object = parser.parse(ParseResponseHelper.parseResponse(response));//reusable
+            JSONObject jsonResponseObject = (JSONObject) object;
+            token = (String) jsonResponseObject.get("token");
+            assertNotNull(token);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -99,7 +120,7 @@ public class UserResourceTest {
     @Test
     public void testGetUser() throws Exception {
         HttpGet getRequest = new HttpGet(resourceURL + "profile");
-        getRequest.setHeader("token", authenticateWithAdmin());
+        getRequest.setHeader("token", UserSession.TEST_TOKEN);
         HttpResponse response = httpClient.execute(getRequest);
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatusLine().getStatusCode());
@@ -116,53 +137,15 @@ public class UserResourceTest {
 
     @Test
     public void testLogout() throws Exception {
-        String myToken = authenticateWithAdmin();
-
         HttpGet getRequest = new HttpGet(resourceURL + "logout");
         HttpResponse response = httpClient.execute(getRequest);
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatusLine().getStatusCode());
-
-        cleanUp();
-        setUp();
-
-        getRequest = new HttpGet(resourceURL + "profile");
-        getRequest.setHeader("token", myToken);
-        response = httpClient.execute(getRequest);
-
-        assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), response.getStatusLine().getStatusCode());
     }
 
     @After
     public void cleanUp() throws Exception {
         httpClient.getConnectionManager().shutdown();
-    }
-
-    public String authenticateWithAdmin() throws IOException {
-        HttpPut putRequest = new HttpPut(resourceURL + "authenticate");
-        putRequest.setHeader("content-type", "application/json");
-
-        JSONObject jsonRequestObject = new JSONObject();
-        jsonRequestObject.put("username", "admin");
-        jsonRequestObject.put("password", "admin");
-
-        putRequest.setEntity(new StringEntity(jsonRequestObject.toJSONString()));
-        HttpResponse response = httpClient.execute(putRequest);
-
-        assertEquals(Response.Status.OK.getStatusCode(), response.getStatusLine().getStatusCode());
-
-        String token = null;
-
-        try {
-            Object object = parser.parse(ParseResponseHelper.parseResponse(response));//reusable
-            JSONObject jsonResponseObject = (JSONObject) object;
-            token = (String) jsonResponseObject.get("token");
-            assertNotNull(token);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return token;
     }
 
 }
