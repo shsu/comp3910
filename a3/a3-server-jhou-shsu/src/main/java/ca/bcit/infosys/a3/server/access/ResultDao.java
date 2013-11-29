@@ -43,7 +43,18 @@ public class ResultDao {
         }
 
         return result.get(0);
+    }
 
+    public int getNextQuizWeek(final int userID) {
+        int nextQuizWeek = 1;
+
+        for (Result result : getAll(userID)) {
+            if (result.getWeek() >= nextQuizWeek) {
+                nextQuizWeek = result.getWeek() + 1;
+            }
+        }
+
+        return nextQuizWeek;
     }
 
     public List<Result> getAll(final int userID) {

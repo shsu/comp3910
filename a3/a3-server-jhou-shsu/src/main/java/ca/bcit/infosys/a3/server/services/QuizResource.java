@@ -43,4 +43,24 @@ public class QuizResource implements Serializable {
         return questions;
     }
 
+
+    @GET
+    @Path("next")
+    @Produces("application/json")
+    public List<Question> getNextQuiz(@HeaderParam("token") final String token) {
+        if (!userSession.verifyToken(token)) {
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+        }
+
+        int nextQuizWeek = resultDao.getNextQuizWeek(userSession.getUserID());
+
+        List<Question> questions = questionDao.getAllForWeek(nextQuizWeek);
+
+        if (questions.isEmpty()) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+
+        return questions;
+    }
+
 }
