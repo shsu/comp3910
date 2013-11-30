@@ -93,11 +93,11 @@ public class UserResource implements Serializable {
         JSONObject obj = new JSONObject();
 
         if (userSession.getToken() == null) {
-            obj.put("loggedOut", false);
+            obj.put("success", false);
         }
         userSession.setUserID(0);
         userSession.clearToken();
-        obj.put("loggedOut", true);
+        obj.put("success", true);
 
         return obj.toJSONString();
     }

@@ -29,6 +29,22 @@ public class ResultResource implements Serializable {
     private UserSession userSession;
 
     @GET
+    @Path("{week}")
+    @Produces("application/json")
+    public Result getResult(@HeaderParam("token") final String token, @PathParam("week") final int week) {
+        if (!userSession.verifyToken(token)) {
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+        }
+
+        Result result = resultDao.getResultForWeek(userSession.getUserID(), week);
+        if (result == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+
+        return result;
+    }
+
+    @GET
     @Produces("application/json")
     public String getResults(@HeaderParam("token") final String token) {
         if (!userSession.verifyToken(token)) {
@@ -63,19 +79,19 @@ public class ResultResource implements Serializable {
         return outputJSON.toJSONString();
     }
 
-    @PUT
-    @Path("save")
+    @POST
+    @Path("{week}")
     @Consumes("application/json")
-    public Response saveResult(@HeaderParam("token") final String token, Result result) {
+    public Response saveResult(@HeaderParam("token") final String token, @PathParam("week") final int week, final Result result) {
         if (!userSession.verifyToken(token)) {
             throw new WebApplicationException(Response.Status.UNAUTHORIZED);
         }
 
-        if (resultDao.getResultForWeek(userSession.getUserID(), result.getWeek()) != null) {
+        if (resultDao.getResultForWeek(userSession.getUserID(), week) != null) {
             throw new WebApplicationException(Response.Status.CONFLICT);
         }
 
-        Result newResult = new Result(userSession.getUserID(), result.getWeek(), result.getScore(), result.getTotalPossibleScore());
+        Result newResult = new Result(userSession.getUserID(), week, result.getScore(), result.getTotalPossibleScore());
         Set<ConstraintViolation<Result>> constraintViolations = ValidationHelper.getValidator().validate(newResult);
 
         if (constraintViolations.size() > 0) {
@@ -84,6 +100,29 @@ public class ResultResource implements Serializable {
 
         resultDao.create(newResult);
 
-        return Response.created(URI.create("/results")).build();
+        return Response.created(URI.create("/results")).status(Response.Status.CREATED).entity(newResult).build();
+    }
+
+    @DELETE
+    @Path("all")
+    public String clearAllResults(@HeaderParam("token") final String token) {
+        if (!userSession.verifyToken(token)) {
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+        }
+
+        List<Result> results = resultDao.getAll(userSession.getUserID());
+
+        if (results.isEmpty()) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+
+        for (Result result : results) {
+            resultDao.delete(result);
+        }
+
+        JSONObject outputJSON = new JSONObject();
+        outputJSON.put("success", true);
+
+        return outputJSON.toJSONString();
     }
 }
