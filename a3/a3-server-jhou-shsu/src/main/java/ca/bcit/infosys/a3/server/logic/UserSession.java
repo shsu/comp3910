@@ -14,7 +14,7 @@ public class UserSession implements Serializable {
 
     private String token;
 
-    private static final boolean TEST_MODE = true;
+    private static final boolean TEST_MODE = false;
 
     private static final int TEST_USER_ID = 1;
 

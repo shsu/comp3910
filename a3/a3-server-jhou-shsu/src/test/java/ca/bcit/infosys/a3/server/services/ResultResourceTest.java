@@ -38,28 +38,6 @@ public class ResultResourceTest {
     }
 
     @Test
-    public void testGetResults() throws Exception {
-        final long total_quiz_taken = 3;
-        final double average = 0.8;
-
-        HttpGet getRequest = new HttpGet(resourceURL);
-        getRequest.setHeader("token", UserSession.TEST_TOKEN);
-        HttpResponse response = httpClient.execute(getRequest);
-
-        try {
-            Object object = parser.parse(ParseResponseHelper.parseResponse(response));
-            JSONObject jsonResponseObject = (JSONObject) object;
-
-            JSONArray jsonResultsArray = (JSONArray) jsonResponseObject.get("results");
-            assertEquals(total_quiz_taken, jsonResultsArray.size());
-            assertEquals(average, jsonResponseObject.get("cumulativeAverage"));
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
     public void testSaveResult() throws Exception {
         final int week = 4;
 

@@ -4,7 +4,7 @@ import ca.bcit.infosys.a3.server.access.UserDao;
 import ca.bcit.infosys.a3.server.domain.User;
 import ca.bcit.infosys.a3.server.logic.UserSession;
 import ca.bcit.infosys.a3.server.validation.ValidationHelper;
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -50,7 +50,7 @@ public class UserResource implements Serializable {
         obj.put("userID", userSession.getUserID());
         obj.put("token", userSession.getToken());
 
-        return obj.toJSONString();
+        return obj.toString();
     }
 
     @POST
@@ -99,6 +99,6 @@ public class UserResource implements Serializable {
         userSession.clearToken();
         obj.put("success", true);
 
-        return obj.toJSONString();
+        return obj.toString();
     }
 }
