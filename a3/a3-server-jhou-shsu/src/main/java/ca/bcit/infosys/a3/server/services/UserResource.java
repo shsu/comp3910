@@ -32,23 +32,20 @@ public class UserResource implements Serializable {
      * Authenticates the user and return a string token.
      * If user is already logged in, return string token.
      */
-    @PUT
+    @POST
     @Path("authenticate")
     @Consumes("application/json")
     @Produces("application/json")
     public String authenticateUser(User user) {
-        if (userSession.getToken() == null) {
-            user = userDao.authenticate(user.getUsername(), user.getPassword());
-            if (user == null) {
-                throw new WebApplicationException(Response.Status.UNAUTHORIZED);
-            }
-            userSession.setUserID(user.getId());
-            userSession.generateToken();
+
+        user = userDao.authenticate(user.getUsername(), user.getPassword());
+        if (user == null) {
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
         }
 
         JSONObject obj = new JSONObject();
-        obj.put("userID", userSession.getUserID());
-        obj.put("token", userSession.getToken());
+        obj.put("userID", userDao.findByUsername(user.getUsername()));
+        obj.put("token", userSession.generateToken(user.getId()));
 
         return obj.toString();
     }
@@ -79,25 +76,21 @@ public class UserResource implements Serializable {
     @Path("profile")
     @Produces("application/json")
     public User getUser(@HeaderParam("token") final String token) {
-        if (!userSession.verifyToken(token)) {
+        Integer userID = userSession.verifyTokenAndReturnUserID(token);
+
+        if (userID == null) {
             throw new WebApplicationException(Response.Status.UNAUTHORIZED);
         }
 
-        return userDao.read(userSession.getUserID());
+        return userDao.read(userID);
     }
 
     @GET
     @Path("logout")
     @Produces("application/json")
-    public String logout() {
+    public String logout(@HeaderParam("token") final String token) {
         JSONObject obj = new JSONObject();
-
-        if (userSession.getToken() == null) {
-            obj.put("success", false);
-        }
-        userSession.setUserID(0);
-        userSession.clearToken();
-        obj.put("success", true);
+        obj.put("success", userSession.clearToken(token));
 
         return obj.toString();
     }

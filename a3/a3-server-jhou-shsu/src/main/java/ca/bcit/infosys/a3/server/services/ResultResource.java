@@ -31,11 +31,9 @@ public class ResultResource implements Serializable {
     @Path("{week}")
     @Produces("application/json")
     public Result getResult(@HeaderParam("token") final String token, @PathParam("week") final int week) {
-        if (!userSession.verifyToken(token)) {
-            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
-        }
+        Integer userID = userSession.verifyTokenAndReturnUserID(token);
 
-        Result result = resultDao.getResultForWeek(userSession.getUserID(), week);
+        Result result = resultDao.getResultForWeek(userID, week);
         if (result == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
@@ -46,11 +44,9 @@ public class ResultResource implements Serializable {
     @GET
     @Produces("application/json")
     public List<Result> getResults(@HeaderParam("token") final String token) {
-        if (!userSession.verifyToken(token)) {
-            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
-        }
+        Integer userID = userSession.verifyTokenAndReturnUserID(token);
 
-        List<Result> results = resultDao.getAll(userSession.getUserID());
+        List<Result> results = resultDao.getAll(userID);
         if (results.isEmpty()) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
@@ -62,11 +58,9 @@ public class ResultResource implements Serializable {
     @Path("average")
     @Produces("application/json")
     public String getResultsAverage(@HeaderParam("token") final String token) {
-        if (!userSession.verifyToken(token)) {
-            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
-        }
+        Integer userID = userSession.verifyTokenAndReturnUserID(token);
 
-        List<Result> results = resultDao.getAll(userSession.getUserID());
+        List<Result> results = resultDao.getAll(userID);
         if (results.isEmpty()) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
@@ -89,15 +83,13 @@ public class ResultResource implements Serializable {
     @Path("{week}")
     @Consumes("application/json")
     public Response saveResult(@HeaderParam("token") final String token, @PathParam("week") final int week, final Result result) {
-        if (!userSession.verifyToken(token)) {
-            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
-        }
+        Integer userID = userSession.verifyTokenAndReturnUserID(token);
 
-        if (resultDao.getResultForWeek(userSession.getUserID(), week) != null) {
+        if (resultDao.getResultForWeek(userID, week) != null) {
             throw new WebApplicationException(Response.Status.CONFLICT);
         }
 
-        Result newResult = new Result(userSession.getUserID(), week, result.getScore(), result.getTotalPossibleScore());
+        Result newResult = new Result(userID, week, result.getScore(), result.getTotalPossibleScore());
         Set<ConstraintViolation<Result>> constraintViolations = ValidationHelper.getValidator().validate(newResult);
 
         if (constraintViolations.size() > 0) {
@@ -112,11 +104,9 @@ public class ResultResource implements Serializable {
     @DELETE
     @Path("all")
     public String clearAllResults(@HeaderParam("token") final String token) {
-        if (!userSession.verifyToken(token)) {
-            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
-        }
+        Integer userID = userSession.verifyTokenAndReturnUserID(token);
 
-        List<Result> results = resultDao.getAll(userSession.getUserID());
+        List<Result> results = resultDao.getAll(userID);
 
         if (results.isEmpty()) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);

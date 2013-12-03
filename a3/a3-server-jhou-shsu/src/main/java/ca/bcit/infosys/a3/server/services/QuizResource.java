@@ -30,9 +30,7 @@ public class QuizResource implements Serializable {
     @Path("{week}")
     @Produces("application/json")
     public List<Question> getQuizForWeek(@HeaderParam("token") final String token, @PathParam("week") int week) {
-        if (!userSession.verifyToken(token)) {
-            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
-        }
+        Integer userID = userSession.verifyTokenAndReturnUserID(token);
 
         List<Question> questions = questionDao.getAllForWeek(week);
 
@@ -48,11 +46,9 @@ public class QuizResource implements Serializable {
     @Path("next")
     @Produces("application/json")
     public List<Question> getNextQuiz(@HeaderParam("token") final String token) {
-        if (!userSession.verifyToken(token)) {
-            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
-        }
+        Integer userID = userSession.verifyTokenAndReturnUserID(token);
 
-        int nextQuizWeek = resultDao.getNextQuizWeek(userSession.getUserID());
+        int nextQuizWeek = resultDao.getNextQuizWeek(userID);
 
         List<Question> questions = questionDao.getAllForWeek(nextQuizWeek);
 

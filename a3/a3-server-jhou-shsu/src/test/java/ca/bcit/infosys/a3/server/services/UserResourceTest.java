@@ -4,7 +4,7 @@ import ca.bcit.infosys.a3.server.logic.UserSession;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.simple.JSONObject;
@@ -40,15 +40,15 @@ public class UserResourceTest {
 
     @Test
     public void testAuthenticateUser() throws Exception {
-        HttpPut putRequest = new HttpPut(resourceURL + "authenticate");
-        putRequest.setHeader("content-type", "application/json");
+        HttpPost postRequest = new HttpPost(resourceURL + "authenticate");
+        postRequest.setHeader("content-type", "application/json");
 
         JSONObject jsonRequestObject = new JSONObject();
         jsonRequestObject.put("username", "admin");
         jsonRequestObject.put("password", "admin");
 
-        putRequest.setEntity(new StringEntity(jsonRequestObject.toJSONString()));
-        HttpResponse response = httpClient.execute(putRequest);
+        postRequest.setEntity(new StringEntity(jsonRequestObject.toJSONString()));
+        HttpResponse response = httpClient.execute(postRequest);
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatusLine().getStatusCode());
 

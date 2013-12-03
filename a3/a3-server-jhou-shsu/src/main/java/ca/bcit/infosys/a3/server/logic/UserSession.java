@@ -1,18 +1,17 @@
 package ca.bcit.infosys.a3.server.logic;
 
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.ApplicationScoped;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
-/**
- * Created by shsu on 11/21/2013.
- */
-@SessionScoped
+@ApplicationScoped
 public class UserSession implements Serializable {
 
-    private int userID;
-
-    private String token;
+    private Map<String, Integer> tokensForAuthenticatedUserID;
 
     private static final boolean TEST_MODE = false;
 
@@ -21,34 +20,37 @@ public class UserSession implements Serializable {
     public static final String TEST_TOKEN = "test";
 
     public UserSession() {
+        tokensForAuthenticatedUserID = new HashMap<String, Integer>();
         if (TEST_MODE) {
-            userID = TEST_USER_ID;
-            token = TEST_TOKEN;
+            tokensForAuthenticatedUserID.put(TEST_TOKEN, TEST_USER_ID);
         }
     }
 
-    public int getUserID() {
-        return userID;
+    public boolean clearToken(String tokenToBeClearerd) {
+        Integer userID = tokensForAuthenticatedUserID.remove(tokenToBeClearerd);
+
+        if (userID != null) {
+            return true;
+        }
+        return false;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
+    public String generateToken(final int userID) {
+        String token = UUID.randomUUID().toString().replaceAll("-", "");
+        tokensForAuthenticatedUserID.put(token, userID);
 
-    public String getToken() {
         return token;
     }
 
-    public void clearToken() {
-        this.token = null;
-    }
+    public Integer verifyTokenAndReturnUserID(String tokenToBeVerified) throws WebApplicationException {
+        if (tokenToBeVerified != null) {
 
-    public void generateToken() {
-        this.token = UUID.randomUUID().toString().replaceAll("-", "");
-    }
+            Integer userID = tokensForAuthenticatedUserID.get(tokenToBeVerified);
+            if (userID != null) {
+                return userID;
+            }
 
-    public boolean verifyToken(String tokenToBeVerified) {
-        return (this.token != null && tokenToBeVerified != null && this.token.equals(tokenToBeVerified));
+        }
+        throw new WebApplicationException(Response.Status.UNAUTHORIZED);
     }
-
 }
