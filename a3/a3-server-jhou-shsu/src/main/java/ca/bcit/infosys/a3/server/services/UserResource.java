@@ -44,7 +44,7 @@ public class UserResource implements Serializable {
         }
 
         JSONObject obj = new JSONObject();
-        obj.put("userID", userDao.findByUsername(user.getUsername()));
+        obj.put("userID", userDao.findByUsername(user.getUsername()).getId());
         obj.put("token", userSession.generateToken(user.getId()));
 
         return obj.toString();
