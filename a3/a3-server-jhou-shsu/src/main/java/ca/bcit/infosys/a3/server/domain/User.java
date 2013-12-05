@@ -6,6 +6,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+/**
+ * Entity Bean
+ */
 @Entity
 @Table(name = "Users")
 public class User {

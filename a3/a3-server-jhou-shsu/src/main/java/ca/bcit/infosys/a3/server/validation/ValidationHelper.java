@@ -5,7 +5,7 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
 /**
- * Created by shsu on 11/23/2013.
+ * Hibernate validator helper.
  */
 public class ValidationHelper {
     private static ValidatorFactory factory = Validation.buildDefaultValidatorFactory();

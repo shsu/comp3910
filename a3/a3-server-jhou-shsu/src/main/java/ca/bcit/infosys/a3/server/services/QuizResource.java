@@ -13,6 +13,9 @@ import javax.ws.rs.core.Response;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Resource responsible for generating questions for quizzes.
+ */
 @RequestScoped
 @Path("/quiz")
 public class QuizResource implements Serializable {
@@ -26,6 +29,15 @@ public class QuizResource implements Serializable {
     @Inject
     private UserSession userSession;
 
+    /**
+     * Returns HTTP 200 and JSON Array of questions for the specified quiz.
+     * Returns HTTP 401 if token is not correct.
+     * Returns HTTP 404 if quiz not found.
+     *
+     * @param token authorization
+     * @param week of quiz
+     * @return JSONArray of the specified quiz.
+     */
     @GET
     @Path("{week}")
     @Produces("application/json")
@@ -41,7 +53,14 @@ public class QuizResource implements Serializable {
         return questions;
     }
 
-
+    /**
+     * Returns HTTP 200 and JSON Array of questions for the next quiz.
+     * Returns HTTP 401 if token is not correct.
+     * Returns HTTP 404 if quiz not found.
+     *
+     * @param token authorization
+     * @return JSONArray of the next quiz.
+     */
     @GET
     @Path("next")
     @Produces("application/json")

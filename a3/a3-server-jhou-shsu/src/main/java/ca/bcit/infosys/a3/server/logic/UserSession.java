@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * Contains a hashmap of authenticated tokens, this is created at runtime and stored in memory.
+ */
 @ApplicationScoped
 public class UserSession implements Serializable {
 

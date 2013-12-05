@@ -4,6 +4,9 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
+/**
+ * Entity Bean
+ */
 @Entity
 @Table(name = "Results")
 public class Result {

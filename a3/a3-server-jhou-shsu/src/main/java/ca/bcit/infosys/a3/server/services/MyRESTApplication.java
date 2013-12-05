@@ -4,6 +4,9 @@ import javax.ws.rs.core.Application;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * RestEasy Application.
+ */
 public class MyRESTApplication extends Application {
 
     private Set<Object> singletons = new HashSet<Object>();

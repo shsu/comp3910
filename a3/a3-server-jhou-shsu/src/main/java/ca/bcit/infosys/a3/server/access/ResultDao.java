@@ -9,7 +9,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
- * Created by shsu on 11/21/2013.
+ * CRUD Data Access
  */
 @Stateless
 public class ResultDao {

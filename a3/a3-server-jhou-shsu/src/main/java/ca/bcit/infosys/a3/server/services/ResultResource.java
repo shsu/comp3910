@@ -17,6 +17,9 @@ import java.net.URI;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Resource responsible for storing quiz results, retriving them, and calculating averages.
+ */
 @RequestScoped
 @Path("/results")
 public class ResultResource implements Serializable {
@@ -27,6 +30,15 @@ public class ResultResource implements Serializable {
     @Inject
     private UserSession userSession;
 
+    /**
+     * Returns HTTP 200 and a JSON Object of the result for week specified.
+     * Returns HTTP 401 if token is not correct.
+     * Returns HTTP 404 if no results exists in the database for user.
+     *
+     * @param token authentication
+     * @param week  of quiz
+     * @return JSONObject result
+     */
     @GET
     @Path("{week}")
     @Produces("application/json")
@@ -41,6 +53,14 @@ public class ResultResource implements Serializable {
         return result;
     }
 
+    /**
+     * Returns HTTP 200 and a JSON Array of the results for all quizzes taken so far.
+     * Returns HTTP 401 if token is not correct.
+     * Returns HTTP 404 if no results exists in the database for user.
+     *
+     * @param token authentication
+     * @return JSONArray of results
+     */
     @GET
     @Produces("application/json")
     public List<Result> getResults(@HeaderParam("token") final String token) {
@@ -54,6 +74,14 @@ public class ResultResource implements Serializable {
         return results;
     }
 
+    /**
+     * Returns HTTP 200 and JSON Object with a cumulative average based on the results for all quizzes taken so far.
+     * Returns HTTP 401 if token is not correct.
+     * Returns HTTP 404 if no results exists in the database for user.
+     *
+     * @param token
+     * @return the cumulative average score
+     */
     @GET
     @Path("average")
     @Produces("application/json")
@@ -79,6 +107,16 @@ public class ResultResource implements Serializable {
         return outputJSON.toString();
     }
 
+    /**
+     * Returns HTTP 201 and creates a unique new record for quiz week specified.
+     * Returns HTTP 400 if new record is invalid.
+     * Returns HTTP 401 if token is not correct.
+     * Returns HTTP 409 if new record already exists.
+     *
+     * @param token authentication
+     * @param week  of quiz
+     * @return JSONObject
+     */
     @POST
     @Path("{week}")
     @Consumes("application/json")
@@ -101,6 +139,15 @@ public class ResultResource implements Serializable {
         return Response.created(URI.create("/results")).status(Response.Status.CREATED).entity(newResult).build();
     }
 
+
+    /**
+     * Returns HTTP 200 and deletes all quiz records for user.
+     * Returns HTTP 401 if token is not correct.
+     * Returns HTTP 404 if no results exists in the database for user.
+     *
+     * @param token authentication
+     * @return success
+     */
     @DELETE
     @Path("all")
     public String clearAllResults(@HeaderParam("token") final String token) {

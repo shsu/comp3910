@@ -15,6 +15,9 @@ import javax.ws.rs.core.Response;
 import java.io.Serializable;
 import java.util.Set;
 
+/**
+ * Resource responsible for user related tasks such as authentication, profile, and logout.
+ */
 @RequestScoped
 @Path("/user")
 public class UserResource implements Serializable {
@@ -28,9 +31,13 @@ public class UserResource implements Serializable {
     public UserResource() {
     }
 
+
     /**
-     * Authenticates the user and return a string token.
-     * If user is already logged in, return string token.
+     * Returns HTTP 200 and returns user token if credentials are correct.
+     * Returns HTTP 401 if credentials are not correct.
+     *
+     * @param user JSONObject
+     * @return token
      */
     @POST
     @Path("authenticate")
@@ -50,6 +57,15 @@ public class UserResource implements Serializable {
         return obj.toString();
     }
 
+
+    /**
+     * Returns HTTP 201 and creates a unique new user.
+     * Returns HTTP 400 if desired new user is invalid.
+     * Returns HTTP 409 if desired new user already exists.
+     *
+     * @param user JSONObject
+     * @return the new user details
+     */
     @POST
     @Path("register")
     @Consumes("application/json")
@@ -72,6 +88,13 @@ public class UserResource implements Serializable {
         return Response.status(Response.Status.CREATED).entity(userDao.findByUsername(user.getUsername())).build();
     }
 
+    /**
+     * Returns HTTP 200 and user profile.
+     * Returns HTTP 401 if token is not correct.
+     *
+     * @param token authorization
+     * @return JSONObject of user details
+     */
     @GET
     @Path("profile")
     @Produces("application/json")
@@ -85,6 +108,12 @@ public class UserResource implements Serializable {
         return userDao.read(userID);
     }
 
+    /**
+     * Returns HTTP 200 and logs out user.
+     *
+     * @param token to invalidate
+     * @return if token was invalidated successfully or not
+     */
     @GET
     @Path("logout")
     @Produces("application/json")
