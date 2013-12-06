@@ -120,6 +120,7 @@ public class ResultResource implements Serializable {
     @POST
     @Path("{week}")
     @Consumes("application/json")
+    @Produces("application/json")
     public Response saveResult(@HeaderParam("token") final String token, @PathParam("week") final int week, final Result result) {
         Integer userID = userSession.verifyTokenAndReturnUserID(token);
 
@@ -136,7 +137,7 @@ public class ResultResource implements Serializable {
 
         resultDao.create(newResult);
 
-        return Response.created(URI.create("/results")).status(Response.Status.CREATED).entity(newResult).build();
+        return Response.status(Response.Status.CREATED).entity(newResult).build();
     }
 
 
